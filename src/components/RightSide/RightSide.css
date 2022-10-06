@@ -18,3 +18,9 @@
 .navIcons > img:hover {
   cursor: pointer;
 }
+
+.right-share-btn {
+  height: 3rem;
+  width: 80%;
+  align-self: center;
+}
