@@ -5,7 +5,7 @@ import RightSide from "../../components/RightSide/RightSide";
 import "./home.css";
 const Home = () => {
   return (
-    <div>
+    <div className="home">
       <Leftside />
       <MiddleSide />
       <RightSide />

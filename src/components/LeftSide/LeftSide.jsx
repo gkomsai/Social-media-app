@@ -1,8 +1,13 @@
 import React from 'react'
+import ProfileCard from '../ProfileCard/ProfileCard'
+import Searchbar from '../Searchbar/Searchbar'
 
 const Leftside = () => {
   return (
-    <div>Leftside</div>
+    <div>
+        <Searchbar />
+        <ProfileCard/>
+    </div>
   )
 }
 
