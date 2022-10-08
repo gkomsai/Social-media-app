@@ -99,6 +99,7 @@ userRouter.delete("/:id", async (req, res) => {
   }
 });
 
+
 userRouter.put("/:id/follow", async (req, res) => {
   const id = req.params.id;
   const currentUserId = req.body.userId;
@@ -132,5 +133,44 @@ userRouter.put("/:id/follow", async (req, res) => {
     }
   }
 });
+
+
+
+userRouter.put("/:id/unfollow", async (req, res) => {
+  const id = req.params.id;
+  const currentUserId = req.body.userId;
+//   console.log(id, currentUserId);
+  if (currentUserId == id) { // i.e the person want to unfollow himself
+    return res
+      .status(403)
+      .send({ status: "error", message: "Action Forbidden" });
+  } else {
+    try {
+      const followUser = await UserModel.findById(id);
+      const followingUser = await UserModel.findById(currentUserId);
+
+      if (followUser.followers.includes(currentUserId)) {
+
+        await followUser.updateOne({ $pull: { followers: currentUserId } });
+        await followingUser.updateOne({ $pull: { following: id } });
+        res.status(200).send({status: "success", message: "User unfollowed Successfully" });
+
+      } else {
+        return res
+          .status(403)
+          .send({
+            status: "error",
+            message: "You are not following this User",
+          });
+      }
+    } catch (err) {
+      console.log(err);
+      res.status(500).send({ status: "error", message: err.message });
+    }
+  }
+});
+
+
+
 
 module.exports = { userRouter };
