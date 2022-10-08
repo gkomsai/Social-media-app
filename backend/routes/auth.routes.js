@@ -10,10 +10,10 @@ const authRouter = Router();
 authRouter.post("/signup", async (req, res) => {
   try {
     // console.log(req.body);
-    const { userName, password } = req.body;
-    const isEmailPresent = await UserModel.findOne({ userName });
+    const { username, password } = req.body;
+    const isEmailPresent = await UserModel.findOne({ username });
     // console.log(isEmailPresent);
-    if (userName) {
+    if (username) {
       res
         .status(400)
         .send({ status: "error", message: "Email already exists" });
@@ -46,9 +46,9 @@ authRouter.post("/signup", async (req, res) => {
 
 authRouter.post("/login", async (req, res) => {
   try {
-    const { userName, password } = req.body;
+    const { username, password } = req.body;
 
-    const user = await UserModel.findOne({ userName });
+    const user = await UserModel.findOne({ username });
     //   console.log(user);
     if (user) {
       let hash = user.password;
@@ -61,7 +61,7 @@ authRouter.post("/login", async (req, res) => {
         }
         if (result) {
           const token = jwt.sign(
-            { userId: user._id, userName: userName },
+            { userId: user._id, username: user.username },
             process.env.JWT_SECRET_KEY,
             {
               expiresIn: "5h",
