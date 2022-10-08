@@ -1,0 +1,7 @@
+.Profile{
+    /* the reason of making every page as relative is the we want ot see the two blur behind our background */
+    position: relative;
+    display: grid;
+    grid-template-columns: 22rem auto 24rem;
+    gap: 1rem;
+}
