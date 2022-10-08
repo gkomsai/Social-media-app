@@ -1,4 +1,5 @@
 const { Router } = require("express");
+const { checkUserAuth } = require("../middleware/authMiddleware");
 const userRouter = Router();
 
 /*  ----------------------for getting a singleuser-------------------------------- */
@@ -33,6 +34,9 @@ userRouter.get("/", async (req, res) => {
     res.status(500).send({ status: "error", message: err.message });
   }
 });
+
+userRouter.use(checkUserAuth);
+
 
 /*  ----------------------for updating  a user-------------------------------- */
 
@@ -93,5 +97,7 @@ userRouter.delete("/:id", async (req, res) => {
     });
   }
 });
+
+userRouter.put("/:id/follow", )
 
 module.exports = { userRouter };
