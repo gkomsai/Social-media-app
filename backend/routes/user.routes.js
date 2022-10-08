@@ -146,13 +146,13 @@ userRouter.put("/:id/unfollow", async (req, res) => {
       .send({ status: "error", message: "Action Forbidden" });
   } else {
     try {
-      const followUser = await UserModel.findById(id);
-      const followingUser = await UserModel.findById(currentUserId);
+      const unfollowUser = await UserModel.findById(id); // the user which curr user want to unfollow
+      const unfollowingUser = await UserModel.findById(currentUserId); // curr user
 
-      if (followUser.followers.includes(currentUserId)) {
+      if (unfollowUser.followers.includes(currentUserId)) {
 
-        await followUser.updateOne({ $pull: { followers: currentUserId } });
-        await followingUser.updateOne({ $pull: { following: id } });
+        await unfollowUser.updateOne({ $pull: { followers: currentUserId } });
+        await unfollowingUser.updateOne({ $pull: { following: id } });
         res.status(200).send({status: "success", message: "User unfollowed Successfully" });
 
       } else {
