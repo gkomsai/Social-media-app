@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const { checkUserAuth } = require("../middleware/authMiddleware");
+const { UserModel } = require("../models/userModel");
 const userRouter = Router();
 
 /*  ----------------------for getting a singleuser-------------------------------- */
@@ -17,7 +18,7 @@ userRouter.get("/:id", async (req, res) => {
         .send({ status: "error", message: "No such user exists" });
     }
   } catch (err) {
-    res.status(500).send({ status: "error", message: err.message });
+    return res.status(500).send({ status: "error", message: err.message });
   }
 });
 
