@@ -5,8 +5,12 @@ import Notification from "../../assets/noti.png";
 import Comment from "../../assets/comment.png";
 import { UilSetting } from "@iconscout/react-unicons";
 import TrendCard from "../TrendCard/TrendCard";
+import ShareModal from "../ShareModel/ShareModal";
+import { useDisclosure } from "@chakra-ui/react";
 
 const RightSide = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   return (
     <div className="RightSide">
       <div className="navIcons">
@@ -17,10 +21,11 @@ const RightSide = () => {
       </div>
       <TrendCard />
       <div>
-        <button className="button right-share-btn">
+        <button onClick={onOpen} className="button right-share-btn">
           Share
         </button>
       </div>
+      <ShareModal isOpen={isOpen} onClose={onClose} />
     </div>
   );
 };
