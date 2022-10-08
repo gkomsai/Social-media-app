@@ -37,7 +37,6 @@ userRouter.get("/", async (req, res) => {
 
 userRouter.use(checkUserAuth);
 
-
 /*  ----------------------for updating  a user-------------------------------- */
 
 userRouter.patch("/id", async (req, res) => {
@@ -86,9 +85,11 @@ userRouter.delete("/:id", async (req, res) => {
     try {
       await UserModel.findByIdAndDelete(id);
 
-      res.status(200).send({ status: "error", message: "User Deleted Successfully!" });
+      res
+        .status(200)
+        .send({ status: "error", message: "User Deleted Successfully!" });
     } catch (error) {
-      res.status(500).send({status: "error",  message: err.message});
+      res.status(500).send({ status: "error", message: err.message });
     }
   } else {
     return res.status(403).send({
@@ -98,6 +99,38 @@ userRouter.delete("/:id", async (req, res) => {
   }
 });
 
-userRouter.put("/:id/follow", )
+userRouter.put("/:id/follow", async (req, res) => {
+  const id = req.params.id;
+  const currentUserId = req.body.userId;
+//   console.log(id, userId);
+  if (currentUserId == id) {
+    return res
+      .status(403)
+      .send({ status: "error", message: "Action Forbidden" });
+  } else {
+    try {
+      const followUser = await UserModel.findById(id);
+      const followingUser = await UserModel.findById(currentUserId);
+
+      if (!followUser.followers.includes(currentUserId)) {
+
+        await followUser.updateOne({ $push: { followers: currentUserId } });
+        await followingUser.updateOne({ $push: { following: id } });
+        res.status(200).send({status: "success", message: "User followed!" });
+
+      } else {
+        return res
+          .status(403)
+          .send({
+            status: "error",
+            message: "you are already following this id",
+          });
+      }
+    } catch (err) {
+      console.log(err);
+      res.status(500).send({ status: "error", message: err.message });
+    }
+  }
+});
 
 module.exports = { userRouter };
