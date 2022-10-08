@@ -44,4 +44,53 @@ userRouter.post("/signup", async (req, res) => {
 
 
 
+userRouter.post("/login", async (req, res) => {
+  try {
+    const { userName, password } = req.body;
+
+    const user = await UserModel.findOne({ userName });
+    //   console.log(user);
+    if (user) {
+      let hash = user.password;
+      bcrypt.compare(password, hash, function (err, result) {
+        if (err) {
+          return res.send({
+            message: "Something went wrong, plz try again later",
+            status: "error",
+          });
+        }
+        if (result) {
+          const token = jwt.sign(
+            { userId: user._id, userName: userName },
+            process.env.JWT_SECRET_KEY,
+            {
+              expiresIn: "5h",
+            }
+          );
+          return res.status(200).send({
+            status: "success",
+            message: "Login Successfull!!!",
+            token: token,
+            user: user,
+          });
+        } else {
+          return res
+            .status(400)
+            .send({ status: "error", message: "Invalid Credentials" });
+        }
+      });
+    } else {
+      return res
+        .status(400)
+        .send({ status: "error", message: "Invalid Credentials" });
+    }
+  } catch (err) {
+    // console.log(err);
+    return res
+      .status(400)
+      .send({ status: "error", message: "Unable to Login" });
+  }
+});
+
+
 module.exports = { userRouter };
