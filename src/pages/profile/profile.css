@@ -5,3 +5,9 @@
     grid-template-columns: 22rem auto 24rem;
     gap: 1rem;
 }
+.profile-centre{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+}
