@@ -2,9 +2,11 @@ import React from "react";
 import cover from "../../assets/cover.jpg";
 import profile from "../../assets/profileImg.jpg";
 import "./profileCard.css";
-// import "../LeftSide/LeftSide.css";
+
 
 const ProfileCard = () => {
+  const profilePage = true;
+
   return (
     <div className="profileCard">
       <div className="profileImages">
@@ -24,21 +26,27 @@ const ProfileCard = () => {
             <span>Followers</span>
           </div>
           <div className="vl"> </div>
+
           <div className="follow">
             <span>2,084</span>
             <span>Following</span>
           </div>
 
-          <div className="vl"></div>
-          <div className="follow">
-            <span>1,436</span>
-            <span>Posts</span>
-          </div>
+          {profilePage && (
+            <>
+              {" "}
+              <div className="vl"></div>
+              <div className="follow">
+                <span>3</span>
+                <span>Posts</span>
+              </div>
+            </>
+          )}
         </div>
         <hr />
       </div>
 
-      <span>My Profile</span>
+      {profilePage ? "" : <span>My Profile</span>}
     </div>
   );
 };

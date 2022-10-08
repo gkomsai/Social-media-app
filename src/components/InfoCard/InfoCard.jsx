@@ -13,19 +13,19 @@ const InfoCard = () => {
         <span>
           <b>Status </b>
         </span>
-        <span>{}</span>
+        <span>single</span>
       </div>
       <div className="info">
         <span>
           <b>Lives in </b>
         </span>
-        <span></span>
+        <span>Delhi</span>
       </div>
       <div className="info">
         <span>
           <b>Works at </b>
         </span>
-        <span></span>
+        <span>Amazon</span>
       </div>
 
       <button className="button logout-button">Log Out</button>
