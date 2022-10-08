@@ -5,9 +5,9 @@ const jwt = require("jsonwebtoken");
 const { UserModel } = require("../models/userModel");
 require("dotenv").config();
 
-const userRouter = Router();
+const authRouter = Router();
 
-userRouter.post("/signup", async (req, res) => {
+authRouter.post("/signup", async (req, res) => {
   try {
     // console.log(req.body);
     const { userName, password } = req.body;
@@ -44,7 +44,7 @@ userRouter.post("/signup", async (req, res) => {
 
 
 
-userRouter.post("/login", async (req, res) => {
+authRouter.post("/login", async (req, res) => {
   try {
     const { userName, password } = req.body;
 
@@ -93,4 +93,4 @@ userRouter.post("/login", async (req, res) => {
 });
 
 
-module.exports = { userRouter };
+module.exports = { authRouter };
