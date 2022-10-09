@@ -101,4 +101,30 @@ postsRouter.delete("/delete/:id", async (req, res) => {
   }
 });
 
+
+
+/*  ----------------------for liking and disliking  a post -------------------------------- */
+
+postsRouter.patch("/like/:id", async (req, res) => {
+  const id = req.params.id;
+  const { userId } = req.body;
+  try {
+    const foundPost = await PostModel.findById(id);
+    if (foundPost.likes.includes(userId)) {
+      await foundPost.updateOne({ $pull: { likes: userId } });
+      res.status(200).send({status:"success", message: "Post disliked"});
+    } else {
+      await foundPost.updateOne({ $push: { likes: userId } });
+      res.status(200).send({status:"success", message: "Post liked"});
+    }
+  } catch (err) {
+    return res.status(500).send({ status: "error", message: err.message });
+  }
+});
+
+
+
+
+
+
 module.exports = { postsRouter };
