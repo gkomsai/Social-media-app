@@ -1,4 +1,5 @@
 const { Router } = require("express");
+const jwt = require("jsonwebtoken");
 const { checkUserAuth } = require("../middleware/authMiddleware");
 const { UserModel } = require("../models/userModel");
 const userRouter = Router();
@@ -38,14 +39,17 @@ userRouter.get("/", async (req, res) => {
 
 userRouter.use(checkUserAuth);
 
+
+
 /*  ----------------------for updating  a user-------------------------------- */
 
-userRouter.patch("/id", async (req, res) => {
+userRouter.patch("/update/:id", async (req, res) => {
   const id = req.params.id; // the id of the person who wants to update
 
-  const { _id, currentUserAdmin, password } = req.body;
+  const { userId, password } = req.body;
+  // console.log("req.body user ke patch req me", req.body);
 
-  if (id === _id) {
+  if (id === userId) {
     try {
       // if we also have to update password then password will be bcrypted again
       if (password) {
@@ -56,13 +60,13 @@ userRouter.patch("/id", async (req, res) => {
       const user = await UserModel.findByIdAndUpdate(id, req.body, {
         new: true,
       });
-      const token = jwt.sign(
-        { username: user.username, id: user._id },
-        process.env.JWT_SECRET_KEY,
-        { expiresIn: "2h" }
-      );
-      console.log({ user, token });
-      return res.status(200).send({ user, token });
+      // const token = jwt.sign(
+      //   { username: user.username, userId: user._id },
+      //   process.env.JWT_SECRET_KEY,
+      //   { expiresIn: "2h" }
+      // );
+      // console.log({ user, token });
+      return res.status(200).send(user);
     } catch (err) {
       console.log(err);
       res.status(500).send({ status: "error", message: err.message });
@@ -75,20 +79,28 @@ userRouter.patch("/id", async (req, res) => {
   }
 });
 
+
+
 /*  ----------------------for Deleting a user-------------------------------- */
 
-userRouter.delete("/:id", async (req, res) => {
+userRouter.delete("/delete/:id", async (req, res) => {
   const id = req.params.id;
 
-  const { currentUserId, currentUserAdmin } = req.body;
+  const { userId, currentUserAdmin } = req.body;
 
-  if (currentUserId == id || currentUserAdmin) {
+  if (userId === id || currentUserAdmin) {
     try {
-      await UserModel.findByIdAndDelete(id);
-
-      res
-        .status(200)
-        .send({ status: "error", message: "User Deleted Successfully!" });
+      const deletedUser = await UserModel.findByIdAndDelete(id);
+      if (deletedUser) {
+        return res
+          .status(200)
+          .send({ status: "success", message: "User Deleted Successfully!" });
+      } else {
+        return res.status(400).send({
+          status: "error",
+          message: "User already deleted",
+        });
+      }
     } catch (error) {
       res.status(500).send({ status: "error", message: err.message });
     }
@@ -101,10 +113,13 @@ userRouter.delete("/:id", async (req, res) => {
 });
 
 
-userRouter.put("/:id/follow", async (req, res) => {
+
+/*  ----------------------for following a user-------------------------------- */
+
+userRouter.patch("/:id/follow", async (req, res) => { // note- put or patch both will work
   const id = req.params.id;
   const currentUserId = req.body.userId;
-//   console.log(id, userId);
+  //   console.log(id, userId);
   if (currentUserId == id) {
     return res
       .status(403)
@@ -115,18 +130,14 @@ userRouter.put("/:id/follow", async (req, res) => {
       const followingUser = await UserModel.findById(currentUserId);
 
       if (!followUser.followers.includes(currentUserId)) {
-
         await followUser.updateOne({ $push: { followers: currentUserId } });
         await followingUser.updateOne({ $push: { following: id } });
-        res.status(200).send({status: "success", message: "User followed!" });
-
+        res.status(200).send({ status: "success", message: "User followed Successfully!" });
       } else {
-        return res
-          .status(403)
-          .send({
-            status: "error",
-            message: "you are already following this id",
-          });
+        return res.status(403).send({
+          status: "error",
+          message: "you are already following this user",
+        });
       }
     } catch (err) {
       console.log(err);
@@ -137,11 +148,14 @@ userRouter.put("/:id/follow", async (req, res) => {
 
 
 
-userRouter.put("/:id/unfollow", async (req, res) => {
+/*  ----------------------for unfollowing a user-------------------------------- */
+
+userRouter.patch("/:id/unfollow", async (req, res) => {  
   const id = req.params.id;
   const currentUserId = req.body.userId;
-//   console.log(id, currentUserId);
-  if (currentUserId == id) { // i.e the person want to unfollow himself
+  //   console.log(id, currentUserId);
+  if (currentUserId == id) {
+    // i.e the person want to unfollow himself
     return res
       .status(403)
       .send({ status: "error", message: "Action Forbidden" });
@@ -151,18 +165,16 @@ userRouter.put("/:id/unfollow", async (req, res) => {
       const unfollowingUser = await UserModel.findById(currentUserId); // curr user
 
       if (unfollowUser.followers.includes(currentUserId)) {
-
         await unfollowUser.updateOne({ $pull: { followers: currentUserId } });
         await unfollowingUser.updateOne({ $pull: { following: id } });
-        res.status(200).send({status: "success", message: "User unfollowed Successfully" });
-
+        res
+          .status(200)
+          .send({ status: "success", message: "User unfollowed Successfully" });
       } else {
-        return res
-          .status(403)
-          .send({
-            status: "error",
-            message: "You are not following this User",
-          });
+        return res.status(403).send({
+          status: "error",
+          message: "You are not following this User",
+        });
       }
     } catch (err) {
       console.log(err);
@@ -170,8 +182,6 @@ userRouter.put("/:id/unfollow", async (req, res) => {
     }
   }
 });
-
-
 
 
 module.exports = { userRouter };
