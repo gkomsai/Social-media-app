@@ -1,6 +1,8 @@
 const { Router } = require("express");
+const mongoose = require("mongoose");
 const { checkUserAuth } = require("../middleware/authMiddleware");
 const { PostModel } = require("../models/postModel");
+const { UserModel } = require("../models/userModel");
 const postsRouter = Router();
 
 postsRouter.use(checkUserAuth);
@@ -36,7 +38,6 @@ postsRouter.get("/:id", async (req, res) => {
   }
 });
 
-
 /*  ----------------------for getting all the posts of a particular user-------------------------------- */
 postsRouter.get("/", async (req, res) => {
   const userId = req.body.userId;
@@ -65,13 +66,16 @@ postsRouter.patch("/update/:id", async (req, res) => {
     const foundPost = await PostModel.findById(postId);
     if (foundPost.userId === userId) {
       await foundPost.updateOne({ $set: req.body });
-    return  res
+      return res
         .status(200)
         .send({ status: "success", message: "Post updated Successfully!" });
     } else {
-   return   res
+      return res
         .status(403)
-        .send({ status: "error", message: "Action forbidden! you can't update other's posts" });
+        .send({
+          status: "error",
+          message: "Action forbidden! you can't update other's posts",
+        });
     }
   } catch (err) {
     return res.status(500).send({ status: "error", message: err.message });
@@ -101,8 +105,6 @@ postsRouter.delete("/delete/:id", async (req, res) => {
   }
 });
 
-
-
 /*  ----------------------for liking and disliking  a post -------------------------------- */
 
 postsRouter.patch("/like/:id", async (req, res) => {
@@ -112,19 +114,59 @@ postsRouter.patch("/like/:id", async (req, res) => {
     const foundPost = await PostModel.findById(id);
     if (foundPost.likes.includes(userId)) {
       await foundPost.updateOne({ $pull: { likes: userId } });
-      res.status(200).send({status:"success", message: "Post disliked"});
+      res.status(200).send({ status: "success", message: "Post disliked" });
     } else {
       await foundPost.updateOne({ $push: { likes: userId } });
-      res.status(200).send({status:"success", message: "Post liked"});
+      res.status(200).send({ status: "success", message: "Post liked" });
     }
   } catch (err) {
     return res.status(500).send({ status: "error", message: err.message });
   }
 });
 
+/*  ----------------------for getting the timeline post of a user -------------------------------- */
 
 
+postsRouter.get("/:id/timeline", async (req, res) => {  
+  // console.log("inside timeline post");
+  const userId = req.params.id
+  // const { userId } = req.body;
+  try {
+    const currentUserPosts = await PostModel.find({userId });
+    // return res.send(currentUserPosts);
 
-
+    const followingPostsObj = await UserModel.aggregate([
+      {
+        $match: {
+          _id: new mongoose.Types.ObjectId(userId),
+        },
+      },
+      {
+        $lookup: {
+          from: "posts",
+          localField: "following",
+          foreignField: "userId",
+          as: "followingPosts",
+        },
+      },
+      {
+        $project: {
+          followingPosts: 1,
+          _id: 1,
+        },
+      },
+    ]);
+    // console.log("afteraggregate");
+    res.status(200).send(
+      currentUserPosts
+        .concat(...followingPostsMainArr[0].followingPosts)
+        .sort((a, b) => {
+          return new Date(b.createdAt) - new Date(a.createdAt); // we are sorting so that we can get these posts in the latest order
+        })
+    );
+  } catch (err) {
+    res.status(500).send({message:err.message});
+  }
+});
 
 module.exports = { postsRouter };
