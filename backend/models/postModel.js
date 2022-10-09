@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const postSchema = mongoose.Schema(
   {
-    userId: { type: String, required: true },
+    userId: { type: String, required: true},
     description: {type: String, required : true},
     likes: [],
     createdAt: {
@@ -11,7 +11,7 @@ const postSchema = mongoose.Schema(
     },
     image: String,
   },
-  { versionKey: false,  }
+  { versionKey: false, timestamps: true }
 );
 
 var PostModel = mongoose.model("post", postSchema);
