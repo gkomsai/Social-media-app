@@ -11,7 +11,7 @@ const postSchema = mongoose.Schema(
     },
     image: String,
   },
-  { versionKey: false, timestamps: true }
+  { versionKey: false,  }
 );
 
 var PostModel = mongoose.model("post", postSchema);

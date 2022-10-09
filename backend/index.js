@@ -16,6 +16,7 @@ app.use('/posts', postsRouter)
 
 
 
+
 app.get("/", (req, res) => {
   res.send("Welcome to social-media-app backend server home page");
 });

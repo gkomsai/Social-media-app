@@ -11,9 +11,9 @@ authRouter.post("/signup", async (req, res) => {
   try {
     // console.log(req.body);
     const { username, password } = req.body;
-    const isEmailPresent = await UserModel.findOne({ username });
+    const isusernamePresent = await UserModel.findOne({ username });
     // console.log(isEmailPresent);
-    if (username) {
+    if (isusernamePresent) {
       res
         .status(400)
         .send({ status: "error", message: "Email already exists" });
