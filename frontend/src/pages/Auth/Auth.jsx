@@ -1,16 +1,17 @@
 import React, { useState } from "react";
-
 import Logo from "../../assets/logo.png";
-
-import { Box, Button, Input, Text, VStack } from "@chakra-ui/react";
-
+import { Box, Button, Input, Text, useToast, VStack } from "@chakra-ui/react";
 import styles from "./Auth.module.css";
-
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { loginFun, signupFun } from "../../redux/auth/action";
 
 const Auth = () => {
   const [isSignUp, setIsSignUp] = useState(false);
   const [user, setUser] = useState();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const toast = useToast();
 
   const handleChange = (e) => {
     let { name, value } = e.target;
@@ -18,6 +19,12 @@ const Auth = () => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (isSignUp) {
+      dispatch(signupFun(user, toast, navigate));
+    } else {
+      dispatch(loginFun(user, toast, navigate));
+    }
   };
 
   return (
@@ -87,6 +94,7 @@ const Auth = () => {
             color="white"
             fontWeight="700"
             _hover={{ backgroundColor: "#25cf60" }}
+            onClick={handleSubmit}
           >
             {isSignUp ? " Sign up" : "Sign In"}
           </Button>
