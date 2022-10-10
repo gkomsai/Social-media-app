@@ -47,18 +47,6 @@
 
 /* right side */
 
-.authForm {
-  background-color: var(--cardColor);
-  border-radius: 1rem;
-  padding: 1rem;
-}
-
-.authForm > div {
-  width: 100%;
-  align-items: center;
-  justify-content: center;
-}
-
 
 
 .signupdiv {
@@ -93,28 +81,7 @@
   margin-top: 15px;
 }
 
-.googlebtn {
-  width: 75%;
-  margin: auto;
-  height: 40px;
-  border: 0.1px solid silver;
-  border-radius: 8px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 30px;
-  margin-top: 20px;
-  cursor: pointer;
-}
 
-.googlelogo {
-  font-size: 30px;
-}
-
-.googletext {
-  font-size: 14px;
-  font-weight: 700;
-}
 
 .note {
   color: gray;
@@ -208,19 +175,7 @@
     font-size: 14px;
   }
 
-  .googlebtn {
-    width: 75%;
-    margin: auto;
-  }
-
-  .googlelogo {
-    font-size: 30px;
-  }
-
-  .googletext {
-    font-size: 14px;
-    font-weight: 700;
-  }
+  
 
   .note {
     font-size: 14px;
