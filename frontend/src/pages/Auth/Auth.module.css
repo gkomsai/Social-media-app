@@ -1,0 +1,229 @@
+.Auth {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  gap: 4rem;
+  position: relative;
+}
+
+.Auth > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* left side */
+.a-left {
+  gap: 2rem;
+}
+
+.a-left > img {
+  width: 4rem;
+  height: 4rem;
+}
+
+.Webname > h1 {
+  font-size: 3rem;
+  background-color: red;
+  /* Creating  the gradient. */
+  background-image: var(--buttonBg);
+  
+  /* Set the background size and repeat properties. */
+  background-size: 100%;
+  background-repeat: repeat;
+
+  /* Use the text as a mask for the background. */
+  /* This will show the gradient as a text color rather than element bg. */
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-background-clip: text;
+  -moz-text-fill-color: transparent;
+}
+
+.Webname > h6 {
+  font-size: 0.85rem;
+}
+
+/* right side */
+
+.authForm {
+  background-color: var(--cardColor);
+  border-radius: 1rem;
+  padding: 1rem;
+}
+
+.authForm > div {
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+
+
+.signupdiv {
+  width: 40%;
+  margin: auto;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  border-radius: 30px;
+  margin-top: 70px;
+  text-align: center;
+  padding-bottom: 40px;
+}
+
+.heading {
+  font-size: 37px;
+  font-weight: 700;
+  padding-top: 40px;
+}
+
+.subheading {
+  font-size: 25px;
+  width: 70%;
+  color: #8f7e77;
+  font-weight: 700;
+  margin: auto;
+  margin-top: 12px;
+}
+
+.subsubheading {
+  font-size: 16px;
+  font-weight: 500;
+  color: #767676;
+  margin-top: 15px;
+}
+
+.googlebtn {
+  width: 75%;
+  margin: auto;
+  height: 40px;
+  border: 0.1px solid silver;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  margin-top: 20px;
+  cursor: pointer;
+}
+
+.googlelogo {
+  font-size: 30px;
+}
+
+.googletext {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.note {
+  color: gray;
+  font-size: 14px;
+  width: 65%;
+  text-align: left;
+  margin: auto;
+  margin-top: 20px;
+}
+
+@media (min-width: 414px) and (max-width: 896px) {
+  .signupdiv {
+    width: 80%;
+    margin: auto;
+    margin-top: 40px;
+  }
+
+  .note {
+    color: gray;
+    font-size: 14px;
+    width: 75%;
+    text-align: center;
+    margin: auto;
+    margin-top: 20px;
+  }
+
+  .subheading {
+    font-size: 16px;
+    width: 90%;
+    color: #8f7e77;
+    font-weight: 700;
+    margin: auto;
+    margin-top: 10px;
+  }
+}
+
+@media (min-width: 412px) and (max-width: 915px) {
+  .signupdiv {
+    width: 90%;
+  }
+
+  .subheading {
+    font-size: 16px;
+    width: 85%;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .signupdiv {
+    width: 65%;
+  }
+
+  .heading {
+    font-size: 37px;
+    font-weight: 700;
+    padding-top: 30px;
+  }
+
+  .subheading {
+    font-size: 25px;
+    width: 80%;
+  }
+
+  .note {
+    color: gray;
+    font-size: 14px;
+    width: 70%;
+  }
+}
+
+@media (min-width: 280px) and (max-width: 653px) {
+  .signupdiv {
+    width: 90%;
+  }
+
+  .heading {
+    font-size: 28px;
+    font-weight: 700;
+    padding-top: 40px;
+    width: 80%;
+    margin: auto;
+    line-height: 30px;
+  }
+
+  .subheading {
+    font-size: 16px;
+    width: 70%;
+  }
+
+  .subsubheading {
+    font-size: 14px;
+  }
+
+  .googlebtn {
+    width: 75%;
+    margin: auto;
+  }
+
+  .googlelogo {
+    font-size: 30px;
+  }
+
+  .googletext {
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .note {
+    font-size: 14px;
+    width: 65%;
+  }
+}

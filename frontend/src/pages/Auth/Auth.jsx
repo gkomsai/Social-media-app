@@ -1,6 +1,12 @@
 import React, { useState } from "react";
-import "./Auth.css";
+
 import Logo from "../../assets/logo.png";
+
+import { Box, Button, Input, Text, VStack } from "@chakra-ui/react";
+
+import styles from "./Auth.module.css";
+
+import { Link } from "react-router-dom";
 
 const Auth = () => {
   const [isSignUp, setIsSignUp] = useState(false);
@@ -18,86 +24,90 @@ const Auth = () => {
     <div className="Auth">
       <div className="a-left">
         <img src={Logo} alt="" />
-
-        <div className="Webname">
-          <h1>Social Media</h1>
-          <h6>Explore the ideas throughout the world</h6>
-        </div>
       </div>
+      <Box py={"10"}>
+        <Box className={styles.signupdiv}>
+          <Text className={styles.heading}>
+            {isSignUp ? "Register" : "Login"}
+          </Text>
 
-      <div className="a-right">
-        <form className="infoForm authForm" onSubmit={handleSubmit}>
-          <h3>{isSignUp ? "Register" : "Login"}</h3>
-          {isSignUp && (
-            <div>
-              <input
-                required
-                type="text"
-                placeholder="First Name"
-                className="infoInput"
-                name="firstname"
-                onChange={handleChange}
-              />
-              <input
-                required
-                type="text"
-                placeholder="Last Name"
-                className="infoInput"
-                name="lastname"
-                onChange={handleChange}
-              />
-            </div>
-          )}
-
-          <div>
-            <input
-              required
-              type="text"
-              placeholder="Username"
-              className="infoInput"
-              name="username"
-              onChange={handleChange}
-            />
-          </div>
-          <div>
-            <input
-              required
-              type="password"
-              className="infoInput"
-              placeholder="Password"
-              name="password"
-              onChange={handleChange}
-            />
+          <VStack spacing={"6"} w="75%" m="auto">
             {isSignUp && (
-              <input
-                required
-                type="password"
-                className="infoInput"
-                name="confirmpass"
-                placeholder="Confirm Password"
-                onChange={handleChange}
-              />
+              <>
+                {" "}
+                <Input
+                  type="text"
+                  name="firstName"
+                  focusBorderColor="#F9802D"
+                  placeholder="Enter First Name"
+                  marginTop="15px"
+                  fontWeight="lighter"
+                  fontSize="14px"
+                  onChange={handleChange}
+                />
+                <Input
+                  type="text"
+                  name="lastName"
+                  focusBorderColor="#F9802D"
+                  placeholder=" Enter lastName"
+                  fontWeight="lighter"
+                  fontSize="14px"
+                  onChange={handleChange}
+                />
+              </>
             )}
-          </div>
+            <Input
+              type="text"
+              name="username"
+              focusBorderColor="#F9802D"
+              placeholder="Enter username"
+              marginTop="15px"
+              fontWeight="lighter"
+              fontSize="14px"
+              onChange={handleChange}
+            />
 
-          <div>
-            <span
-              style={{
-                fontSize: "12px",
-                cursor: "pointer",
-                textDecoration: "underline",
-              }}
-            >
-              {isSignUp
-                ? "Already have an account Login"
-                : "Don't have an account Sign up"}
-            </span>
-            <button className="button infoButton" type="submit">
-              {isSignUp ? "SignUp" : "Login"}
-            </button>
-          </div>
-        </form>
-      </div>
+            <Input
+              type="password"
+              name="password"
+              focusBorderColor="#F9802D"
+              placeholder=" Enter password"
+              marginTop="15px"
+              fontWeight="lighter"
+              fontSize="14px"
+              onChange={handleChange}
+            />
+          </VStack>
+          <Button
+            backgroundColor="#F9802D"
+            marginTop="40px"
+            padding="25px 35px 25px 35px"
+            borderRadius="25px"
+            fontSize="15px"
+            color="white"
+            fontWeight="700"
+            _hover={{ backgroundColor: "#25cf60" }}
+          >
+            {isSignUp ? " Sign up" : "Sign In"}
+          </Button>
+
+          <Text onClick={() => setIsSignUp(!isSignUp)} className={styles.note}>
+            {isSignUp ? (
+              <Link to="/auth/login">
+                {" "}
+                Already have an account{" "}
+                <span style={{ color: "#F9802D" }}>Login</span>
+              </Link>
+            ) : (
+              <Link to="/auth/signup">
+                {" "}
+                Don't have an account{" "}
+                <span style={{ color: "#F9802D" }}>Sign up</span>{" "}
+              </Link>
+            )}
+          </Text>
+        </Box>
+      </Box>
     </div>
   );
 };
