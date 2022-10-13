@@ -63,7 +63,7 @@ export const signupFun = (payload, toast, navigate) => (dispatch) => {
         // console.log(res.data);
         dispatch(signupSuccess(res.data));
         notify(toast, "Account Created Successfully", "success");
-        navigate("/login");
+        navigate("/authlogin");
       }
     })
     .catch((err) => {

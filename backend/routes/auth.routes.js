@@ -3,52 +3,59 @@ const { Router } = require("express");
 var bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { UserModel } = require("../models/userModel");
+const {
+  emailPassRequiredValidator,
+} = require("../middleware/emailPassRequiredValidator");
+const { passwordValidator } = require("../middleware/passwordValidator");
+const { emailValidator } = require("../middleware/emailValidator");
 require("dotenv").config();
 
 const authRouter = Router();
 
-authRouter.post("/signup", async (req, res) => {
-  try {
-    // console.log(req.body);
-    const { username, password } = req.body;
-    const isusernamePresent = await UserModel.findOne({ username });
-    // console.log(isEmailPresent);
-    if (isusernamePresent) {
-      res
-        .status(400)
-        .send({ status: "error", message: "Email already exists" });
-    } else {
-      bcrypt
-        .hash(password, 10)
-        .then(async function (hash) {
-          const newUser = new UserModel({ ...req.body, password: hash });
-          await newUser.save();
+authRouter.post(
+  "/signup",
+  [emailPassRequiredValidator, emailValidator, passwordValidator],
+  async (req, res) => {
+    try {
+      console.log(req.body);
+      const { email, password } = req.body;
+      const isemailPresent = await UserModel.findOne({ email });
+      // console.log(isemailPresent);
+      if (isemailPresent) {
+        res
+          .status(400)
+          .send({ status: "error", message: "email already exists" });
+      } else {
+        bcrypt
+          .hash(password, 10)
+          .then(async function (hash) {
+            const newUser = new UserModel({ ...req.body, password: hash });
+            await newUser.save();
 
-          return res.status(201).send({
-            message: "Signup Sussessfull",
-            status: "success",
-            user: newUser,
+            return res.status(201).send({
+              message: "Signup Sussessfull",
+              status: "success",
+              user: newUser,
+            });
+          })
+          .catch((err) => {
+            // console.log(err);
+            return res
+              .status(400)
+              .send({ status: "error", message: err.message });
           });
-        })
-        .catch((err) => {
-          // console.log(err);
-          return res
-            .status(400)
-            .send({ status: "error", message: err.message });
-        });
+      }
+    } catch (err) {
+      return res.status(400).send({ status: "error", message: err.message });
     }
-  } catch (err) {
-    return res.status(400).send({ status: "error", message: err.message });
   }
-});
+);
 
-
-
-authRouter.post("/login", async (req, res) => {
+authRouter.post("/login",emailPassRequiredValidator, async (req, res) => {
   try {
-    const { username, password } = req.body;
+    const { email, password } = req.body;
 
-    const user = await UserModel.findOne({ username });
+    const user = await UserModel.findOne({ email });
     //   console.log(user);
     if (user) {
       let hash = user.password;
@@ -61,7 +68,7 @@ authRouter.post("/login", async (req, res) => {
         }
         if (result) {
           const token = jwt.sign(
-            { userId: user._id, username: user.username },
+            { userId: user._id, email: user.email },
             process.env.JWT_SECRET_KEY,
             {
               expiresIn: "5h",
@@ -91,6 +98,5 @@ authRouter.post("/login", async (req, res) => {
       .send({ status: "error", message: "Unable to Login" });
   }
 });
-
 
 module.exports = { authRouter };
