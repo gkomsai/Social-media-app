@@ -1,60 +1,16 @@
-.Auth {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  gap: 4rem;
-  position: relative;
-}
+.birdLogo img {
 
-.Auth > div {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* left side */
-.a-left {
-  gap: 2rem;
-}
-
-.a-left > img {
   width: 4rem;
-  height: 4rem;
+  height: 3rem;
+
 }
-
-.Webname > h1 {
-  font-size: 3rem;
-  background-color: red;
-  /* Creating  the gradient. */
-  background-image: var(--buttonBg);
-  
-  /* Set the background size and repeat properties. */
-  background-size: 100%;
-  background-repeat: repeat;
-
-  /* Use the text as a mask for the background. */
-  /* This will show the gradient as a text color rather than element bg. */
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  -moz-background-clip: text;
-  -moz-text-fill-color: transparent;
-}
-
-.Webname > h6 {
-  font-size: 0.85rem;
-}
-
-/* right side */
-
-
 
 .signupdiv {
   width: 40%;
   margin: auto;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   border-radius: 30px;
-  margin-top: 70px;
+  margin-top: 50px;
   text-align: center;
   padding-bottom: 40px;
 }
@@ -73,15 +29,6 @@
   margin: auto;
   margin-top: 12px;
 }
-
-.subsubheading {
-  font-size: 16px;
-  font-weight: 500;
-  color: #767676;
-  margin-top: 15px;
-}
-
-
 
 .note {
   color: gray;
@@ -170,12 +117,6 @@
     font-size: 16px;
     width: 70%;
   }
-
-  .subsubheading {
-    font-size: 14px;
-  }
-
-  
 
   .note {
     font-size: 14px;

@@ -60,12 +60,7 @@ userRouter.patch("/update/:id", async (req, res) => {
       const user = await UserModel.findByIdAndUpdate(id, req.body, {
         new: true,
       });
-      // const token = jwt.sign(
-      //   { username: user.username, userId: user._id },
-      //   process.env.JWT_SECRET_KEY,
-      //   { expiresIn: "2h" }
-      // );
-      // console.log({ user, token });
+   
       return res.status(200).send(user);
     } catch (err) {
       console.log(err);
