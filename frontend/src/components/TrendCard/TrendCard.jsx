@@ -9,7 +9,7 @@ const TrendCard = () => {
 
       {trendingData.map((el, id) => {
         return (
-          <div className="trend" key={id}>
+          <div className="trend" key={Date.now()+el.name}>
             <span>#{el.name}</span>
             <span>{el.shares}k shares</span>
           </div>

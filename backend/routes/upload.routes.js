@@ -1,7 +1,8 @@
 const { Router } = require("express");
 const uploadRouter = Router();
 const path = require("path");
-const multer  = require('multer')
+const multer  = require('multer');
+const { checkUserAuth } = require("../middleware/authMiddleware");
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -13,7 +14,7 @@ const storage = multer.diskStorage({
   });
 const upload = multer({ storage: storage });
 
-
+uploadRouter.use(checkUserAuth);
 uploadRouter.post("/", upload.single("file"), (req, res) => { //npte- this "file" keyword  should be also present in the frontend input tag under name atrribute other wise file will not be uploaded
     try {
       return res.status(200).json({message:"File uploded successfully"});

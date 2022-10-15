@@ -6,7 +6,7 @@ const FollowersCard = () => {
     <div className="FollowersCard">
       <h3>Who is folllowing you</h3>
       {followersData?.map((el) => (
-        <div key={Date.now()} className="follower">
+        <div key={Date.now()+el.email} className="follower">
           <div className="followerImage">
             <img src={el.img} className="followerImage" alt="" />
           </div>
