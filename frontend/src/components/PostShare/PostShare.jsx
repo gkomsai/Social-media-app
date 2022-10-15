@@ -47,11 +47,11 @@ console.log({PostReducer});
       data.append("name", fileName);
       data.append("file", image);
       newPost.image = fileName;
-      console.log(newPost);
+      console.log({newPost});
       try {
         dispatch(uploadImage(data,toast));
       } catch (err) {
-        console.log(err);
+        console.error(err);
       }
     }
     dispatch(uploadPost(newPost,toast));

@@ -58,7 +58,7 @@ export const signupFun = (payload, toast, navigate) => (dispatch) => {
   axios
     .post(`/auth/signup`, payload)
     .then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
       if (res.data) {
         // console.log(res.data);
         dispatch(signupSuccess(res.data));
@@ -77,7 +77,7 @@ export const loginFun = (payload, toast, navigate) => (dispatch) => {
   axios
     .post(`/auth/login`, payload)
     .then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
       if (res.data.token) {
         // console.log(res.data);
         dispatch(loginSuccess(res.data));

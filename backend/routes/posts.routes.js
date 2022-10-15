@@ -135,7 +135,7 @@ postsRouter.get("/:id/timeline", async (req, res) => {
     const currentUserPosts = await PostModel.find({userId });
     // return res.send(currentUserPosts);
 
-    const followingPostsObj = await UserModel.aggregate([
+    const followingPostsMainArr = await UserModel.aggregate([
       {
         $match: {
           _id: new mongoose.Types.ObjectId(userId),
