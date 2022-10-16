@@ -11,6 +11,15 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+
+// to serve images from the uploads/images/ of the local server 
+// app.use(express.static('uploads')); 
+// app.use('/images', express.static('images'));
+
+
+
+
+
 app.use("/auth", authRouter);
 app.use("/user", userRouter);
 app.use('/posts', postsRouter)

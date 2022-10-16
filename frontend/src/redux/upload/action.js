@@ -51,7 +51,7 @@ export const uploadPost = (payload, toast) => (dispatch) => {
     .then((res) => {
       console.log(res.data);
       if (res.data) {
-        dispatch({ type: types.UPLOAD_SUCCESS, payload: res.data });
+        dispatch({ type: types.UPLOAD_SUCCESS});
         notify(toast, res.data.message, "success");
       }
     })
@@ -71,7 +71,7 @@ export const getTimelinePosts = (id, toast) => async (dispatch) => {
       console.log(res.data);
       if (res.data) {
         dispatch({ type: types.RETREIVING_SUCCESS, payload: res.data });
-        notify(toast, res.data.message, "success");
+        // notify(toast, res.data.message, "success");
       }
     })
     .catch((err) => {
