@@ -4,13 +4,15 @@ import Comment from "../../assets/comment.png";
 import Share from "../../assets/share.png";
 import Heart from "../../assets/like.png";
 import NotLike from "../../assets/notlike.png";
+import { useSelector } from "react-redux";
 
 const SinglePost = ({ postData }) => {
-
+  console.log({postData})
+  const { user } = useSelector((state) => state.AuthReducer);
 
   return (
     <div className="SinglePost">
-      <img src={postData.img} alt="" />
+      <img src={postData.image ? process.env.REACT_APP_PUBLIC_FOLDER + postData.image : ""} alt="" />
 
       <div className="postReact">
         <img
@@ -27,7 +29,7 @@ const SinglePost = ({ postData }) => {
         <span>
           <b>{postData.name} </b>
         </span>
-        <span>{postData.desc}</span>
+        <span>{postData.description}</span>
       </div>
     </div>
   );

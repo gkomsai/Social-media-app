@@ -15,7 +15,6 @@ export const PostReducer = (state = initialState, { type, payload }) => {
     case types.UPLOAD_SUCCESS:
       return {
         ...state,
-        posts: payload,
         uploading: false,
         error: false,
       };

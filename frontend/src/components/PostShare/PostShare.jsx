@@ -7,7 +7,11 @@ import { UilSchedule } from "@iconscout/react-unicons";
 import { UilTimes } from "@iconscout/react-unicons";
 import profileImg from "../../assets/profileImg.jpg";
 import { useDispatch, useSelector } from "react-redux";
-import { uploadImage, uploadPost } from "../../redux/upload/action";
+import {
+  getTimelinePosts,
+  uploadImage,
+  uploadPost,
+} from "../../redux/upload/action";
 import { useToast } from "@chakra-ui/react";
 
 const PostShare = () => {
@@ -19,10 +23,7 @@ const PostShare = () => {
   const { user } = useSelector((store) => store.AuthReducer);
   const PostReducer = useSelector((store) => store.PostReducer);
 
-console.log({PostReducer});
-
-
-
+  console.log({ PostReducer });
 
   const onImageChange = (e) => {
     if (e.target.files && e.target.files[0]) {
@@ -47,15 +48,16 @@ console.log({PostReducer});
       data.append("name", fileName);
       data.append("file", image);
       newPost.image = fileName;
-      console.log({newPost});
+      console.log({ newPost });
       try {
-        dispatch(uploadImage(data,toast));
+        dispatch(uploadImage(data, toast));
       } catch (err) {
         console.error(err);
       }
     }
-    dispatch(uploadPost(newPost,toast));
-    resetShare();
+    dispatch(uploadPost(newPost, toast))
+      .then(dispatch(getTimelinePosts(user._id,toast)))
+      .then(resetShare());
   };
 
   // Reset Post Share
@@ -63,8 +65,6 @@ console.log({PostReducer});
     setImage(null);
     description.current.value = "";
   };
-
-
 
   return (
     <div className="PostShare">
@@ -98,7 +98,9 @@ console.log({PostReducer});
             <UilSchedule />
             Shedule
           </div>
-          <button     onClick={handleUpload} className="button ps-button">Share</button>
+          <button onClick={handleUpload} className="button ps-button">
+            Share
+          </button>
 
           <div style={{ display: "none" }}>
             <input type="file" ref={imageRef} onChange={onImageChange} />

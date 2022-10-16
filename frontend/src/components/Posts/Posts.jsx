@@ -21,7 +21,7 @@ const Posts = () => {
   return (
     <div className="Posts">
       {posts?.map((el) => {
-        return <SinglePost postData={el} key={Date.now() + el.name} />;
+        return <SinglePost postData={el} key={Date.now()+Math.random()} />;
       })}
     </div>
   );

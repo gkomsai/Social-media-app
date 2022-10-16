@@ -5,7 +5,7 @@ const { PostModel } = require("../models/postModel");
 const { UserModel } = require("../models/userModel");
 const postsRouter = Router();
 
-postsRouter.use(checkUserAuth);
+// postsRouter.use(checkUserAuth);
 
 /*  ----------------------for creating a new post-------------------------------- */
 
