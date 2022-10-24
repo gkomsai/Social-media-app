@@ -20,7 +20,7 @@ export const getUser = (id, toast) => (dispatch) => {
     .then((res) => {
       console.log(res.data);
       if (res.data) {
-        dispatch({ type: types.GET_USER_SUCCESS });
+        dispatch({ type: types.GET_USER_SUCCESS, payload: res.data });
         notify(toast, "user fetched successfully", "success");
       }
     })
@@ -32,28 +32,26 @@ export const getUser = (id, toast) => (dispatch) => {
     });
 };
 
-
-
 export const getAllUser = (toast) => (dispatch) => {
-    dispatch({ type: types.GET_USER_REQUEST });
-    axios({
-      method: "get",
-      url: `/user`,
-      headers: headers,
+  dispatch({ type: types.GET_USER_REQUEST });
+  axios({
+    method: "get",
+    url: `/user`,
+    headers: headers,
+  })
+    .then((res) => {
+      // console.log(res.data);
+      if (res.data) {
+        dispatch({ type: types.GET_USER_SUCCESS, payload: res.data });
+        notify(toast, "All user fetched successfully", "success");
+      }
     })
-      .then((res) => {
-        // console.log(res.data);
-        if (res.data) {
-          dispatch({ type: types.GET_USER_SUCCESS });
-          notify(toast, "All user fetched successfully", "success");
-        }
-      })
-      .catch((err) => {
-        // console.error(err);
-        notify(toast, err.response.data.message, "error");
-        dispatch({ type: types.GET_USER_FAILURE });
-      });
-  };
+    .catch((err) => {
+      // console.error(err);
+      notify(toast, err.response.data.message, "error");
+      dispatch({ type: types.GET_USER_FAILURE });
+    });
+};
 
 export const upadteUser = (id, payload, toast) => (dispatch) => {
   dispatch({ type: types.UPDATE_USER_REQUEST });
@@ -66,7 +64,7 @@ export const upadteUser = (id, payload, toast) => (dispatch) => {
     .then((res) => {
       console.log(res.data);
       if (res.data) {
-        dispatch({ type: types.UPDATE_USER_SUCCESS });
+        dispatch({ type: types.UPDATE_USER_SUCCESS, payload: res.data });
         notify(toast, "user updated successfully", "success");
       }
     })
@@ -95,5 +93,47 @@ export const deleteUser = (id, toast) => (dispatch) => {
       // console.error(err);
       notify(toast, err.response.data.message, "error");
       dispatch({ type: types.DELETE_USER_FAILURE });
+    });
+};
+
+export const followUser = (id, toast) => (dispatch) => {
+  dispatch({ type: types.FOLLOW_USER_REQUEST });
+  axios({
+    method: "patch",
+    url: `/user/${id}/follow`,
+    headers: headers,
+  })
+    .then((res) => {
+      console.log(res.data);
+      if (res.data) {
+        dispatch({ type: types.FOLLOW_USER_SUCCESS });
+        notify(toast, res.data.message, "success");
+      }
+    })
+    .catch((err) => {
+      // console.error(err);
+      notify(toast, err.response.data.message, "error");
+      dispatch({ type: types.FOLLOW_USER_FAILURE });
+    });
+};
+
+export const unfollowUser = (id, toast) => (dispatch) => {
+  dispatch({ type: types.UNFOLLOW_USER_REQUEST });
+  axios({
+    method: "patch",
+    url: `/user/${id}/unfollow`,
+    headers: headers,
+  })
+    .then((res) => {
+      console.log(res.data);
+      if (res.data) {
+        dispatch({ type: types.UNFOLLOW_USER_SUCCESS });
+        notify(toast, res.data.message, "success");
+      }
+    })
+    .catch((err) => {
+      // console.error(err);
+      notify(toast, err.response.data.message, "error");
+      dispatch({ type: types.UNFOLLOW_USER_FAILURE });
     });
 };
