@@ -12,6 +12,7 @@ import { useToast } from "@chakra-ui/react";
 import axios from "axios";
 import { notify } from "../../utils/extraFunctions";
 import { getItemFromLocal } from "../../utils/localStorage";
+import defaultProfile from "../../assets/defaultProfile.png";
 
 const PostShare = () => {
   const [image, setImage] = useState(null);
@@ -21,7 +22,7 @@ const PostShare = () => {
   const toast = useToast();
   const dispatch = useDispatch();
   const { user } = useSelector((store) => store.AuthReducer);
-  const PostReducer = useSelector((store) => store.PostReducer);
+  // const PostReducer = useSelector((store) => store.PostReducer);
 
   // console.log({ PostReducer });
   const token = getItemFromLocal("token");
@@ -88,7 +89,7 @@ const PostShare = () => {
 
   return (
     <div className="PostShare">
-      <img src={profileImg} alt="Profile" />
+     <img src={user.profilePicture ? user.profilePicture : defaultProfile} alt="" />
       <div>
         <input
           type="text"

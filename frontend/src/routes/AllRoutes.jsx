@@ -16,7 +16,7 @@ const AllRoutes = () => {
         
         <Route path="/" element={<PrivateRoute> <Home /> </PrivateRoute>} />
       
-        <Route path="/profile" element={<PrivateRoute><Profile /> </PrivateRoute> } />
+        <Route path="/profile/:id" element={<PrivateRoute><Profile /> </PrivateRoute> } />
         <Route path="*" element={<Error />} />
       </Routes>
     </div>

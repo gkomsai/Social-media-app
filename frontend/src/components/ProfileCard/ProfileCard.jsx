@@ -1,34 +1,36 @@
 import React from "react";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import cover from "../../assets/cover.jpg";
-import profile from "../../assets/profileImg.jpg";
+import defaultProfile from "../../assets/defaultProfile.png";
 import "./profileCard.css";
 
-
 const ProfileCard = () => {
-  const profilePage = true;
+  const profilePage = false;
+  const { user } = useSelector((store) => store.AuthReducer);
 
   return (
     <div className="profileCard">
       <div className="profileImages">
-        <img src={cover} alt="" />
-        <img src={profile} alt="" />
+        <img src={user.coverPicture ? user.coverPicture : cover} alt="" />
+        <img src={user.profilePicture ? user.profilePicture : defaultProfile} alt="" />
       </div>
       <div className="profileName">
-        <span>Diya</span>
-        <span>senior UI UX Designer</span>
+      <span>{user.firstName} {user.lastName}</span>
+        <span>{user.worksAt? user.worksAt : 'Write about yourself'}</span>
       </div>
 
       <div className="followStatus">
         <hr />
         <div>
           <div className="follow">
-            <span>6,890</span>
+          <span>{user.followers.length}</span>
             <span>Followers</span>
           </div>
           <div className="vl"> </div>
 
           <div className="follow">
-            <span>2,084</span>
+          <span>{user.following.length}</span>
             <span>Following</span>
           </div>
 
@@ -46,7 +48,11 @@ const ProfileCard = () => {
         <hr />
       </div>
 
-      {profilePage ? "" : <span>My Profile</span>}
+      {profilePage ? "" :  <span>
+          <Link to={`/profile/${user._id}`} style={{ textDecoration: "none", color: "inherit" }}>
+            My Profile
+          </Link>
+        </span>}
     </div>
   );
 };
