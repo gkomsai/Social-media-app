@@ -90,3 +90,7 @@ export const loginFun = (payload, toast, navigate) => (dispatch) => {
       dispatch(loginFailure());
     });
 };
+
+export const logoutFun =() =>(dispatch)=>{
+  return dispatch(logoutSuccess());
+}
