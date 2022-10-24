@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useSelector } from "react-redux";
+
 import { notify } from "../../utils/extraFunctions";
 import { getItemFromLocal } from "../../utils/localStorage";
 import * as types from "./actionTypes";
@@ -47,17 +47,21 @@ const headers = {
 //       });
 //   };
 export const uploadPost = (payload, toast) => (dispatch) => {
-
   dispatch({ type: types.UPLOAD_START });
-  axios
-    .post(`/posts/create`, payload, { headers })
+  axios({
+    method: "post",
+    url: `/posts/create`,
+    data: payload,
+    headers: headers,
+  })
     .then((res) => {
       console.log(res.data);
       if (res.data) {
-        dispatch({ type: types.UPLOAD_SUCCESS});
+        dispatch({ type: types.UPLOAD_SUCCESS });
         notify(toast, "post created Successfully in the Database", "success");
       }
-    }).then(dispatch(getTimelinePosts(user._id, toast)))
+    })
+    .then(dispatch(getTimelinePosts(user._id, toast)))
     .catch((err) => {
       console.error(err);
       notify(toast, err.response.data.message, "error");
@@ -68,10 +72,13 @@ export const uploadPost = (payload, toast) => (dispatch) => {
 export const getTimelinePosts = (id, toast) => async (dispatch) => {
   dispatch({ type: types.RETREIVING_START });
   // console.log({headers})
-  axios
-    .get(`/posts/${id}/timeline`, { headers })
+  return axios({
+    method: "get",
+    url: `/posts/${id}/timeline`,
+    headers: headers,
+  })
     .then((res) => {
-      console.log("timeline data",res.data);
+      console.log("timeline data", res.data);
       if (res.data) {
         dispatch({ type: types.RETREIVING_SUCCESS, payload: res.data });
         notify(toast, "post fetched Successfully from the database", "success");
@@ -82,4 +89,17 @@ export const getTimelinePosts = (id, toast) => async (dispatch) => {
       notify(toast, err.response.data.message, "error");
       dispatch({ type: types.RETREIVING_FAILURE });
     });
+};
+export const likePost = (id) => {
+  try {
+    return axios({
+      method: "patch",
+      url: `posts/like/${id}`,
+      headers: headers,
+    }).then((res) => {
+      console.log("likes res", res);
+    });
+  } catch (err) {
+    console.log(err);
+  }
 };

@@ -7,16 +7,15 @@ import { UilSchedule } from "@iconscout/react-unicons";
 import { UilTimes } from "@iconscout/react-unicons";
 import profileImg from "../../assets/profileImg.jpg";
 import { useDispatch, useSelector } from "react-redux";
-import { getTimelinePosts, uploadPost } from "../../redux/upload/action";
+import { uploadPost } from "../../redux/posts/action";
 import { useToast } from "@chakra-ui/react";
 import axios from "axios";
 import { notify } from "../../utils/extraFunctions";
 import { getItemFromLocal } from "../../utils/localStorage";
-import logger from "redux-logger";
 
 const PostShare = () => {
   const [image, setImage] = useState(null);
-  const [result, setResult] = useState(null);
+
   const imageRef = useRef();
   const description = useRef();
   const toast = useToast();
@@ -29,7 +28,7 @@ const PostShare = () => {
   // console.log(token);
   const headers = {
     "Content-Type": "application/json",
-    Authorization: `Bearer ${token}`,
+    "Authorization": `Bearer ${token}`,
   };
 
   const onImageChange = (e) => {
@@ -65,30 +64,27 @@ const PostShare = () => {
               image: res.data.secure_url,
               cloudinary_id: res.data.public_id,
             };
-            dispatch(uploadPost(newPost, toast))
-            
+            dispatch(uploadPost(newPost, toast));
+
             resetShare();
-        
-             
           }
         })
         .catch((err) => {
           console.error(err);
           // notify(toast, err.response.data.message, "error");
           notify(toast, "something went wrong", "error");
-          // dispatch({ type: types.UPLOAD_FAILURE });
         });
-    }else{
-      dispatch(uploadPost(newPost, toast))
+    } else {
+      dispatch(uploadPost(newPost, toast));
       resetShare();
     }
   };
 
   // Reset Post Share
-  function resetShare ()  {
+  function resetShare() {
     setImage(null);
     description.current.value = "";
-  };
+  }
 
   return (
     <div className="PostShare">

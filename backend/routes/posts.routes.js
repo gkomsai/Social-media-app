@@ -8,7 +8,7 @@ const {cloudinary} = require("../config/cloudinary");
 const upload = require("../config/multer");
 const postsRouter = Router();
 
-// postsRouter.use(checkUserAuth);
+postsRouter.use(checkUserAuth);
 
 /*  ----------------------for creating a new post-------------------------------- */
 
@@ -134,13 +134,17 @@ postsRouter.delete("/delete/:id", async (req, res) => {
 postsRouter.patch("/like/:id", async (req, res) => {
   const id = req.params.id;
   const { userId } = req.body;
+  console.log(req.body);
   try {
     const foundPost = await PostModel.findById(id);
+  
     if (foundPost.likes.includes(userId)) {
       await foundPost.updateOne({ $pull: { likes: userId } });
       res.status(200).send({ status: "success", message: "Post disliked" });
     } else {
       await foundPost.updateOne({ $push: { likes: userId } });
+      // await foundPost.updateOne({ $push: { likes: userId }, new:true });
+      console.log({foundPost});
       res.status(200).send({ status: "success", message: "Post liked" });
     }
   } catch (err) {

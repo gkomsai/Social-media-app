@@ -10,6 +10,7 @@ const checkUserAuth = async (req, res, next) => {
   }
 
   const token = req.headers.authorization.split(" ")[1];
+  console.log({token});
   jwt.verify(token, process.env.JWT_SECRET_KEY, function (err, decoded) {
     if (err) {
       return res
@@ -17,7 +18,7 @@ const checkUserAuth = async (req, res, next) => {
         .send({ message: "Something went wrong, please login again" });
     } else {
       req.body.userId = decoded.userId;
-      req.body.email = decoded.email;
+      // req.body.email = decoded.email;
       console.log("auth-middleware reqBody: ", req.body);
       next();
     }

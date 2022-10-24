@@ -51,7 +51,7 @@ authRouter.post(
   }
 );
 
-authRouter.post("/login",emailPassRequiredValidator, async (req, res) => {
+authRouter.post("/login", emailPassRequiredValidator, async (req, res) => {
   try {
     const { email, password } = req.body;
 
@@ -68,10 +68,10 @@ authRouter.post("/login",emailPassRequiredValidator, async (req, res) => {
         }
         if (result) {
           const token = jwt.sign(
-            { userId: user._id, email: user.email },
+            { userId: user._id },
             process.env.JWT_SECRET_KEY,
             {
-              expiresIn: "5h",
+              expiresIn: "2h",
             }
           );
           return res.status(200).send({
