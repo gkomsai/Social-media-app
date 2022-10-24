@@ -75,14 +75,14 @@ const Signup = () => {
             />
           </VStack>
           <Button
-            backgroundColor="#F9802D"
+            backgroundcolor="#F9802D"
             marginTop="40px"
             padding="25px 35px 25px 35px"
             borderRadius="25px"
             fontSize="15px"
             color="white"
             fontWeight="700"
-            _hover={{ backgroundColor: "#25cf60" }}
+            _hover={{ backgroundcolor: "#25cf60" }}
             onClick={handleSubmit}
           >
             Sign up

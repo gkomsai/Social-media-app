@@ -17,7 +17,7 @@ const InfoCard = () => {
             width="2rem"
             height="1.2rem"
             onClick={onOpen}
-            backgroundColor="#24be6a"
+            backgroundcolor="#24be6a"
           />
           <ProfileModal isOpen={isOpen} onClose={onClose} />
         </div>
