@@ -6,10 +6,10 @@ import * as types from "./actionTypes";
 
 const token = getItemFromLocal("token");
 const user = getItemFromLocal("user");
-// console.log(token);
+// console.log({token});
 const headers = {
   "Content-Type": "application/json",
-  Authorization: `Bearer ${token}`,
+  "Authorization": `Bearer ${token}`,
 };
 
 // export const uploadImage = (payload, toast) => (dispatch) => {

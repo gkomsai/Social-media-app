@@ -7,6 +7,7 @@ import { UilSetting } from "@iconscout/react-unicons";
 import TrendCard from "../TrendCard/TrendCard";
 import ShareModal from "../ShareModel/ShareModal";
 import { useDisclosure } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 
 const RightSide = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -14,7 +15,9 @@ const RightSide = () => {
   return (
     <div className="RightSide">
       <div className="navIcons">
+      <Link to="/">
         <img src={Home} alt="" />
+        </Link >
         <UilSetting />
         <img src={Notification} alt="" />
         <img src={Comment} alt="" />

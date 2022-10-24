@@ -62,7 +62,7 @@ const Login = () => {
             fontSize="15px"
             color="white"
             fontWeight="700"
-            _hover={{ backgroundColor: "#25cf60" }}
+            _hover={{ backgroundcolor: "#25cf60" }}
             onClick={handleSubmit}
           >
             Sign In
