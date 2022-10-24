@@ -7,15 +7,15 @@ import { UilSchedule } from "@iconscout/react-unicons";
 import { UilTimes } from "@iconscout/react-unicons";
 import profileImg from "../../assets/profileImg.jpg";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getTimelinePosts,
-  uploadImage,
-  uploadPost,
-} from "../../redux/upload/action";
+import { uploadPost } from "../../redux/posts/action";
 import { useToast } from "@chakra-ui/react";
+import axios from "axios";
+import { notify } from "../../utils/extraFunctions";
+import { getItemFromLocal } from "../../utils/localStorage";
 
 const PostShare = () => {
   const [image, setImage] = useState(null);
+
   const imageRef = useRef();
   const description = useRef();
   const toast = useToast();
@@ -23,7 +23,13 @@ const PostShare = () => {
   const { user } = useSelector((store) => store.AuthReducer);
   const PostReducer = useSelector((store) => store.PostReducer);
 
-  console.log({ PostReducer });
+  // console.log({ PostReducer });
+  const token = getItemFromLocal("token");
+  // console.log(token);
+  const headers = {
+    "Content-Type": "application/json",
+    "Authorization": `Bearer ${token}`,
+  };
 
   const onImageChange = (e) => {
     if (e.target.files && e.target.files[0]) {
@@ -36,7 +42,7 @@ const PostShare = () => {
     e.preventDefault();
 
     //post data
-    const newPost = {
+    let newPost = {
       userId: user._id,
       description: description.current.value,
     };
@@ -44,27 +50,41 @@ const PostShare = () => {
     // if there is an image with post
     if (image) {
       const data = new FormData();
-      const fileName = Date.now() + image.name;
-      data.append("name", fileName);
+      // const fileName = Date.now() + image.name;
+      // data.append("name", fileName);
       data.append("file", image);
-      newPost.image = fileName;
-      console.log({ newPost });
-      try {
-        dispatch(uploadImage(data, toast));
-      } catch (err) {
-        console.error(err);
-      }
+      axios
+        .post(`/posts/upload`, data, { headers })
+        .then((res) => {
+          console.log("upload wala", res.data);
+          if (res.data) {
+            notify(toast, "Image uploaded Successfully", "success");
+            newPost = {
+              ...newPost,
+              image: res.data.secure_url,
+              cloudinary_id: res.data.public_id,
+            };
+            dispatch(uploadPost(newPost, toast));
+
+            resetShare();
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+          // notify(toast, err.response.data.message, "error");
+          notify(toast, "something went wrong", "error");
+        });
+    } else {
+      dispatch(uploadPost(newPost, toast));
+      resetShare();
     }
-    dispatch(uploadPost(newPost, toast))
-      .then(dispatch(getTimelinePosts(user._id,toast)))
-      .then(resetShare());
   };
 
   // Reset Post Share
-  const resetShare = () => {
+  function resetShare() {
     setImage(null);
     description.current.value = "";
-  };
+  }
 
   return (
     <div className="PostShare">

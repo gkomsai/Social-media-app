@@ -3,16 +3,40 @@ const mongoose = require("mongoose");
 const { checkUserAuth } = require("../middleware/authMiddleware");
 const { PostModel } = require("../models/postModel");
 const { UserModel } = require("../models/userModel");
+
+const {cloudinary} = require("../config/cloudinary");
+const upload = require("../config/multer");
 const postsRouter = Router();
 
-// postsRouter.use(checkUserAuth);
+postsRouter.use(checkUserAuth);
 
 /*  ----------------------for creating a new post-------------------------------- */
 
-postsRouter.post("/create", async (req, res) => {
-  const newPost = new PostModel(req.body);
+postsRouter.post("/upload", upload.single("file"), async (req, res) => { //note- this "file" keyword  should be also present in the frontend input tag under name atrribute other wise file will not be uploaded
+  try{
+    const  result = await cloudinary.uploader.upload(req.file.path);
+     if(result){
+  return res.status(200).send(result);
+     }
+ 
+  }catch(err){
+    console.error(err);
+  }
+  });
+
+
+
+
+
+
+
+
+
+postsRouter.post("/create",  async (req, res) => {
+  console.log("req.body",req.body);
 
   try {
+  const newPost = new PostModel({...req.body });
     await newPost.save();
     res.status(200).send(newPost);
   } catch (err) {
@@ -110,13 +134,17 @@ postsRouter.delete("/delete/:id", async (req, res) => {
 postsRouter.patch("/like/:id", async (req, res) => {
   const id = req.params.id;
   const { userId } = req.body;
+  console.log(req.body);
   try {
     const foundPost = await PostModel.findById(id);
+  
     if (foundPost.likes.includes(userId)) {
       await foundPost.updateOne({ $pull: { likes: userId } });
       res.status(200).send({ status: "success", message: "Post disliked" });
     } else {
       await foundPost.updateOne({ $push: { likes: userId } });
+      // await foundPost.updateOne({ $push: { likes: userId }, new:true });
+      console.log({foundPost});
       res.status(200).send({ status: "success", message: "Post liked" });
     }
   } catch (err) {

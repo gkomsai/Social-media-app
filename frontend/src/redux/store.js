@@ -6,7 +6,7 @@ import {
   } from "redux";
   import thunk from "redux-thunk";
   import { AuthReducer,  } from "./auth/reducer";
-  import {PostReducer  } from "./upload/reducer";
+  import {PostReducer  } from "./posts/reducer";
 
   
   const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
