@@ -71,7 +71,7 @@ authRouter.post("/login", emailPassRequiredValidator, async (req, res) => {
             { userId: user._id },
             process.env.JWT_SECRET_KEY,
             {
-              expiresIn: "2h",
+              expiresIn: "5h",
             }
           );
           return res.status(200).send({
