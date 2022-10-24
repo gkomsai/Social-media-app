@@ -10,6 +10,9 @@ const postSchema = mongoose.Schema(
       default: new Date(),
     },
     image: String,
+    cloudinary_id: {
+      type: String,
+    },
   },
   { versionKey: false, timestamps: true }
 );

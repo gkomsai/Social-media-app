@@ -8,7 +8,7 @@ const initialState = {
 };
 
 export const PostReducer = (state = initialState, { type, payload }) => {
-  console.log({ payload });
+  // console.log({ payload });
   switch (type) {
     case types.UPLOAD_START:
       return { ...state, error: false, uploading: true };
@@ -23,7 +23,7 @@ export const PostReducer = (state = initialState, { type, payload }) => {
     case types.RETREIVING_START:
       return { ...state, loading: true, error: false };
     case types.RETREIVING_SUCCESS:
-      return { ...state, posts: payload, loading: false, error: false };
+      return { ...state, posts: [...payload], loading: false, error: false };
     case types.RETREIVING_FAILURE:
       return { ...state, loading: false, error: true };
     default:
