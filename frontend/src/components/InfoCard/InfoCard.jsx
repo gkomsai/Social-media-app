@@ -3,14 +3,18 @@ import React, { useEffect } from "react";
 import ProfileModal from "../ProfileModal/ProfileModal";
 import "./InfoCard.css";
 import { UilPen } from "@iconscout/react-unicons";
-import { useDisclosure } from "@chakra-ui/react";
-import { useSelector } from "react-redux";
+import { useDisclosure, useToast } from "@chakra-ui/react";
+import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
+// import axios from "axios";
+import { logoutFun } from "../../redux/auth/action";
+import { notify } from "../../utils/extraFunctions";
 
 const InfoCard = () => {
   const [currentUser, setCurrentUser] = useState({});
+  const dispatch =useDispatch();
+  const toast = useToast();
   const { id } = useParams();
 console.log(id);
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -26,6 +30,12 @@ console.log(id);
   //     // console.log({fetchedUser});
   //   }
   // };
+  const handleLogOut = ()=> {
+    dispatch(logoutFun())
+    notify(toast, "Logout Successfully", "success");
+  }
+
+
   useEffect(() => {
     if (id === user._id) {
       setCurrentUser(user);
@@ -71,7 +81,7 @@ console.log(id);
         <span>{currentUser.worksAt}</span>
       </div>
 
-      <button className="button logout-button">Log Out</button>
+      <button className="button logout-button" onClick={handleLogOut}  >Log Out</button>
     </div>
   );
 };

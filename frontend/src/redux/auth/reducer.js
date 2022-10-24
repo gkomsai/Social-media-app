@@ -65,6 +65,7 @@ export const AuthReducer = (state = initialState, action) => {
         isError: true,
       };
     case USER_LOGOUT_SUCCESS:
+      localStorage.clear();
       return {
         ...state,
         isAuthLoading: false,
