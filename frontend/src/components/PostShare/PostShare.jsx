@@ -51,8 +51,6 @@ const PostShare = () => {
     // if there is an image with post
     if (image) {
       const data = new FormData();
-      // const fileName = Date.now() + image.name;
-      // data.append("name", fileName);
       data.append("file", image);
       axios
         .post(`/posts/upload`, data, { headers })
@@ -87,6 +85,9 @@ const PostShare = () => {
     description.current.value = "";
   }
 
+  if(!user){
+    return <h1>user doesn't exist</h1>
+  }
   return (
     <div className="PostShare">
      <img src={user.profilePicture ? user.profilePicture : defaultProfile} alt="" />

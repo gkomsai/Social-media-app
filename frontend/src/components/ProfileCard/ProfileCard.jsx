@@ -9,33 +9,36 @@ const ProfileCard = ({ location }) => {
 
   const { user } = useSelector((store) => store.AuthReducer);
   const {posts} = useSelector((store) => store.PostReducer);
+  if(!user){
+    return <h1>user doesn't exist</h1>
+  }
   return (
     <div className="profileCard">
       <div className="profileImages">
-        <img src={user.coverPicture ? user.coverPicture : cover} alt="" />
+        <img src={user?.coverPicture ? user.coverPicture : cover} alt="" />
         <img
-          src={user.profilePicture ? user.profilePicture : defaultProfile}
+          src={user?.profilePicture ? user.profilePicture : defaultProfile}
           alt=""
         />
       </div>
       <div className="profileName">
         <span>
-          {user.firstName} {user.lastName}
+          {user?.firstName} {user?.lastName}
         </span>
-        <span>{user.worksAt ? user.worksAt : "Write about yourself"}</span>
+        <span>{user?.worksAt ? user?.worksAt : "Write about yourself"}</span>
       </div>
 
       <div className="followStatus">
         <hr />
         <div>
           <div className="follow">
-            <span>{user.followers.length}</span>
+            <span>{user?.followers.length}</span>
             <span>Followers</span>
           </div>
           <div className="vl"> </div>
 
           <div className="follow">
-            <span>{user.following.length}</span>
+            <span>{user?.following.length}</span>
             <span>Following</span>
           </div>
 
@@ -44,7 +47,7 @@ const ProfileCard = ({ location }) => {
               <div className="vl"></div>
               <div className="follow">
                 <span>{
-                posts.filter((post)=>post.userId === user._id).length
+                posts?.filter((post)=>post.userId === user?._id).length
                 }</span>
                 <span>Posts</span>
               </div>{" "}
