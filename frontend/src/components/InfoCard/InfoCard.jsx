@@ -7,7 +7,6 @@ import { useDisclosure, useToast } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-// import axios from "axios";
 import { logoutFun } from "../../redux/auth/action";
 import { notify } from "../../utils/extraFunctions";
 import { getUser } from "../../redux/user/action";
@@ -23,15 +22,7 @@ console.log(id);
   console.log({user});
   console.log(id,user._id);
 
-  // const fetchcurrentUser = async () => {
-  //   // 
-  //   // } else {
-  //     // console.log("fetching");
-  //     // const fetchedUser = await axios.get(`/user/${currentUserId}`)
-  //     // setCurrentUser(fetchedUser);
-  //     // console.log({fetchedUser});
-  //   }
-  // };
+
   const handleLogOut = ()=> {
     dispatch(logoutFun())
     notify(toast, "Logout Successfully", "success");

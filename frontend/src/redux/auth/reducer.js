@@ -13,7 +13,7 @@ import {
 const initialState = {
   token: getItemFromLocal("token") || false,
   user: getItemFromLocal("user") || {},
-  allUser:[],
+  allUser: [],
   isAuthLoading: false,
   isError: false,
 };
@@ -80,11 +80,11 @@ export const AuthReducer = (state = initialState, action) => {
         isError: false,
       };
     case types.GET_USER_SUCCESS:
-      console.log("get Alluser success",payload)
+      console.log("get Alluser success", payload);
       // saveItemToLocal("allUser", payload);
       return {
         ...state,
-        allUser:[...payload],
+        allUser: [...payload],
         isAuthLoading: true,
         isError: false,
       };
@@ -96,18 +96,17 @@ export const AuthReducer = (state = initialState, action) => {
       };
 
     case types.UPDATE_USER_REQUEST:
-    
       return {
         ...state,
         isAuthLoading: true,
         isError: false,
       };
     case types.UPDATE_USER_SUCCESS:
-      console.log("upadate user request",payload)
+      console.log("upadate user request", payload);
       saveItemToLocal("user", payload);
       return {
         ...state,
-        user: {...payload},
+        user: { ...payload },
         isAuthLoading: true,
         isError: false,
       };
@@ -126,14 +125,14 @@ export const AuthReducer = (state = initialState, action) => {
     case types.DELETE_USER_SUCCESS:
       return {
         ...state,
-        isAuthLoading: true,
+        isAuthLoading: false,
         isError: false,
       };
     case types.DELETE_USER_FAILURE:
       return {
         ...state,
-        isAuthLoading: true,
-        isError: false,
+        isAuthLoading: false,
+        isError: true,
       };
     case types.FOLLOW_USER_REQUEST:
       return {
@@ -144,14 +143,16 @@ export const AuthReducer = (state = initialState, action) => {
     case types.FOLLOW_USER_SUCCESS:
       return {
         ...state,
-        isAuthLoading: true,
+        user: { ...state.user, following: [...state.user.following, payload] },
+        //first I am spreading the user then going inside the following array and again spreading everything inside the following array so that if any other userId will not get affected and then putting the follwer id .
+        isAuthLoading: false,
         isError: false,
       };
     case types.FOLLOW_USER_FAILURE:
       return {
         ...state,
-        isAuthLoading: true,
-        isError: false,
+        isAuthLoading: false,
+        isError: true,
       };
     case types.UNFOLLOW_USER_REQUEST:
       return {
@@ -162,14 +163,18 @@ export const AuthReducer = (state = initialState, action) => {
     case types.UNFOLLOW_USER_SUCCESS:
       return {
         ...state,
-        isAuthLoading: true,
+        user: {
+          ...state.user,
+          following: [...state.user.following.filter((id) => id !== payload)],
+        },
+        isAuthLoading: false,
         isError: false,
       };
     case types.UNFOLLOW_USER_FAILURE:
       return {
         ...state,
-        isAuthLoading: true,
-        isError: false,
+        isAuthLoading: false,
+        isError: true,
       };
     default:
       return state;
