@@ -5,6 +5,7 @@ const { authRouter } = require("./routes/auth.routes.js");
 const { userRouter } = require("./routes/user.routes.js");
 const { postsRouter } = require("./routes/posts.routes.js");
 const { chatRouter } = require("./routes/chat.routes.js");
+const { messageRouter } = require("./routes/message.routes.js");
 
 
 const port = process.env.PORT || 8080;
@@ -25,6 +26,7 @@ app.use("/auth", authRouter);
 app.use("/user", userRouter);
 app.use('/posts', postsRouter)
 app.use('/chats', chatRouter);
+app.use('/message', messageRouter);
 
 
 
