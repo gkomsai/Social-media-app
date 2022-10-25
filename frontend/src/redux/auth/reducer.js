@@ -79,10 +79,11 @@ export const AuthReducer = (state = initialState, action) => {
         isError: false,
       };
     case types.GET_USER_SUCCESS:
+      console.log("get user success",payload)
       saveItemToLocal("user", payload);
       return {
         ...state,
-        user:payload,
+        user:{...payload},
         isAuthLoading: true,
         isError: false,
       };
@@ -94,16 +95,18 @@ export const AuthReducer = (state = initialState, action) => {
       };
 
     case types.UPDATE_USER_REQUEST:
-      saveItemToLocal("user", payload);
+    
       return {
         ...state,
-        user: payload,
         isAuthLoading: true,
         isError: false,
       };
     case types.UPDATE_USER_SUCCESS:
+      console.log("upadate user request",payload)
+      saveItemToLocal("user", payload);
       return {
         ...state,
+        user: {...payload},
         isAuthLoading: true,
         isError: false,
       };

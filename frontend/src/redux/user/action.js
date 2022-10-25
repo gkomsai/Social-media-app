@@ -62,15 +62,15 @@ export const upadteUser = (id, payload, toast) => (dispatch) => {
     headers: headers,
   })
     .then((res) => {
-      console.log(res.data);
+      console.log("upadteUser res.data",res.data);
       if (res.data) {
         dispatch({ type: types.UPDATE_USER_SUCCESS, payload: res.data });
         notify(toast, "user updated successfully", "success");
       }
     })
     .catch((err) => {
-      // console.error(err);
-      notify(toast, err.response.data.message, "error");
+      console.error("update user err",err);
+      // notify(toast, err.response.data.message, "error");
       dispatch({ type: types.UPDATE_USER_FAILURE });
     });
 };

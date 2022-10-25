@@ -10,6 +10,7 @@ import { useParams } from "react-router-dom";
 // import axios from "axios";
 import { logoutFun } from "../../redux/auth/action";
 import { notify } from "../../utils/extraFunctions";
+import { getUser } from "../../redux/user/action";
 
 const InfoCard = () => {
   const [currentUser, setCurrentUser] = useState({});
@@ -19,7 +20,8 @@ const InfoCard = () => {
 console.log(id);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { user } = useSelector((state) => state.AuthReducer);
-  // console.log(id,user._id);
+  console.log({user});
+  console.log(id,user._id);
 
   // const fetchcurrentUser = async () => {
   //   // 
@@ -37,9 +39,14 @@ console.log(id);
 
 
   useEffect(() => {
-    if (id === user._id) {
-      setCurrentUser(user);
-}
+    if(user){
+      if (id === user._id) {
+        setCurrentUser(user);
+  }
+    }else{
+      dispatch(getUser(id,toast)).then((user)=>setCurrentUser(user))
+    }
+   
     // fetchcurrentUser();
   }, [user]);
 
@@ -55,7 +62,7 @@ console.log(id);
               onClick={onOpen}
               backgroundcolor="#24be6a"
             />
-            <ProfileModal isOpen={isOpen} onClose={onClose} />
+            <ProfileModal isOpen={isOpen}   userData = {user} onClose={onClose} />
           </div>
         ) : (
           ""
