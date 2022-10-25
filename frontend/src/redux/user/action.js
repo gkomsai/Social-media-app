@@ -106,7 +106,7 @@ export const followUser = (id, toast) => (dispatch) => {
     .then((res) => {
       console.log(res.data);
       if (res.data) {
-        dispatch({ type: types.FOLLOW_USER_SUCCESS });
+        dispatch({ type: types.FOLLOW_USER_SUCCESS, payload:id }); // user jise bhi follow karna chahta hai uski id
         notify(toast, res.data.message, "success");
       }
     })
@@ -127,7 +127,7 @@ export const unfollowUser = (id, toast) => (dispatch) => {
     .then((res) => {
       console.log(res.data);
       if (res.data) {
-        dispatch({ type: types.UNFOLLOW_USER_SUCCESS });
+        dispatch({ type: types.UNFOLLOW_USER_SUCCESS, payload:id });
         notify(toast, res.data.message, "success");
       }
     })

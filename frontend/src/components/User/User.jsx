@@ -1,12 +1,22 @@
+import { useToast } from "@chakra-ui/react";
 import React, { useState } from "react";
-import { useSelector, } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import defaultProfile from "../../assets/defaultProfile.png";
+import { followUser, unfollowUser } from "../../redux/user/action";
 const User = ({ person }) => {
-
-    const { user } = useSelector((state) => state.AuthReducer);
+  const dispatch = useDispatch();
+  const toast = useToast();
+  const { user } = useSelector((state) => state.AuthReducer);
   const [following, setFollowing] = useState(
     person.followers.includes(user._id)
   );
+  const handleFollow = () => {
+    following
+      ? dispatch(unfollowUser(person._id, toast))
+      : dispatch(followUser(person._id, toast));
+    setFollowing((prev) => !prev);
+  };
+
 
   return (
     <div className="follower">
@@ -18,13 +28,14 @@ const User = ({ person }) => {
         />
         <div className="name">
           <span>{person.firstName}</span>
-          <span>{person.lastName}</span>
+          <span>{person.email}</span>
         </div>
       </div>
       <button
         className={
           following ? "button fc-button UnfollowButton" : "button fc-button"
         }
+        onClick={handleFollow}
       >
         {following ? "Unfollow" : "Follow"}
       </button>
