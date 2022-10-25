@@ -13,6 +13,7 @@ import {
 const initialState = {
   token: getItemFromLocal("token") || false,
   user: getItemFromLocal("user") || {},
+  allUser:[],
   isAuthLoading: false,
   isError: false,
 };
@@ -79,11 +80,11 @@ export const AuthReducer = (state = initialState, action) => {
         isError: false,
       };
     case types.GET_USER_SUCCESS:
-      console.log("get user success",payload)
-      saveItemToLocal("user", payload);
+      console.log("get Alluser success",payload)
+      // saveItemToLocal("allUser", payload);
       return {
         ...state,
-        user:{...payload},
+        allUser:[...payload],
         isAuthLoading: true,
         isError: false,
       };

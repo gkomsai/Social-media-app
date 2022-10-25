@@ -5,7 +5,6 @@ import { UilPlayCircle } from "@iconscout/react-unicons";
 import { UilLocationPoint } from "@iconscout/react-unicons";
 import { UilSchedule } from "@iconscout/react-unicons";
 import { UilTimes } from "@iconscout/react-unicons";
-import profileImg from "../../assets/profileImg.jpg";
 import { useDispatch, useSelector } from "react-redux";
 import { uploadPost } from "../../redux/posts/action";
 import { useToast } from "@chakra-ui/react";
@@ -16,15 +15,12 @@ import defaultProfile from "../../assets/defaultProfile.png";
 
 const PostShare = () => {
   const [image, setImage] = useState(null);
-
   const imageRef = useRef();
   const description = useRef();
   const toast = useToast();
   const dispatch = useDispatch();
   const { user } = useSelector((store) => store.AuthReducer);
-  // const PostReducer = useSelector((store) => store.PostReducer);
 
-  // console.log({ PostReducer });
   const token = getItemFromLocal("token");
   // console.log(token);
   const headers = {
