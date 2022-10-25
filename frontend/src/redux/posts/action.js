@@ -90,6 +90,8 @@ export const getTimelinePosts = (id, toast) => async (dispatch) => {
       dispatch({ type: types.RETREIVING_FAILURE });
     });
 };
+
+
 export const likePost = (id) => {
   try {
     return axios({
