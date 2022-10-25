@@ -3,14 +3,13 @@ const mongoose = require("mongoose");
 const { checkUserAuth } = require("../middleware/authMiddleware");
 const { PostModel } = require("../models/postModel");
 const { UserModel } = require("../models/userModel");
-
 const {cloudinary} = require("../config/cloudinary");
 const upload = require("../config/multer");
 const postsRouter = Router();
 
 postsRouter.use(checkUserAuth);
 
-/*  ----------------------for creating a new post-------------------------------- */
+/*  ----------------------for uploading the images-------------------------------- */
 
 postsRouter.post("/upload", upload.single("file"), async (req, res) => { //note- this "file" keyword  should be also present in the frontend input tag under name atrribute other wise file will not be uploaded
   try{
@@ -27,10 +26,7 @@ postsRouter.post("/upload", upload.single("file"), async (req, res) => { //note-
 
 
 
-
-
-
-
+/*  ----------------------for creating a new post-------------------------------- */
 
 postsRouter.post("/create",  async (req, res) => {
   console.log("req.body",req.body);

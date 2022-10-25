@@ -2,6 +2,7 @@ import { useToast } from "@chakra-ui/react";
 import React from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
 import { getTimelinePosts } from "../../redux/posts/action";
 import SinglePost from "../SinglePost/SinglePost";
@@ -11,13 +12,17 @@ import "./Posts.css";
 const Posts = () => {
   const dispatch = useDispatch();
   const toast = useToast();
+  const params = useParams();
   const { user } = useSelector((state) => state.AuthReducer);
   let { posts, loading } = useSelector((state) => state.PostReducer);
   useEffect(() => {
     dispatch(getTimelinePosts(user._id, toast));
   }, [getTimelinePosts, dispatch, user]);
-  if (!posts) return "No Posts";
 
+  if (!posts) return "No Posts";
+ if(params.id){
+  posts = posts.filter((post)=> post.userId===params.id);
+ } 
   return (
     <div className="Posts">
       {posts?.map((el) => {
