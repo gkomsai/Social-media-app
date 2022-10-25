@@ -1,0 +1,30 @@
+.Chat {
+  position: relative;
+  display: grid;
+  grid-template-columns: 22% auto;
+  gap: 1rem;
+}
+
+.Left-side-chat {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.Chat-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background: var(--cardColor);
+  border-radius: 1rem;
+  padding: 1rem;
+  height: auto;
+  min-height: 80vh;
+  overflow: scroll;
+}
+
+.Right-side-chat {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
