@@ -75,7 +75,7 @@ const Signup = () => {
             />
           </VStack>
           <Button
-            backgroundcolor="#F9802D"
+         bgColor={"#F9802D"}
             marginTop="40px"
             padding="25px 35px 25px 35px"
             borderRadius="25px"

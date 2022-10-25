@@ -47,8 +47,8 @@ export const getAllUser = (toast) => (dispatch) => {
       }
     })
     .catch((err) => {
-      // console.error(err);
-      notify(toast, err.response.data.message, "error");
+      console.error(err);
+      // notify(toast, err.response.data.message, "error");
       dispatch({ type: types.GET_USER_FAILURE });
     });
 };
@@ -111,8 +111,8 @@ export const followUser = (id, toast) => (dispatch) => {
       }
     })
     .catch((err) => {
-      // console.error(err);
-      notify(toast, err.response.data.message, "error");
+      console.error(err);
+      // notify(toast, err.response.data.message, "error");
       dispatch({ type: types.FOLLOW_USER_FAILURE });
     });
 };
