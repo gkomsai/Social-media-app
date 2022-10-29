@@ -12,7 +12,7 @@ import {
 
 const initialState = {
   token: getItemFromLocal("token") || false,
-  user: getItemFromLocal("user") || {},
+  user: getItemFromLocal("user") || null,
   allUser: [],
   isAuthLoading: false,
   isError: false,
@@ -70,7 +70,7 @@ export const AuthReducer = (state = initialState, action) => {
         ...state,
         isAuthLoading: false,
         token: null,
-        user: {},
+        user: null,
         isError: true,
       };
     case types.GET_USER_REQUEST:
