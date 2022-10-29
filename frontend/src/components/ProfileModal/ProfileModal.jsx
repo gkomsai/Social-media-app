@@ -24,12 +24,12 @@ const headers = {
 const ProfileModal = ({ onOpen, onClose, isOpen, userData }) => {
   const { password, ...other } = userData;
   const [formData, setFormData] = useState(other);
-  console.log({formData});
+  console.log({ formData });
   const [profilePicture, setprofilePicture] = useState(null);
   const [coverPicture, setcoverPicture] = useState(null);
   // console.log({profilePicture},{coverPicture})
   const dispatch = useDispatch();
-  const {id} = useParams();
+  const { id } = useParams();
   const toast = useToast();
   const handleChange = (e) => {
     let { name, value } = e.target;
@@ -90,11 +90,9 @@ const ProfileModal = ({ onOpen, onClose, isOpen, userData }) => {
         });
     }
     setTimeout(() => {
-      
-      console.log({updatedUserData});
-      dispatch(upadteUser(id, updatedUserData,toast));
+      console.log({ updatedUserData });
+      dispatch(upadteUser(id, updatedUserData, toast));
     }, 5000);
-   
   };
 
   return (
@@ -181,7 +179,11 @@ const ProfileModal = ({ onOpen, onClose, isOpen, userData }) => {
               />
             </div>
 
-            <button className="button infoButton" onClick={onClose} type="submit">
+            <button
+              className="button infoButton"
+              onClick={onClose}
+              type="submit"
+            >
               Update
             </button>
           </form>
