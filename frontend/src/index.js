@@ -9,7 +9,8 @@ import axios from "axios";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
 
-axios.defaults.baseURL="http://localhost:7000";
+// axios.defaults.baseURL="http://localhost:7000";
+axios.defaults.baseURL="https://social-media-app-backend-1.herokuapp.com";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
