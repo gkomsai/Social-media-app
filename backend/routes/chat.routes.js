@@ -24,10 +24,10 @@ chatRouter.post("/", async (req, res) => {
 
 chatRouter.get("/:userId", async (req, res) => {
   try {
-    const foundChat = await ChatModel.find({
+    const foundMember = await ChatModel.find({
       members: { $in: [req.params.userId] },
     });
-    res.status(200).send(foundChat);
+    res.status(200).send(foundMember);
   } catch (err) {
     return res.status(500).send({ status: "error", message: err.message });
   }

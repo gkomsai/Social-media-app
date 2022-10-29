@@ -181,7 +181,7 @@ const ProfileModal = ({ onOpen, onClose, isOpen, userData }) => {
               />
             </div>
 
-            <button className="button infoButton" type="submit">
+            <button className="button infoButton" onClick={onClose} type="submit">
               Update
             </button>
           </form>
