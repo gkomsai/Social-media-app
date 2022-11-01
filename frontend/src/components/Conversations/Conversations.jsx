@@ -7,17 +7,17 @@ import defaultProfile from "../../assets/defaultProfile.png";
 const Conversation = ({ data, currentUser, online }) => {
   const [userData, setUserData] = useState(null);
   const dispatch = useDispatch();
-  const { chatUsers } = useSelector((state) => state.ChatReducer);
+  // const { chatUsers } = useSelector((state) => state.ChatReducer);
   // setUserData()
-  console.log({ chatUsers });
+  // console.log({ chatUsers });
 
   const userId = data?.members.find((id) => id !== currentUser);
-  console.log({ userId });
+  // console.log({ userId });
 
   const getUserData = async () => {
     try {
       getUser(userId).then((res) => {
-        console.log("getUseres", res.data);
+        // console.log("getUseres", res.data);
         dispatch({ type: "SAVE_USER", payload: res.data });
         setUserData(res.data);
       });
