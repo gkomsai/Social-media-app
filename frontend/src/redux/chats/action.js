@@ -28,18 +28,22 @@ export const createNewChat = (payload) => (dispatch)=>{
   };
   
   
-export const findParticularUser = (id) => (dispatch)=>{
-    try {
-      return axios({
+export const findParticularUser = (id) =>{
+    // try {
+ return  axios({
         method: "get",
         url: `/chats/${id}`,
         headers: headers,
-      }).then((res) => {
-      dispatch({type:"FIND_SUCCESS",payload:res.data});
-      });
-    } catch (err) {
-      console.error(err);
-    }
+      })
+    //   .then((res) => {
+    //     console.log("**********",res.data);
+    //     let data =res.data;
+    // //   dispatch({type:"FIND_SUCCESS",payload:res.data});
+    // return data;
+    //   });
+    // } catch (err) {
+    //   console.error(err);
+    // }
   };
 
   export const findChats = (firstId,secondId) => (dispatch)=>{

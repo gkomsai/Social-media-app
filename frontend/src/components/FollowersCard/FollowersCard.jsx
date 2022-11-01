@@ -13,7 +13,7 @@ const FollowersCard = () => {
   const [persons, setPersons] = useState([]);
   const { user } = useSelector((store) => store.AuthReducer);
   const { allUser } = useSelector((store) => store.AuthReducer);
-console.log("allUser",allUser);
+// console.log("allUser",allUser);
 
 
   useEffect(() => {
