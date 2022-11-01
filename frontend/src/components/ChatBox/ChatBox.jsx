@@ -6,7 +6,7 @@ import { format } from "timeago.js";
 import { addMessage, getMessages } from "../../api/messageApi";
 import InputEmoji from "react-input-emoji";
 
-const ChatBox = ({ chat, currentUser }) => {
+const ChatBox = ({ chat, currentUser, setSendMessage, receivedMessage }) => {
   const [userData, setUserData] = useState(null);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
@@ -54,14 +54,27 @@ const ChatBox = ({ chat, currentUser }) => {
       text: newMessage,
       chatId: chat._id,
     };
+    const receiverId = chat.members.find((id) => id !== currentUser);
+    // send message to socket server
+    setSendMessage({ ...message, receiverId });
+    // send message to database
     try {
       const { data } = await addMessage(message);
       setMessages([...messages, data]);
       setNewMessage("");
-    } catch(err) {
-      console.error(err);
+    } catch {
+      console.log("error");
     }
   };
+
+  // Receiveing Message from parent component and will render as soon as our recevied message is changed so this code is enableling us the real-time chatting
+  useEffect(() => {
+    console.log("Message Arrived: ", receivedMessage);
+    if (receivedMessage && receivedMessage.chatId === chat._id) {
+      setMessages([...messages, receivedMessage]);
+    }
+  }, [receivedMessage]);
+
   return (
     <div className="ChatBox-container">
       {chat ? (

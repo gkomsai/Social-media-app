@@ -14,8 +14,10 @@ const Chat = () => {
   const [currentChat, setCurrentChat] = useState(null);
   console.log({ currentChat });
   const [onlineUsers, setOnlineUsers] = useState([]);
-  console.log({onlineUsers});
-  const socket = useRef();
+  console.log({ onlineUsers });
+  const socket = useRef();  // creating the socket globally 
+  const [sendMessage, setSendMessage] = useState(null);
+  const [receivedMessage, setReceivedMessage] = useState(null);
 
   useEffect(() => {
     const getChatMembers = async () => {
@@ -31,7 +33,6 @@ const Chat = () => {
     getChatMembers(user._id);
   }, [user._id]);
 
-
   // Connect to Socket.io
   useEffect(() => {
     socket.current = io("ws://localhost:8800");
@@ -40,6 +41,22 @@ const Chat = () => {
       setOnlineUsers(users);
     });
   }, [user]);
+
+
+  // Sending Message to the socket server
+  useEffect(() => {
+    if (sendMessage) {
+      socket.current.emit("send-message", sendMessage);
+    }
+  }, [sendMessage]);
+
+  // Geting the message from the socket server
+  useEffect(() => {
+    socket.current.on("recieve-message", (data) => {
+      console.log("receivedMessage from the socket.io",data);
+      setReceivedMessage(data);
+    });
+  }, []);
 
   return (
     <div className="Chat">
@@ -67,8 +84,6 @@ const Chat = () => {
         </div>
       </div>
 
-
-
       {/* Right Side */}
 
       <div className="Right-side-chat">
@@ -76,7 +91,12 @@ const Chat = () => {
           <NavIcons />
         </div>
 
-        <ChatBox chat={currentChat} currentUser={user._id} />
+        <ChatBox
+          chat={currentChat}
+          currentUser={user._id}
+          setSendMessage={setSendMessage}
+          receivedMessage={receivedMessage}
+        />
       </div>
     </div>
   );
