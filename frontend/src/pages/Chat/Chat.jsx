@@ -6,17 +6,22 @@ import Conversation from "../../components/Conversations/Conversations";
 import NavIcons from "../../components/NavIcons/Navicons";
 import { useEffect } from "react";
 import { findParticularUser } from "../../redux/chats/action";
+import ChatBox from "../../components/ChatBox/ChatBox";
 
 const Chat = () => {
   const { user } = useSelector((store) => store.AuthReducer);
   const [chats, setChats] = useState([]);
-  console.log({ chats });
-  // Get the chat in chat section
+  const [currentChat, setCurrentChat] = useState(null);
+  console.log({ currentChat });
+
+
+
+
   useEffect(() => {
     const getChatMembers = async () => {
       try {
         findParticularUser(user._id).then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
           setChats(res.data);
         });
       } catch (error) {
@@ -25,6 +30,10 @@ const Chat = () => {
     };
     getChatMembers(user._id);
   }, [user._id]);
+
+
+
+
   return (
     <div className="Chat">
       {/* Left Side */}
@@ -34,16 +43,24 @@ const Chat = () => {
           <h2>Chats</h2>
           <div className="Chat-list">
             {chats?.map((chat) => (
-              <Conversation
+              <div
                 key={Date.now() + user._id + Math.random()}
-                data={chat}
-                online={true}
-                currentUser={user._id}
-              />
+                onClick={() => {
+                  setCurrentChat(chat);
+                }}
+              >
+                <Conversation
+                  data={chat}
+                  online={true}
+                  currentUser={user._id}
+                />
+              </div>
             ))}
           </div>
         </div>
       </div>
+
+
 
       {/* Right Side */}
 
@@ -51,6 +68,8 @@ const Chat = () => {
         <div style={{ width: "20rem", alignSelf: "flex-end" }}>
           <NavIcons />
         </div>
+
+        <ChatBox chat={currentChat} currentUser={user._id} />
       </div>
     </div>
   );
