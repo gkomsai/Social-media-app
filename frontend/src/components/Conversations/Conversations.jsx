@@ -1,27 +1,35 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "../../redux/user/action";
+import defaultProfile from "../../assets/defaultProfile.png";
 
 const Conversation = ({ data, currentUser, online }) => {
   const [userData, setUserData] = useState(null);
   const dispatch = useDispatch();
+  const { chatUsers } = useSelector((state) => state.ChatReducer);
+  // setUserData()
+  console.log({ chatUsers });
+
+  const userId = data?.members.find((id) => id !== currentUser);
+  console.log({ userId });
+
+  const getUserData = async () => {
+    try {
+      getUser(userId).then((res) => {
+        console.log("getUseres", res.data);
+        dispatch({ type: "SAVE_USER", payload: res.data });
+        setUserData(res.data);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
-    const userId = data.members.find((id) => id !== currentUser);
-    const getUserData = async () => {
-      try {
-        const data= await getUser(userId);
-        console.log({data});
-        setUserData(data);
-        dispatch({ type: "SAVE_USER", data: data });
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
     getUserData();
-  }, []);
+  }, [userId]);
+
   return (
     <>
       <div className="follower conversation">
@@ -30,8 +38,8 @@ const Conversation = ({ data, currentUser, online }) => {
           <img
             src={
               userData?.profilePicture
-                ? process.env.REACT_APP_PUBLIC_FOLDER + userData.profilePicture
-                : process.env.REACT_APP_PUBLIC_FOLDER + "defaultProfile.png"
+                ? userData.profilePicture
+                : defaultProfile
             }
             alt="Profile"
             className="followerImage"
@@ -39,7 +47,7 @@ const Conversation = ({ data, currentUser, online }) => {
           />
           <div className="name" style={{ fontSize: "0.8rem" }}>
             <span>
-              {userData?.firstname} {userData?.lastname}
+              {userData?.firstName} {userData?.lastName}
             </span>
             <span style={{ color: online ? "#51e200" : "" }}>
               {online ? "Online" : "Offline"}

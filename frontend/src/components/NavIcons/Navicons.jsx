@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 const NavIcons = () => {
   return (
     <div className="navIcons">
-      <Link to="../home">
+      <Link to="/">
         <img src={Home} alt="" />
       </Link>
       <UilSetting />

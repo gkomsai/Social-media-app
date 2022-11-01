@@ -10,37 +10,37 @@ import { findParticularUser } from "../../redux/chats/action";
 const Chat = () => {
   const { user } = useSelector((store) => store.AuthReducer);
   const [chats, setChats] = useState([]);
-
-
-// Get the chat in chat section
-useEffect(() => {
-    const getChats = async () => {
+  console.log({ chats });
+  // Get the chat in chat section
+  useEffect(() => {
+    const getChatMembers = async () => {
       try {
-        // const data = ;
-        console.log("findParticularUserData",findParticularUser(user._id));
-        // setChats(data);
+        findParticularUser(user._id).then((res) => {
+          console.log(res.data);
+          setChats(res.data);
+        });
       } catch (error) {
         console.log(error);
       }
     };
-    getChats();
+    getChatMembers(user._id);
   }, [user._id]);
   return (
     <div className="Chat">
       {/* Left Side */}
       <div className="Left-side-chat">
-    <Searchbar />
+        <Searchbar />
         <div className="Chat-container">
           <h2>Chats</h2>
           <div className="Chat-list">
-            {/* {chats?.map((chat) => (
-              <div>
-                <Conversation
-                  data={chat}
-                  currentUser={user._id}
-                    />
-              </div>
-            ))} */}
+            {chats?.map((chat) => (
+              <Conversation
+                key={Date.now() + user._id + Math.random()}
+                data={chat}
+                online={true}
+                currentUser={user._id}
+              />
+            ))}
           </div>
         </div>
       </div>
@@ -51,7 +51,6 @@ useEffect(() => {
         <div style={{ width: "20rem", alignSelf: "flex-end" }}>
           <NavIcons />
         </div>
-   
       </div>
     </div>
   );

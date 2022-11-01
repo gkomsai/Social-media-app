@@ -20,11 +20,39 @@
   padding: 1rem;
   height: auto;
   min-height: 80vh;
-  overflow: scroll;
+  overflow: hidden;
+}
+
+.Chat-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .Right-side-chat {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+}
+.conversation:hover {
+  background: #80808038;
+  cursor: pointer;
+}
+
+.conversation {
+  border-radius: 0.5rem;
+  padding: 10px;
+}
+
+.conversation > div {
+  position: relative;
+}
+
+.online-dot {
+  background-color: greenyellow;
+  border-radius: 50%;
+  position: absolute;
+  left: 2rem;
+  width: 1rem;
+  height: 1rem;
 }
