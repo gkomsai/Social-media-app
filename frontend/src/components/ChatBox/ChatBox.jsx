@@ -4,11 +4,13 @@ import { useDispatch } from "react-redux";
 import { getUser } from "../../redux/user/action";
 import defaultProfile from "../../assets/defaultProfile.png";
 import "./ChatBox.css";
+import { format } from "timeago.js";
+import { getMessages } from "../../api/messageApi";
 
 const ChatBox = ({ chat, currentUser }) => {
   const [userData, setUserData] = useState(null);
-  console.log({userData});
-
+  const [messages, setMessages] = useState([]);
+  console.log({ userData });
 
   const userId = chat?.members.find((id) => id !== currentUser);
 
@@ -24,11 +26,30 @@ const ChatBox = ({ chat, currentUser }) => {
   };
 
   useEffect(() => {
-    if(chat){
-        getUserData();
+    if (chat) {
+      getUserData();
     }
-  
   }, [userId]);
+
+  // fetch messages
+  useEffect(() => {
+    const fetchMessages = async () => {
+      try {
+        const { data } = await getMessages(chat._id);
+        console.log("fetch messages data", data);
+        setMessages(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    if (chat) {
+      fetchMessages();
+    }
+  }, [chat]);
+
+
+
 
   return (
     <div className="ChatBox-container">
@@ -59,6 +80,22 @@ const ChatBox = ({ chat, currentUser }) => {
             marginTop: "20px",
           }}
         />
+      </div>
+
+      <div className="chat-body">
+        {messages.map((message,i) => (
+ 
+            <div
+            key={i}
+              className={
+                message.senderId === currentUser ? "message own" : "message"
+              }
+            >
+              <span>{message.text}</span>{" "}
+              <span>{format(message.createdAt)}</span>
+            </div>
+  
+        ))}
       </div>
     </div>
   );
