@@ -37,7 +37,7 @@ const Chat = () => {
   useEffect(() => {
     socket.current = io("ws://localhost:8800");
     socket.current.emit("new-user-add", user._id);
-    socket.current.on("get-users", (users) => {
+    socket.current.on("get-users", (users) => { // here we are getting the informaiton about the online users from the socket.io
       setOnlineUsers(users);
     });
   }, [user]);
@@ -58,6 +58,14 @@ const Chat = () => {
     });
   }, []);
 
+
+  
+  const checkOnlineStatus = (chat) => {
+    const chatMember = chat.members.find((member) => member !== user._id);   //  since our members array only include only two members so finding the other member excluding the current user
+    const online = onlineUsers.find((user) => user.userId === chatMember); // now checking  those users whose are online 
+    return online ? true : false;
+  };
+
   return (
     <div className="Chat">
       {/* Left Side */}
@@ -75,8 +83,9 @@ const Chat = () => {
               >
                 <Conversation
                   data={chat}
-                  online={true}
+                  online={checkOnlineStatus(chat)}
                   currentUser={user._id}
+                
                 />
               </div>
             ))}

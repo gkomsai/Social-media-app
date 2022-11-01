@@ -55,15 +55,15 @@ const ChatBox = ({ chat, currentUser, setSendMessage, receivedMessage }) => {
       chatId: chat._id,
     };
     const receiverId = chat.members.find((id) => id !== currentUser);
-    // send message to socket server
+    // sending message to socket server
     setSendMessage({ ...message, receiverId });
-    // send message to database
+    // sending message to database
     try {
       const { data } = await addMessage(message);
       setMessages([...messages, data]);
       setNewMessage("");
-    } catch {
-      console.log("error");
+    } catch(err) {
+      console.error(err);
     }
   };
 
@@ -76,7 +76,7 @@ const ChatBox = ({ chat, currentUser, setSendMessage, receivedMessage }) => {
   }, [receivedMessage]);
 
 
-  
+
   //  whenever our message changes, then the below code will handle scroll to last Message
   useEffect(()=> {
     scroll.current?.scrollIntoView({ behavior: "smooth" });
