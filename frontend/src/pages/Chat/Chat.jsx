@@ -14,8 +14,8 @@ const Chat = () => {
   const [currentChat, setCurrentChat] = useState(null);
   console.log({ currentChat });
   const [onlineUsers, setOnlineUsers] = useState([]);
+  console.log({onlineUsers});
   const socket = useRef();
-
 
   useEffect(() => {
     const getChatMembers = async () => {
@@ -40,7 +40,6 @@ const Chat = () => {
       setOnlineUsers(users);
     });
   }, [user]);
-
 
   return (
     <div className="Chat">

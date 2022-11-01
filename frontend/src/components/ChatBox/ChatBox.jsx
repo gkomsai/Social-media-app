@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useRef } from "react";
-import { useDispatch } from "react-redux";
 import { getUser } from "../../redux/user/action";
 import defaultProfile from "../../assets/defaultProfile.png";
 import "./ChatBox.css";
 import { format } from "timeago.js";
-import { getMessages } from "../../api/messageApi";
+import { addMessage, getMessages } from "../../api/messageApi";
 import InputEmoji from "react-input-emoji";
 
 const ChatBox = ({ chat, currentUser }) => {
@@ -49,11 +47,21 @@ const ChatBox = ({ chat, currentUser }) => {
     }
   }, [chat]);
 
-
   const handleSend = async (e) => {
     e.preventDefault();
+    const message = {
+      senderId: currentUser,
+      text: newMessage,
+      chatId: chat._id,
+    };
+    try {
+      const { data } = await addMessage(message);
+      setMessages([...messages, data]);
+      setNewMessage("");
+    } catch(err) {
+      console.error(err);
+    }
   };
-
   return (
     <div className="ChatBox-container">
       {chat ? (
