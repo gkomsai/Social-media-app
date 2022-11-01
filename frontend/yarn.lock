@@ -8516,10 +8516,10 @@ react-icons@^4.4.0:
   resolved "https://registry.yarnpkg.com/react-icons/-/react-icons-4.4.0.tgz#a13a8a20c254854e1ec9aecef28a95cdf24ef703"
   integrity sha512-fSbvHeVYo/B5/L4VhB7sBA1i2tS8MkT0Hb9t2H1AVPkwGfVHLJCqyr2Py9dKMxsyM63Eng1GkdZfbWj+Fmv8Rg==
 
-react-input-emoji@^4.2.0:
-  version "4.2.0"
-  resolved "https://registry.npmjs.org/react-input-emoji/-/react-input-emoji-4.2.0.tgz"
-  integrity sha512-DaFJP6mrsh6KPfMXSNMAv05gXjSfw/j06SEx8d6cEMj8nGPzR3D4sAbSicTvvsrLppL+3v6l/eB6HfFp26tSJg==
+react-input-emoji@^4.3.0:
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/react-input-emoji/-/react-input-emoji-4.3.0.tgz#26b07db0eca67024410b5d48fccd18119676a9a1"
+  integrity sha512-SYg+iJcaFMs7A3zjX/lLxiwGO9jutb0IAFRjYGX7mT3qFmYa/NYSsu6irm2RPFedqsat4nZi/VH4uhpx8N2PLw==
   dependencies:
     emoji-mart "3.0.1"
 

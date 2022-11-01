@@ -16,7 +16,7 @@
   flex-direction: column;
   gap: 0.5rem;
   padding: 1.5rem;
-  overflow: scroll;
+  overflow-y: scroll;
 }
 
 .message {
@@ -41,4 +41,37 @@
   align-self: flex-end;
   border-radius: 1rem 1rem 0 1rem;
   background: linear-gradient(98.63deg, #24e4f0 0%, #358ff9 100%);
+}
+
+.chat-sender {
+  background: white;
+  display: flex;
+  justify-content: space-between;
+  height: 3.5rem;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.8rem;
+  border-radius: 1rem;
+  align-self: end;
+}
+.chat-sender > div {
+  height: 100%;
+  padding: 0px 15px 0px 15px;
+}
+
+.chat-sender > div:nth-of-type(1) {
+  background: rgb(233, 233, 233);
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.chatbox-empty-message {
+  display: flex;
+  align-self: center;
+  justify-content: center;
+  font-size: 20px;
 }
