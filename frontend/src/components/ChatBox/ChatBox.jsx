@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { getUser } from "../../redux/user/action";
 import defaultProfile from "../../assets/defaultProfile.png";
 import "./ChatBox.css";
@@ -11,7 +11,7 @@ const ChatBox = ({ chat, currentUser, setSendMessage, receivedMessage }) => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   console.log({ userData });
-
+  const scroll = useRef();
   const userId = chat?.members.find((id) => id !== currentUser);
 
   const getUserData = async () => {
@@ -75,6 +75,17 @@ const ChatBox = ({ chat, currentUser, setSendMessage, receivedMessage }) => {
     }
   }, [receivedMessage]);
 
+
+  
+  //  whenever our message changes, then the below code will handle scroll to last Message
+  useEffect(()=> {
+    scroll.current?.scrollIntoView({ behavior: "smooth" });
+  },[messages])
+
+
+
+
+
   return (
     <div className="ChatBox-container">
       {chat ? (
@@ -111,6 +122,7 @@ const ChatBox = ({ chat, currentUser, setSendMessage, receivedMessage }) => {
             {messages.map((message, i) => (
               <div
                 key={i}
+                ref={scroll}
                 className={
                   message.senderId === currentUser ? "message own" : "message"
                 }
