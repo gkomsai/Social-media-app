@@ -1,15 +1,12 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { getUser } from "../../redux/user/action";
 import defaultProfile from "../../assets/defaultProfile.png";
 
 const Conversation = ({ data, currentUser, online }) => {
   const [userData, setUserData] = useState(null);
   const dispatch = useDispatch();
-  // const { chatUsers } = useSelector((state) => state.ChatReducer);
-  // setUserData()
-  // console.log({ chatUsers });
 
   const userId = data?.members.find((id) => id !== currentUser);
   // console.log({ userId });
