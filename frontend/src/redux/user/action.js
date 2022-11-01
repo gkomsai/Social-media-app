@@ -62,7 +62,7 @@ export const upadteUser = (id, payload, toast) => (dispatch) => {
     headers: headers,
   })
     .then((res) => {
-      console.log("upadteUser res.data",res.data);
+      // console.log("upadteUser res.data",res.data);
       if (res.data) {
         dispatch({ type: types.UPDATE_USER_SUCCESS, payload: res.data });
         notify(toast, "user updated successfully", "success");
@@ -83,7 +83,7 @@ export const deleteUser = (id, toast) => (dispatch) => {
     headers: headers,
   })
     .then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
       if (res.data) {
         dispatch({ type: types.DELETE_USER_SUCCESS });
         notify(toast, "user deleted successfully", "success");
@@ -104,7 +104,7 @@ export const followUser = (id, toast) => (dispatch) => {
     headers: headers,
   })
     .then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
       if (res.data) {
         dispatch({ type: types.FOLLOW_USER_SUCCESS, payload:id }); // user jise bhi follow karna chahta hai uski id
         notify(toast, res.data.message, "success");
@@ -125,7 +125,7 @@ export const unfollowUser = (id, toast) => (dispatch) => {
     headers: headers,
   })
     .then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
       if (res.data) {
         dispatch({ type: types.UNFOLLOW_USER_SUCCESS, payload:id });
         notify(toast, res.data.message, "success");

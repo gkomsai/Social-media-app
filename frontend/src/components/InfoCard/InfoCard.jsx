@@ -16,11 +16,11 @@ const InfoCard = () => {
   const dispatch =useDispatch();
   const toast = useToast();
   const { id } = useParams();
-console.log(id);
+// console.log(id);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { user } = useSelector((state) => state.AuthReducer);
-  console.log({user});
-  console.log(id,user._id);
+  // console.log({user});
+  // console.log(id,user._id);
 
 
   const handleLogOut = ()=> {

@@ -82,10 +82,7 @@ export const loginFun = (payload, toast, navigate) => (dispatch) => {
         // console.log(res.data);
         dispatch(loginSuccess(res.data));
         notify(toast, res.data.message, "success");
-        setTimeout(()=>{
-          navigate("/");
-        },1000)
-      
+        navigate("/");
       }
     })
     .catch((err) => {

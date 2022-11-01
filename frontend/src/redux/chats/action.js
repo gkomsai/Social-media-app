@@ -28,14 +28,17 @@ export const createNewChat = (payload) => (dispatch)=>{
   };
   
   
-export const findParticularUser = (id) => (dispatch)=>{
+export const findParticularUser = (id) =>{
     try {
-      return axios({
+         axios({
         method: "get",
         url: `/chats/${id}`,
         headers: headers,
       }).then((res) => {
-      dispatch({type:"FIND_SUCCESS",payload:res.data});
+        console.log("**********",res.data);
+        let data =res.data;
+    //   dispatch({type:"FIND_SUCCESS",payload:res.data});
+    return data;
       });
     } catch (err) {
       console.error(err);
