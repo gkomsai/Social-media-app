@@ -5,7 +5,7 @@ export const getItemFromLocal = (key) =>{
       let temp =JSON.parse(localStorage.getItem(key));
       return temp;  
     } catch (error) {
-        return undefined
+        return null
     }
 };
 

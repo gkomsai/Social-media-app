@@ -1,12 +1,14 @@
 const io = require("socket.io")(8800, {
     cors: {
-      origin: "http://localhost:3000",
+      origin: ["http://localhost:3000","https://indian-social-media.vercel.app"],
     },
   });
   
+
   let activeUsers = [];
   
   io.on("connection", (socket) => {
+    // console.log("socket",socket)
     // add new User
     socket.on("new-user-add", (newUserId) => {
       // if user is not added previously

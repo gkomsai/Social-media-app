@@ -7,31 +7,15 @@ const token = getItemFromLocal("token");
 // console.log({token});
 const headers = {
   "Content-Type": "application/json",
-  Authorization: `Bearer ${token}`,
+  "Authorization": `Bearer ${token}`,
 };
 
 export const getUser = (id) =>  {
-  // dispatch({ type: types.GET_USER_REQUEST });
- return axios({
+  return axios({
     method: "get",
     url: `/user/${id}`,
     headers: headers,
   })
-//     .then((res) => {
-//       console.log("getUser",res.data);
-//       if (res.data) {
-//         dispatch({type:"SAVE_USER", payload:res.data})
-//         // dispatch({ type: types.GET_USER_SUCCESS, payload: res.data });
-
-//         notify(toast, "user fetched successfully", "success");
-//       }
-//     })
-
-//     .catch((err) => {
-//       // console.error(err);
-//       // notify(toast, err.response.data.message, "error");
-//       dispatch({ type: types.GET_USER_FAILURE });
-//     });
 };
 
 export const getAllUser = (toast) => (dispatch) => {

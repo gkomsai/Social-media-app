@@ -7,6 +7,7 @@ import "./profileCard.css";
 
 const ProfileCard = ({ location }) => {
   const { user } = useSelector((store) => store.AuthReducer);
+  // console.log({user});
   const { posts } = useSelector((store) => store.PostReducer);
   if (!user) {
     return <h1>user doesn't exist</h1>;
@@ -31,13 +32,13 @@ const ProfileCard = ({ location }) => {
         <hr />
         <div>
           <div className="follow">
-            <span>{user?.followers.length}</span>
+            <span>{user?.followers?.length}</span>
             <span>Followers</span>
           </div>
           <div className="vl"> </div>
 
           <div className="follow">
-            <span>{user?.following.length}</span>
+            <span>{user?.following?.length}</span>
             <span>Following</span>
           </div>
 

@@ -28,13 +28,12 @@ export const createNewChat = (payload) => (dispatch)=>{
   };
   
   
-export const findParticularUser = (id) =>{
+export const findAllchatingUser = (id) =>{
  return  axios({
         method: "get",
         url: `/chats/${id}`,
         headers: headers,
       })
-   
   };
 
   export const findChats = (firstId,secondId) => (dispatch)=>{
