@@ -1,16 +1,8 @@
 import axios from "axios";
-
 import { notify } from "../../utils/extraFunctions";
-import { getItemFromLocal } from "../../utils/localStorage";
 import * as types from "./actionTypes";
 
-const token = getItemFromLocal("token");
-const user = getItemFromLocal("user");
-// console.log({token});
-const headers = {
-  "Content-Type": "application/json",
-  "Authorization": `Bearer ${token}`,
-};
+
 
 // export const uploadImage = (payload, toast) => (dispatch) => {
 //   dispatch({ type: types.UPLOAD_START });
@@ -46,36 +38,45 @@ const headers = {
 //         dispatch({type:types.UPLOAD_FAILURE});
 //       });
 //   };
-export const uploadPost = (payload, toast) => (dispatch) => {
-  dispatch({ type: types.UPLOAD_START });
+
+
+export const createPost = (payload, token, toast) => (dispatch) => {
+   dispatch({ type: "CREATING START" });
   axios({
     method: "post",
     url: `/posts/create`,
     data: payload,
-    headers: headers,
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
   })
     .then((res) => {
-      console.log(res.data);
+      console.log("new created data", res.data);
       if (res.data) {
-        dispatch({ type: types.UPLOAD_SUCCESS });
+        dispatch({ type: "CREATE SUCCESS", payload: res.data });
         notify(toast, "post created Successfully in the Database", "success");
       }
     })
-    .then(dispatch(getTimelinePosts(user._id, toast)))
     .catch((err) => {
       console.error(err);
       notify(toast, err.response.data.message, "error");
-      dispatch({ type: types.UPLOAD_FAILURE });
+      dispatch({ type: "CREATE FAILURE" });
     });
 };
 
-export const getTimelinePosts = (id, toast) => async (dispatch) => {
+
+
+export const getTimelinePosts = (id, token, toast) => async (dispatch) => {
   dispatch({ type: types.RETREIVING_START });
   // console.log({headers})
   return axios({
     method: "get",
     url: `/posts/${id}/timeline`,
-    headers: headers,
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
   })
     .then((res) => {
       console.log("timeline data", res.data);
@@ -91,13 +92,15 @@ export const getTimelinePosts = (id, toast) => async (dispatch) => {
     });
 };
 
-
-export const likePost = (id) => {
+export const handleLikeUnlikePost = (id, token) => {
   try {
     return axios({
       method: "patch",
       url: `posts/like/${id}`,
-      headers: headers,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
     }).then((res) => {
       console.log("likes res", res);
     });

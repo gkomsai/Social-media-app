@@ -1,21 +1,20 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
 import { getUser } from "../../redux/user/action";
 import defaultProfile from "../../assets/defaultProfile.png";
 
-const Conversation = ({ data, currentUser, online }) => {
+const Conversation = ({ singleChatMemberData, currentUser, online }) => {
   const [userData, setUserData] = useState(null);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  const userId = data?.members.find((id) => id !== currentUser);
+  const userId = singleChatMemberData?.members.find((id) => id !== currentUser); // finding the 2nd member userId
   // console.log({ userId });
 
   const getUserData = async () => {
     try {
       getUser(userId).then((res) => {
         // console.log("getUseres", res.data);
-        dispatch({ type: "SAVE_USER", payload: res.data });
+        // dispatch({ type: "SAVE_USER", payload: res.data });
         setUserData(res.data);
       });
     } catch (error) {

@@ -1,8 +1,11 @@
 import React from "react";
 import "./TrendCard.css";
-
 import { trendingData } from "../../Data/trendingData";
+
+
 const TrendCard = () => {
+
+  
   return (
     <div className="TrendCard">
       <h3>Trends for your</h3>

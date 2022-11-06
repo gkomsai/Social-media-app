@@ -17,7 +17,7 @@ authRouter.post(
   [emailPassRequiredValidator, emailValidator, passwordValidator],
   async (req, res) => {
     try {
-      console.log(req.body);
+      // console.log(req.body);
       const { email, password } = req.body;
       const isemailPresent = await UserModel.findOne({ email });
       // console.log(isemailPresent);

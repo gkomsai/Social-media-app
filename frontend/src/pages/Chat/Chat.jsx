@@ -5,14 +5,15 @@ import Searchbar from "../../components/Searchbar/Searchbar";
 import Conversation from "../../components/Conversations/Conversations";
 import NavIcons from "../../components/NavIcons/Navicons";
 import { useEffect } from "react";
-import { findParticularUser } from "../../redux/chats/action";
+import { findAllchatingUser } from "../../redux/chats/action";
 import ChatBox from "../../components/ChatBox/ChatBox";
 import { io } from "socket.io-client";
 const Chat = () => {
   const { user } = useSelector((store) => store.AuthReducer);
-  const [chats, setChats] = useState([]);
-  const [currentChat, setCurrentChat] = useState(null);
-  console.log({ currentChat });
+  const [allChattingMembers, setaAllChattingMembers] = useState([]);
+  // console.log({allChattingMembers})
+  const [currentChatData, setCurrentChatData] = useState(null);
+  // console.log({ currentChat });
   const [onlineUsers, setOnlineUsers] = useState([]);
   console.log({ onlineUsers });
   const socket = useRef();  // creating the socket globally 
@@ -22,9 +23,9 @@ const Chat = () => {
   useEffect(() => {
     const getChatMembers = async () => {
       try {
-        findParticularUser(user._id).then((res) => {
+        findAllchatingUser(user._id).then((res) => {
           // console.log(res.data);
-          setChats(res.data);
+          setaAllChattingMembers(res.data);
         });
       } catch (error) {
         console.log(error);
@@ -35,7 +36,8 @@ const Chat = () => {
 
   // Connect to Socket.io
   useEffect(() => {
-    socket.current = io("ws://localhost:8800");
+    // socket.current = io("ws://localhost:8090");
+    socket.current = io("https://indian-social-media-app-chatting-backend.onrender.com/");
     socket.current.emit("new-user-add", user._id);
     socket.current.on("get-users", (users) => { // here we are getting the informaiton about the online users from the socket.io
       setOnlineUsers(users);
@@ -74,16 +76,16 @@ const Chat = () => {
         <div className="Chat-container">
           <h2>Chats</h2>
           <div className="Chat-list">
-            {chats?.map((chat) => (
+            {allChattingMembers?.map((chatMember) => (
               <div
                 key={Date.now() + user._id + Math.random()}
                 onClick={() => {
-                  setCurrentChat(chat);
+                  setCurrentChatData(chatMember);
                 }}
               >
                 <Conversation
-                  data={chat}
-                  online={checkOnlineStatus(chat)}
+                  singleChatMemberData={chatMember}
+                  online={checkOnlineStatus(chatMember)}
                   currentUser={user._id}
                 
                 />
@@ -101,7 +103,7 @@ const Chat = () => {
         </div>
 
         <ChatBox
-          chat={currentChat}
+          currentChatData={currentChatData}
           currentUser={user._id}
           setSendMessage={setSendMessage}
           receivedMessage={receivedMessage}

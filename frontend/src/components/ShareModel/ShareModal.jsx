@@ -9,7 +9,10 @@ import {
 } from "@chakra-ui/react";
 import PostShare from "../PostShare/PostShare";
 
+
 const ShareModal = ({ onOpen, onClose, isOpen }) => {
+
+
   return (
     <Modal size={"xl"} isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
