@@ -40,8 +40,6 @@ userRouter.get("/", async (req, res) => {
 
 userRouter.use(checkUserAuth);
 
-
-
 /*  ----------------------for updating  a user-------------------------------- */
 
 userRouter.patch("/update/:id", async (req, res) => {
@@ -61,7 +59,7 @@ userRouter.patch("/update/:id", async (req, res) => {
       const user = await UserModel.findByIdAndUpdate(id, req.body, {
         new: true,
       });
-   
+
       return res.status(200).send(user);
     } catch (err) {
       console.log(err);
@@ -74,8 +72,6 @@ userRouter.patch("/update/:id", async (req, res) => {
     });
   }
 });
-
-
 
 /*  ----------------------for Deleting a user-------------------------------- */
 
@@ -108,11 +104,10 @@ userRouter.delete("/delete/:id", async (req, res) => {
   }
 });
 
-
-
 /*  ----------------------for following a user-------------------------------- */
 
-userRouter.patch("/:id/follow", async (req, res) => { // note- put or patch both will work
+userRouter.patch("/:id/follow", async (req, res) => {
+  // note- put or patch both will work
   const id = req.params.id;
   const currentUserId = req.body.userId;
   //   console.log(id, userId);
@@ -128,7 +123,9 @@ userRouter.patch("/:id/follow", async (req, res) => { // note- put or patch both
       if (!followUser.followers.includes(currentUserId)) {
         await followUser.updateOne({ $push: { followers: currentUserId } });
         await followingUser.updateOne({ $push: { following: id } });
-        res.status(200).send({ status: "success", message: "User followed Successfully!" });
+        res
+          .status(200)
+          .send({ status: "success", message: "User followed Successfully!" });
       } else {
         return res.status(403).send({
           status: "error",
@@ -142,11 +139,9 @@ userRouter.patch("/:id/follow", async (req, res) => { // note- put or patch both
   }
 });
 
-
-
 /*  ----------------------for unfollowing a user-------------------------------- */
 
-userRouter.patch("/:id/unfollow", async (req, res) => {  
+userRouter.patch("/:id/unfollow", async (req, res) => {
   const id = req.params.id;
   const currentUserId = req.body.userId;
   //   console.log(id, currentUserId);
@@ -178,6 +173,5 @@ userRouter.patch("/:id/unfollow", async (req, res) => {
     }
   }
 });
-
 
 module.exports = { userRouter };

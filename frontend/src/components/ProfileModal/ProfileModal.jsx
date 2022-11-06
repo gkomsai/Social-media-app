@@ -180,14 +180,12 @@ const ProfileModal = ({ onOpen, onClose, isOpen, userData }) => {
               <input
                 type="file"
                 name="profilePicture"
-                // onChange={handleImageChange}
                 onChange={(e) => postDetails(e)}
               />
               Cover image
               <input
                 type="file"
                 name="coverPicture"
-                // onChange={handleImageChange}
                 onChange={(e) => postDetails(e)}
               />
             </div>
