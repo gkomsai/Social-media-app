@@ -53,9 +53,20 @@ const Login = () => {
               fontSize="14px"
               onChange={handleChange}
             />
+
+            <Link to="/forgotten_password">
+              <Text
+              color={"#F9802D"}
+                marginTop="15px"
+                fontSize="14px"
+                cursor="pointer"
+              >
+                Forgot Password?
+              </Text>
+            </Link>
           </VStack>
           <Button
-            backgroundColor="#F9802D"
+            bg="var(--buttonBg)"
             marginTop="40px"
             padding="25px 35px 25px 35px"
             borderRadius="25px"
