@@ -1,23 +1,17 @@
 import axios from "axios";
-import { getItemFromLocal } from "../../utils/localStorage";
 
 
 
-
-const token = getItemFromLocal("token");
-// console.log({token});
-const headers = {
-  "Content-Type": "application/json",
-  "Authorization": `Bearer ${token}`,
-};
-
-export const createNewChat = (payload) => (dispatch)=>{
+export const createNewChat = (payload, token) => (dispatch)=>{
     try {
       return axios({
         method: "post",
         url: `/chats`,
         data: payload,
-        headers: headers,
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
       }).then((res) => {
         console.log(res);
       dispatch({type:"CREATE_NEW_CHAT_SUCCESS"});
@@ -28,20 +22,26 @@ export const createNewChat = (payload) => (dispatch)=>{
   };
   
   
-export const findAllchatingUser = (id) =>{
+export const findAllchatingUser = (id,token) =>{
  return  axios({
         method: "get",
         url: `/chats/${id}`,
-        headers: headers,
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
       })
   };
 
-  export const findChats = (firstId,secondId) => (dispatch)=>{
+  export const findChats = (firstId,secondId,token) => (dispatch)=>{
     try {
       return axios({
         method: "get",
         url: `/chats/find/${firstId}/${secondId}`,
-        headers: headers,
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
       }).then((res) => {
       dispatch({type:"FIND_CHAT_SUCCESS",payload:res.data});
       });

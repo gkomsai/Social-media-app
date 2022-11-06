@@ -130,7 +130,7 @@ postsRouter.delete("/delete/:id", async (req, res) => {
 postsRouter.patch("/like/:id", async (req, res) => {
   const id = req.params.id;
   const { userId } = req.body;
-  console.log(req.body);
+  // console.log(req.body);
   try {
     const foundPost = await PostModel.findById(id);
   
@@ -140,7 +140,7 @@ postsRouter.patch("/like/:id", async (req, res) => {
     } else {
       await foundPost.updateOne({ $push: { likes: userId } });
       // await foundPost.updateOne({ $push: { likes: userId }, new:true });
-      console.log({foundPost});
+      // console.log({foundPost});
       res.status(200).send({ status: "success", message: "Post liked" });
     }
   } catch (err) {

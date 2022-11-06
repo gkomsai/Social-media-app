@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-
 import ProfileModal from "../ProfileModal/ProfileModal";
 import "./InfoCard.css";
 import { UilPen } from "@iconscout/react-unicons";
@@ -9,7 +8,7 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { logoutFun } from "../../redux/auth/action";
 import { notify } from "../../utils/extraFunctions";
-import { getUser } from "../../redux/user/action";
+
 
 const InfoCard = () => {
   const [currentUser, setCurrentUser] = useState({});
@@ -19,7 +18,7 @@ const InfoCard = () => {
 // console.log(id);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { user } = useSelector((state) => state.AuthReducer);
-  console.log({user},"info card");
+  // console.log({user},"info card");
   // console.log(id,user._id);
 
 

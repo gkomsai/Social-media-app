@@ -2,12 +2,12 @@ import React, { useEffect, useRef, useState } from "react";
 import { getUser } from "../../redux/user/action";
 import defaultProfile from "../../assets/defaultProfile.png";
 import "./ChatBox.css";
-import TimeAgo from 'javascript-time-ago'
-import en from 'javascript-time-ago/locale/en'
+import { format } from 'timeago.js';
 
 
 import { addMessage, getMessages } from "../../api/messageApi";
 import InputEmoji from "react-input-emoji";
+import { useSelector } from "react-redux";
 
 const ChatBox = ({
   currentChatData,
@@ -19,11 +19,9 @@ const ChatBox = ({
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   // console.log({ userData });
+  const { token } = useSelector((state) => state.AuthReducer);
 
 
-  TimeAgo.addDefaultLocale(en)
-  // Create formatter (English).
-  const timeAgo = new TimeAgo('en-US')
 
 
   const scroll = useRef();
@@ -31,7 +29,7 @@ const ChatBox = ({
 
   const getUserData = async () => {
     try {
-      getUser(userId).then((res) => {
+      getUser(userId,token).then((res) => {
         // console.log("getUseres in chatBox", res.data);
         setUserData(res.data);
       });
@@ -50,7 +48,7 @@ const ChatBox = ({
   useEffect(() => {
     const fetchMessages = async () => {
       try {
-        const { data } = await getMessages(currentChatData._id);
+        const { data } = await getMessages(currentChatData._id, token);
         // console.log("fetch messages data", data);
         setMessages(data);
       } catch (error) {
@@ -73,7 +71,7 @@ const ChatBox = ({
     setSendMessage({ ...message, receiverId });
     // sending message to database
     try {
-      const { data } = await addMessage(message);
+      const { data } = await addMessage(message, token);
       setMessages([...messages, data]);
       setNewMessage("");
     } catch (err) {
@@ -136,7 +134,7 @@ const ChatBox = ({
                 }
               >
                 <span>{message.text}</span>{" "}
-                <span>{timeAgo.format(message.createdAt)}</span>
+                <span>{format(message.createdAt)}</span>
               </div>
             ))}
           </div>

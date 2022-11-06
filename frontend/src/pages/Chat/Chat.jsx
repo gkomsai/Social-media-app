@@ -10,6 +10,7 @@ import ChatBox from "../../components/ChatBox/ChatBox";
 import { io } from "socket.io-client";
 const Chat = () => {
   const { user } = useSelector((store) => store.AuthReducer);
+  const { token } = useSelector((store) => store.AuthReducer);
   const [allChattingMembers, setaAllChattingMembers] = useState([]);
   // console.log({allChattingMembers})
   const [currentChatData, setCurrentChatData] = useState(null);
@@ -23,7 +24,7 @@ const Chat = () => {
   useEffect(() => {
     const getChatMembers = async () => {
       try {
-        findAllchatingUser(user._id).then((res) => {
+        findAllchatingUser(user._id,token).then((res) => {
           // console.log(res.data);
           setaAllChattingMembers(res.data);
         });
@@ -31,7 +32,7 @@ const Chat = () => {
         console.log(error);
       }
     };
-    getChatMembers(user._id);
+    getChatMembers();
   }, [user._id]);
 
   // Connect to Socket.io
@@ -96,7 +97,6 @@ const Chat = () => {
       </div>
 
       {/* Right Side */}
-
       <div className="Right-side-chat">
         <div style={{ width: "20rem", alignSelf: "flex-end" }}>
           <NavIcons />

@@ -6,9 +6,11 @@ import Heart from "../../assets/like.png";
 import NotLike from "../../assets/notlike.png";
 import { useSelector } from "react-redux";
 import {  handleLikeUnlikePost } from "../../redux/posts/action";
+import { useToast } from "@chakra-ui/toast";
 
 const SinglePost = ({ postData }) => {
   // console.log({postData})
+  const toast = useToast();
   const { user } = useSelector((state) => state.AuthReducer);
   const { token } = useSelector((state) => state.AuthReducer);
   const [liked, setLiked] = useState(postData.likes.includes(user._id));
@@ -16,7 +18,7 @@ const SinglePost = ({ postData }) => {
 
  
   const handleLike = () => {
-  handleLikeUnlikePost(postData._id,token);
+  handleLikeUnlikePost(postData._id,token,toast);
     setLiked((prev) => !prev);
     liked? setLikes((prev)=>prev-1): setLikes((prev)=>prev+1)
   };
