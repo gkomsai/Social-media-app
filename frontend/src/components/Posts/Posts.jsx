@@ -14,14 +14,19 @@ const Posts = () => {
   const toast = useToast();
   const params = useParams();
   const { user } = useSelector((state) => state.AuthReducer);
+  const { token } = useSelector((state) => state.AuthReducer);
   let { posts, loading } = useSelector((state) => state.PostReducer);
+
+
   useEffect(() => {
-    dispatch(getTimelinePosts(user._id, toast));
+    dispatch(getTimelinePosts(user._id, token, toast));
   }, [getTimelinePosts, dispatch, user]);
 
   if (!posts) return "No Posts";
+
+// For handling the posts indide our Profile page
  if(params.id){
-  posts = posts.filter((post)=> post.userId===params.id);
+  posts = posts.filter((post)=> post.userId===params.id);  
  } 
   return (
     <div className="Posts">

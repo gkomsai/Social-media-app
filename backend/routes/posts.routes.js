@@ -153,8 +153,9 @@ postsRouter.patch("/like/:id", async (req, res) => {
 
 postsRouter.get("/:id/timeline", async (req, res) => {  
   // console.log("inside timeline post");
-  const userId = req.params.id
-  // const { userId } = req.body;
+  // const userId = req.params.id
+  const { userId } = req.body;
+  // console.log({userId})
   try {
     const currentUserPosts = await PostModel.find({userId });
     // return res.send(currentUserPosts);

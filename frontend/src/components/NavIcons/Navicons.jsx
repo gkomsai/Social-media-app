@@ -1,20 +1,20 @@
 import React from "react";
-import Home from "../../assets/home.png";
-import Notification from "../../assets/noti.png";
-import Comment from "../../assets/comment.png";
 import { UilSetting } from "@iconscout/react-unicons";
+import { GrNotification } from "react-icons/gr";
+import { BsFillChatDotsFill } from "react-icons/bs";
+import { AiFillHome } from "react-icons/ai";
 import { Link } from "react-router-dom";
 
 const NavIcons = () => {
   return (
     <div className="navIcons">
       <Link to="/">
-        <img src={Home} alt="" />
+        <AiFillHome color="#F97430" size={'25px'} title="home"/>
       </Link>
       <UilSetting />
-      <img src={Notification} alt="" />
+      <GrNotification size={'25px'}  />
       <Link to="/chats">
-        <img src={Comment} alt="" />
+        <BsFillChatDotsFill color="#F97430" size={'25px'} title="chats"/>
       </Link>
     </div>
   );

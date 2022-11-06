@@ -3,15 +3,15 @@
   border-radius: 0.7rem;
   gap: 1rem;
   display: grid;
-
   font-size: 13px;
   max-height: auto;
+  justify-content: flex-start;
 }
 .follower {
   display: flex;
-  /* justify-content: space-between; */
   gap: 40px;
   align-items: center;
+ 
 }
 
 .follower > div {
@@ -29,6 +29,7 @@
   flex-direction: column;
   align-items: flex-start;
   width: 8rem;
+  margin-left: 10px;
 }
 
 .name > span:nth-of-type(1) {

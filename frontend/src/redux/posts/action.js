@@ -6,7 +6,7 @@ import * as types from "./actionTypes";
 
 const token = getItemFromLocal("token");
 const user = getItemFromLocal("user");
-// console.log({token});
+console.log("redux wala",{user});
 const headers = {
   "Content-Type": "application/json",
   "Authorization": `Bearer ${token}`,
@@ -61,7 +61,7 @@ export const uploadPost = (payload, toast) => (dispatch) => {
         notify(toast, "post created Successfully in the Database", "success");
       }
     })
-    .then(dispatch(getTimelinePosts(user._id, toast)))
+    .then(dispatch(getTimelinePosts(user._id, token, toast)))
     .catch((err) => {
       console.error(err);
       notify(toast, err.response.data.message, "error");
@@ -69,13 +69,16 @@ export const uploadPost = (payload, toast) => (dispatch) => {
     });
 };
 
-export const getTimelinePosts = (id, toast) => async (dispatch) => {
+export const getTimelinePosts = (id, token, toast) => async (dispatch) => {
   dispatch({ type: types.RETREIVING_START });
   // console.log({headers})
   return axios({
     method: "get",
     url: `/posts/${id}/timeline`,
-    headers: headers,
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`,
+    },
   })
     .then((res) => {
       console.log("timeline data", res.data);

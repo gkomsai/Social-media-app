@@ -2,7 +2,10 @@ import React, { useEffect, useRef, useState } from "react";
 import { getUser } from "../../redux/user/action";
 import defaultProfile from "../../assets/defaultProfile.png";
 import "./ChatBox.css";
-import { format } from "timeago.js";
+import TimeAgo from 'javascript-time-ago'
+import en from 'javascript-time-ago/locale/en'
+
+
 import { addMessage, getMessages } from "../../api/messageApi";
 import InputEmoji from "react-input-emoji";
 
@@ -15,7 +18,14 @@ const ChatBox = ({
   const [userData, setUserData] = useState(null);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
-  console.log({ userData });
+  // console.log({ userData });
+
+  
+  TimeAgo.addDefaultLocale(en)
+  // Create formatter (English).
+  const timeAgo = new TimeAgo('en-US')
+
+
   const scroll = useRef();
   const userId = currentChatData?.members.find((id) => id !== currentUser);
 
@@ -52,8 +62,7 @@ const ChatBox = ({
     }
   }, [currentChatData]);
 
-  const handleSend = async (e) => {
-    e.preventDefault();
+  const handleSend = async () => {
     const message = {
       senderId: currentUser,
       text: newMessage,
@@ -127,7 +136,7 @@ const ChatBox = ({
                 }
               >
                 <span>{message.text}</span>{" "}
-                <span>{format(message.createdAt)}</span>
+                <span>{timeAgo.format(message.createdAt)}</span>
               </div>
             ))}
           </div>
@@ -136,9 +145,7 @@ const ChatBox = ({
             <InputEmoji
               value={newMessage}
               onChange={setNewMessage}
-              onKeyPress={(event) =>
-                event.key === "Enter" ? handleSend() : null
-              }
+              onEnter={handleSend}
             />
             <div className="send-button button" onClick={handleSend}>
               Send

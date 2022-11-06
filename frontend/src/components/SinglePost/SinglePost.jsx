@@ -23,7 +23,6 @@ const SinglePost = ({ postData }) => {
 
   return (
     <div className="SinglePost">
-      {/* <img src={postData.image ? process.env.REACT_APP_PUBLIC_FOLDER + postData.image : ""} alt="" /> */}
       <img src={postData.image} alt="" />
 
       <div className="postReact">
