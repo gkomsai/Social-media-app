@@ -6,7 +6,7 @@ import { UilLocationPoint } from "@iconscout/react-unicons";
 import { UilSchedule } from "@iconscout/react-unicons";
 import { UilTimes } from "@iconscout/react-unicons";
 import { useDispatch, useSelector } from "react-redux";
-import { uploadPost } from "../../redux/posts/action";
+import { createPost } from "../../redux/posts/action";
 import { useToast } from "@chakra-ui/react";
 import axios from "axios";
 import { notify } from "../../utils/extraFunctions";
@@ -59,7 +59,7 @@ const PostShare = () => {
               image: res.data.secure_url,
               cloudinary_id: res.data.public_id,
             };
-            dispatch(uploadPost(newPost, toast));
+            dispatch(createPost(newPost, toast));
 
             resetShare();
           }
@@ -70,7 +70,7 @@ const PostShare = () => {
           notify(toast, "something went wrong", "error");
         });
     } else {
-      dispatch(uploadPost(newPost, toast));
+      dispatch(createPost(newPost, toast));
       resetShare();
     }
   };

@@ -6,7 +6,7 @@ import * as types from "./actionTypes";
 
 const token = getItemFromLocal("token");
 const user = getItemFromLocal("user");
-console.log("redux wala",{user});
+// console.log("redux wala",{user});
 const headers = {
   "Content-Type": "application/json",
   "Authorization": `Bearer ${token}`,
@@ -46,8 +46,9 @@ const headers = {
 //         dispatch({type:types.UPLOAD_FAILURE});
 //       });
 //   };
-export const uploadPost = (payload, toast) => (dispatch) => {
-  dispatch({ type: types.UPLOAD_START });
+export const createPost = (payload, toast) => (dispatch) => {
+  console.warn("inside new post")
+  dispatch({ type: "CREATING START" });
   axios({
     method: "post",
     url: `/posts/create`,
@@ -55,17 +56,17 @@ export const uploadPost = (payload, toast) => (dispatch) => {
     headers: headers,
   })
     .then((res) => {
-      console.log(res.data);
+      console.log("new created data",res.data);
       if (res.data) {
-        dispatch({ type: types.UPLOAD_SUCCESS });
+        dispatch({ type: "CREATE SUCCESS" , payload: res.data });
         notify(toast, "post created Successfully in the Database", "success");
       }
     })
-    .then(dispatch(getTimelinePosts(user._id, token, toast)))
+    // .then(dispatch(getTimelinePosts(user._id, token, toast)))
     .catch((err) => {
       console.error(err);
       notify(toast, err.response.data.message, "error");
-      dispatch({ type: types.UPLOAD_FAILURE });
+      dispatch({ type: "CREATE FAILURE" });
     });
 };
 
@@ -95,7 +96,7 @@ export const getTimelinePosts = (id, token, toast) => async (dispatch) => {
 };
 
 
-export const likePost = (id) => {
+export const handleLikeUnlikePost = (id) => {
   try {
     return axios({
       method: "patch",

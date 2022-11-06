@@ -20,7 +20,7 @@ const ChatBox = ({
   const [newMessage, setNewMessage] = useState("");
   // console.log({ userData });
 
-  
+
   TimeAgo.addDefaultLocale(en)
   // Create formatter (English).
   const timeAgo = new TimeAgo('en-US')
@@ -32,7 +32,7 @@ const ChatBox = ({
   const getUserData = async () => {
     try {
       getUser(userId).then((res) => {
-        console.log("getUseres in chatBox", res.data);
+        // console.log("getUseres in chatBox", res.data);
         setUserData(res.data);
       });
     } catch (error) {
@@ -51,7 +51,7 @@ const ChatBox = ({
     const fetchMessages = async () => {
       try {
         const { data } = await getMessages(currentChatData._id);
-        console.log("fetch messages data", data);
+        // console.log("fetch messages data", data);
         setMessages(data);
       } catch (error) {
         console.log(error);
@@ -83,7 +83,7 @@ const ChatBox = ({
 
   // Receiveing Message from parent component and will render as soon as our recevied message is changed so this code is enableling us the real-time chatting
   useEffect(() => {
-    console.log("Message Arrived: ", receivedMessage);
+    // console.log("Message Arrived: ", receivedMessage);
     if (receivedMessage && receivedMessage.chatId === currentChatData._id) {
       setMessages([...messages, receivedMessage]);
     }

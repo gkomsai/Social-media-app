@@ -5,17 +5,18 @@ import Share from "../../assets/share.png";
 import Heart from "../../assets/like.png";
 import NotLike from "../../assets/notlike.png";
 import { useSelector } from "react-redux";
-import { likePost } from "../../redux/posts/action";
+import {  handleLikeUnlikePost } from "../../redux/posts/action";
 
 const SinglePost = ({ postData }) => {
   // console.log({postData})
   const { user } = useSelector((state) => state.AuthReducer);
+  const { token } = useSelector((state) => state.AuthReducer);
   const [liked, setLiked] = useState(postData.likes.includes(user._id));
   const [likes, setLikes] = useState(postData.likes.length)
 
  
   const handleLike = () => {
-    likePost(postData._id);
+  handleLikeUnlikePost(postData._id,token);
     setLiked((prev) => !prev);
     liked? setLikes((prev)=>prev-1): setLikes((prev)=>prev+1)
   };

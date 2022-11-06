@@ -24,7 +24,7 @@ const headers = {
 const ProfileModal = ({ onOpen, onClose, isOpen, userData }) => {
   const { password, ...other } = userData;
   const [formData, setFormData] = useState(other);
-  console.log({ formData });
+  // console.log({ formData });
   const [profilePicture, setprofilePicture] = useState(null);
   const [coverPicture, setcoverPicture] = useState(null);
   // console.log({profilePicture},{coverPicture})

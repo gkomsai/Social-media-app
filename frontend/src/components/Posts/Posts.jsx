@@ -15,22 +15,22 @@ const Posts = () => {
   const params = useParams();
   const { user } = useSelector((state) => state.AuthReducer);
   const { token } = useSelector((state) => state.AuthReducer);
-  let { posts, loading } = useSelector((state) => state.PostReducer);
-
+  let { timeLinePosts, newPost } = useSelector((state) => state.PostReducer);
+// console.log({newPost})
 
   useEffect(() => {
-    dispatch(getTimelinePosts(user._id, token, toast));
-  }, [getTimelinePosts, dispatch, user]);
+      dispatch(getTimelinePosts(user._id, token, toast));
+  }, [newPost]);
 
-  if (!posts) return "No Posts";
+  if (!timeLinePosts) return "No Posts";
 
 // For handling the posts indide our Profile page
  if(params.id){
-  posts = posts.filter((post)=> post.userId===params.id);  
+  timeLinePosts = timeLinePosts.filter((post)=> post.userId===params.id);  
  } 
   return (
     <div className="Posts">
-      {posts?.map((el) => {
+      {timeLinePosts?.map((el) => {
         return <SinglePost postData={el} key={Date.now() + Math.random()} />;
       })}
     </div>
