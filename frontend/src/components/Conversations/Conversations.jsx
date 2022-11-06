@@ -13,8 +13,6 @@ const Conversation = ({ singleChatMemberData, currentUser, online }) => {
   const getUserData = async () => {
     try {
       getUser(userId).then((res) => {
-        // console.log("getUseres", res.data);
-        // dispatch({ type: "SAVE_USER", payload: res.data });
         setUserData(res.data);
       });
     } catch (error) {

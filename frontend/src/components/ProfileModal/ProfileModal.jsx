@@ -193,7 +193,7 @@ const ProfileModal = ({ onOpen, onClose, isOpen, userData }) => {
             </div>
 
             <Button
-              bg={"orange"}
+              bg="var(--buttonBg)"
               className="button infoButton"
               onClick={onClose}
               type="submit"

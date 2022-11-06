@@ -7,18 +7,21 @@ import { UilSchedule } from "@iconscout/react-unicons";
 import { UilTimes } from "@iconscout/react-unicons";
 import { useDispatch, useSelector } from "react-redux";
 import { createPost } from "../../redux/posts/action";
-import { useToast } from "@chakra-ui/react";
+import { Button, useToast } from "@chakra-ui/react";
 import axios from "axios";
 import { notify } from "../../utils/extraFunctions";
 import { getItemFromLocal } from "../../utils/localStorage";
 import defaultProfile from "../../assets/defaultProfile.png";
 
 const PostShare = () => {
-  const [image, setImage] = useState(null);
   const imageRef = useRef();
   const description = useRef();
   const toast = useToast();
   const dispatch = useDispatch();
+
+  const [image, setImage] = useState(null);
+  const [isLoading, setIsLoading] = useState(false)
+ 
   const { user } = useSelector((store) => store.AuthReducer);
   const { token } = useSelector((store) => store.AuthReducer);
 
@@ -44,8 +47,14 @@ const PostShare = () => {
       description: description.current.value,
     };
 
+    if(!newPost.description){
+      notify(toast, "Please write something about the posts and then Post", "success");
+      return;
+    }
+
     // if there is an image with post
     if (image) {
+      setIsLoading(true)
       const data = new FormData();
       data.append("file", image);
       axios
@@ -61,10 +70,12 @@ const PostShare = () => {
             };
             dispatch(createPost(newPost, token, toast));
             resetShare();
+            setIsLoading(false)
           }
         })
         .catch((err) => {
-          console.error(err);
+          // console.error(err);
+          setIsLoading(false)
           notify(
             toast,
             " file type is not supported! Only jpg|jpeg|png|gif files are allowed",
@@ -72,8 +83,10 @@ const PostShare = () => {
           );
         });
     } else {
+      setIsLoading(true)
       dispatch(createPost(newPost, toast));
       resetShare();
+      setIsLoading(false)
     }
   };
 
@@ -121,9 +134,9 @@ const PostShare = () => {
             <UilSchedule />
             Shedule
           </div>
-          <button onClick={handleUpload} className="button ps-button">
+          <Button  bg="var(--buttonBg)"  isLoading={isLoading} onClick={handleUpload} className="button ps-button">
             Share
-          </button>
+          </Button>
 
           <div style={{ display: "none" }}>
             <input type="file" ref={imageRef} onChange={onImageChange} />
