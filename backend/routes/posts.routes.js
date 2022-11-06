@@ -79,16 +79,17 @@ postsRouter.get("/", async (req, res) => {
 /*  ----------------------for updating a posts of a particular user-------------------------------- */
 
 postsRouter.patch("/update/:id", async (req, res) => {
+  // console.log("inside update post")
   const postId = req.params.id;
   const { userId } = req.body;
 
   try {
     const foundPost = await PostModel.findById(postId);
     if (foundPost.userId === userId) {
-      await foundPost.updateOne({ $set: req.body });
+    const updatedPost=  await foundPost.updateOne(req.body,{new:true});
       return res
         .status(200)
-        .send({ status: "success", message: "Post updated Successfully!" });
+        .send({ status: "success", message: "Post updated Successfully!", updatedPost });
     } else {
       return res
         .status(403)

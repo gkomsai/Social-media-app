@@ -126,7 +126,27 @@ export const deletePost = (id, token,toast) =>(dispatch)=> {
       notify(toast, res.data.message, "success");
     });
   } catch (err) {
-    // console.log(err);
+    notify(toast, err.response.data.message, "error");
+  }
+};
+
+
+export const updatePost = (id, payload, token,toast) =>(dispatch)=> {
+  try {
+    return axios({
+      method: "patch",
+      url: `posts/update/${id}`,
+      data: payload,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }).then((res) => {
+      // console.log("upadate post",res.data)
+      dispatch({ type: "UPDATE SUCCESS", payload:res.data.updatedPost });
+      notify(toast, res.data.message, "success");
+    });
+  } catch (err) {
     notify(toast, err.response.data.message, "error");
   }
 };
