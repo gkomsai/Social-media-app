@@ -8,6 +8,7 @@ const {
 } = require("../middleware/emailPassRequiredValidator");
 const { passwordValidator } = require("../middleware/passwordValidator");
 const { emailValidator } = require("../middleware/emailValidator");
+const { transporter } = require("../config/emailConfig");
 require("dotenv").config();
 
 const authRouter = Router();
@@ -98,5 +99,89 @@ authRouter.post("/login", emailPassRequiredValidator, async (req, res) => {
       .send({ status: "error", message: "Unable to Login" });
   }
 });
+
+authRouter.post("/forgotten_password", async (req, res) => {
+  const { email } = req.body;
+  if (email) {
+    const user = await UserModel.findOne({ email: email });
+    if (user) {
+      const token = jwt.sign({ userID: user._id }, process.env.JWT_SECRET_KEY, {
+        expiresIn: "15m",
+      });
+      const link = `http://localhost:3000/reset-password/${user._id}/${token}`;
+
+      // console.log(link);
+
+      let info = await transporter.sendMail({
+        from: process.env.EMAIL_FROM,
+        to: user.email,
+        subject: "Indian Social Media App - Password Reset Link",
+        html: `It seems you have forgotten your password. That's OK, it happens to the best of us! Would you like to reset your password: <a href=${link}>Click Here</a> to Reset Your Password
+          <p> If you do not wish to reset your password, ignore this message. It will expire in 15 minutes.</p>
+          `,
+      });
+      res.status(200).send({
+        status: "success",
+        message: "Password Reset Email Sent... Please Check Your Email",
+      });
+    } else {
+      res
+        .status(400)
+        .send({ status: "error", message: "Email doesn't exists" });
+    }
+  } else {
+    res
+      .status(400)
+      .send({ status: "error", message: "Email Field is Required" });
+  }
+});
+
+authRouter.post(
+  "/reset-password/:id/:token",
+  passwordValidator,
+  async (req, res) => {
+    const { password, confirmPassword } = req.body;
+    const { id, token } = req.params;
+   
+    const user = await UserModel.findById(id);
+
+    try {
+      jwt.verify(token, process.env.JWT_SECRET_KEY);
+      if (password && confirmPassword) {
+        if (password !== confirmPassword) {
+          return res.status(500).send({
+            status: "error",
+            message: "New Password and Confirm New Password doesn't match",
+          });
+        } else {
+          const salt = await bcrypt.genSalt(10);
+          const newHashPassword = await bcrypt.hash(password, salt);
+          await UserModel.findByIdAndUpdate(user._id, {
+            $set: { password: newHashPassword },
+          });
+          res.status(201).send({
+            status: "success",
+            message: "Password Reset Successfully",
+          });
+        }
+      } else {
+        res
+          .status(400)
+          .send({ status: "error", message: "All Fields are Required" });
+      }
+    } catch (error) {
+      console.log(error);
+      res.status(400).send({ status: "error", message: "Invalid Token" });
+    }
+  }
+);
+
+
+
+
+
+
+
+
 
 module.exports = { authRouter };
