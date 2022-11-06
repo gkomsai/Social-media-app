@@ -1,10 +1,8 @@
 import React from "react";
 import "./RightSide.css";
-
 import TrendCard from "../TrendCard/TrendCard";
 import ShareModal from "../ShareModel/ShareModal";
 import { useDisclosure } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
 import NavIcons from "../NavIcons/Navicons";
 
 const RightSide = () => {

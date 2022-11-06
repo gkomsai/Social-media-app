@@ -8,7 +8,7 @@ import "./profileCard.css";
 const ProfileCard = ({ location }) => {
   const { user } = useSelector((store) => store.AuthReducer);
   // console.log({user});
-  const { posts } = useSelector((store) => store.PostReducer);
+  const { timeLinePosts } = useSelector((store) => store.PostReducer);
   if (!user) {
     return <h1>user doesn't exist</h1>;
   }
@@ -47,7 +47,10 @@ const ProfileCard = ({ location }) => {
               <div className="vl"></div>
               <div className="follow">
                 <span>
-                  {posts?.filter((post) => post.userId === user?._id).length}
+                  {
+                    timeLinePosts?.filter((post) => post.userId === user?._id)
+                      .length
+                  }
                 </span>
                 <span>Posts</span>
               </div>{" "}
