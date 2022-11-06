@@ -92,7 +92,7 @@ export const getTimelinePosts = (id, token, toast) => async (dispatch) => {
     });
 };
 
-export const handleLikeUnlikePost = (id, token) => {
+export const handleLikeUnlikePost = (id, token,toast) => {
   try {
     return axios({
       method: "patch",
@@ -102,9 +102,11 @@ export const handleLikeUnlikePost = (id, token) => {
         Authorization: `Bearer ${token}`,
       },
     }).then((res) => {
-      console.log("likes res", res);
+      // console.log("likes res", res);
+      notify(toast, res.data.message, "success");
     });
   } catch (err) {
-    console.log(err);
+    // console.log(err);
+    notify(toast, err.response.data.message, "error");
   }
 };

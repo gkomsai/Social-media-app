@@ -1,16 +1,10 @@
 import axios from "axios";
 import { notify } from "../../utils/extraFunctions";
-import { getItemFromLocal } from "../../utils/localStorage";
 import * as types from "./actionTypes";
-const token =""
 
-// console.log({token});
-const headers = {
-  "Content-Type": "application/json",
-  "Authorization": `Bearer ${token}`,
-};
 
-export const getUser = (id) =>  {
+
+export const getUser = (id,token) =>  {
   return axios({
     method: "get",
     url: `/user/${id}`,
@@ -21,7 +15,7 @@ export const getUser = (id) =>  {
   })
 };
 
-export const getAllUser = (toast, token) => (dispatch) => {
+export const getAllUser = (token,toast) => (dispatch) => {
   dispatch({ type: types.GET_USER_REQUEST });
   axios({
     method: "get",

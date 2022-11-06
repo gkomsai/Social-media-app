@@ -10,6 +10,7 @@ const FollowersCard = () => {
   const toast = useToast();
   const [persons, setPersons] = useState([]);
   const { user } = useSelector((store) => store.AuthReducer);
+  const { token } = useSelector((store) => store.AuthReducer);
   const { allUser } = useSelector((store) => store.AuthReducer);
   // console.log("allUser",allUser);
 
@@ -19,7 +20,7 @@ const FollowersCard = () => {
 
   useEffect(() => {
     if (allUser.length === 0) {
-      dispatch(getAllUser(toast));
+      dispatch(getAllUser(token, toast));
     }
   }, [allUser.length]);
 
