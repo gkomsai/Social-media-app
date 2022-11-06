@@ -110,3 +110,23 @@ export const handleLikeUnlikePost = (id, token,toast) => {
     notify(toast, err.response.data.message, "error");
   }
 };
+
+export const deletePost = (id, token,toast) =>(dispatch)=> {
+
+  try {
+    return axios({
+      method: "delete",
+      url: `posts/delete/${id}`,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }).then((res) => {
+      dispatch({ type: "DELETE SUCCESS" });
+      notify(toast, res.data.message, "success");
+    });
+  } catch (err) {
+    // console.log(err);
+    notify(toast, err.response.data.message, "error");
+  }
+};
