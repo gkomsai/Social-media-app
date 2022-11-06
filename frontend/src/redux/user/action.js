@@ -2,7 +2,7 @@ import axios from "axios";
 import { notify } from "../../utils/extraFunctions";
 import { getItemFromLocal } from "../../utils/localStorage";
 import * as types from "./actionTypes";
-const token = getItemFromLocal("token");
+const token =""
 
 // console.log({token});
 const headers = {
@@ -14,16 +14,22 @@ export const getUser = (id) =>  {
   return axios({
     method: "get",
     url: `/user/${id}`,
-    headers: headers,
+    headers:{
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`,
+    },
   })
 };
 
-export const getAllUser = (toast) => (dispatch) => {
+export const getAllUser = (toast, token) => (dispatch) => {
   dispatch({ type: types.GET_USER_REQUEST });
   axios({
     method: "get",
     url: `/user`,
-    headers: headers,
+    headers:{
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`,
+    },
   })
     .then((res) => {
       // console.log(res.data);
@@ -39,13 +45,16 @@ export const getAllUser = (toast) => (dispatch) => {
     });
 };
 
-export const upadteUser = (id, payload, toast) => (dispatch) => {
+export const upadteUser = (id, payload, token, toast) => (dispatch) => {
   dispatch({ type: types.UPDATE_USER_REQUEST });
   axios({
     method: "patch",
     url: `/user/update/${id}`,
     data: payload,
-    headers: headers,
+    headers:{
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`,
+    },
   })
     .then((res) => {
       // console.log("upadteUser res.data",res.data);
@@ -55,18 +64,20 @@ export const upadteUser = (id, payload, toast) => (dispatch) => {
       }
     })
     .catch((err) => {
-      console.error("update user err",err);
-      // notify(toast, err.response.data.message, "error");
+      notify(toast, err.response.data.message, "error");
       dispatch({ type: types.UPDATE_USER_FAILURE });
     });
 };
 
-export const deleteUser = (id, toast) => (dispatch) => {
+export const deleteUser = (id, token, toast) => (dispatch) => {
   dispatch({ type: types.DELETE_USER_REQUEST });
   axios({
     method: "delete",
     url: `/user/delete/${id}`,
-    headers: headers,
+    headers:{
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`,
+    },
   })
     .then((res) => {
       // console.log(res.data);
@@ -82,12 +93,15 @@ export const deleteUser = (id, toast) => (dispatch) => {
     });
 };
 
-export const followUser = (id, toast) => (dispatch) => {
+export const followUser = (id, token, toast) => (dispatch) => {
   dispatch({ type: types.FOLLOW_USER_REQUEST });
   axios({
     method: "patch",
     url: `/user/${id}/follow`,
-    headers: headers,
+    headers:{
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`,
+    },
   })
     .then((res) => {
       // console.log(res.data);
@@ -103,12 +117,15 @@ export const followUser = (id, toast) => (dispatch) => {
     });
 };
 
-export const unfollowUser = (id, toast) => (dispatch) => {
+export const unfollowUser = (id, token, toast) => (dispatch) => {
   dispatch({ type: types.UNFOLLOW_USER_REQUEST });
   axios({
     method: "patch",
     url: `/user/${id}/unfollow`,
-    headers: headers,
+    headers:{
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`,
+    },
   })
     .then((res) => {
       // console.log(res.data);

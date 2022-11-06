@@ -20,12 +20,12 @@ const PostShare = () => {
   const toast = useToast();
   const dispatch = useDispatch();
   const { user } = useSelector((store) => store.AuthReducer);
+  const { token } = useSelector((store) => store.AuthReducer);
 
-  const token = getItemFromLocal("token");
   // console.log(token);
   const headers = {
     "Content-Type": "application/json",
-    "Authorization": `Bearer ${token}`,
+    Authorization: `Bearer ${token}`,
   };
 
   const onImageChange = (e) => {
@@ -59,15 +59,17 @@ const PostShare = () => {
               image: res.data.secure_url,
               cloudinary_id: res.data.public_id,
             };
-            dispatch(createPost(newPost, toast));
-
+            dispatch(createPost(newPost, token, toast));
             resetShare();
           }
         })
         .catch((err) => {
           console.error(err);
-          // notify(toast, err.response.data.message, "error");
-          notify(toast, "something went wrong", "error");
+          notify(
+            toast,
+            " file type is not supported! Only jpg|jpeg|png|gif files are allowed",
+            "error"
+          );
         });
     } else {
       dispatch(createPost(newPost, toast));
@@ -81,12 +83,15 @@ const PostShare = () => {
     description.current.value = "";
   }
 
-  if(!user){
-    return <h1>user doesn't exist</h1>
+  if (!user) {
+    return <h1>user doesn't exist</h1>;
   }
   return (
     <div className="PostShare">
-     <img src={user.profilePicture ? user.profilePicture : defaultProfile} alt="" />
+      <img
+        src={user.profilePicture ? user.profilePicture : defaultProfile}
+        alt=""
+      />
       <div>
         <input
           type="text"

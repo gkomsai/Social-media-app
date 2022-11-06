@@ -19,7 +19,7 @@ postsRouter.post("/upload", upload.single("file"), async (req, res) => { //note-
      }
  
   }catch(err){
-    console.error(err);
+    return res.status(500).send({ status: "error", message: err.message });
   }
   });
 
@@ -29,7 +29,7 @@ postsRouter.post("/upload", upload.single("file"), async (req, res) => { //note-
 /*  ----------------------for creating a new post-------------------------------- */
 
 postsRouter.post("/create",  async (req, res) => {
-  console.log("req.body",req.body);
+  // console.log("req.body",req.body);
 
   try {
   const newPost = new PostModel({...req.body });

@@ -11,6 +11,8 @@ const User = ({ person }) => {
   const dispatch = useDispatch();
   const toast = useToast();
   const { user } = useSelector((state) => state.AuthReducer);
+  const { token } = useSelector((state) => state.AuthReducer);
+
   const [following, setFollowing] = useState(
     person.followers.includes(user._id)
   );
@@ -19,8 +21,8 @@ const User = ({ person }) => {
 
   const handleFollow = () => {
     following
-      ? dispatch(unfollowUser(person._id, toast))
-      : dispatch(followUser(person._id, toast));
+      ? dispatch(unfollowUser(person._id,token, toast))
+      : dispatch(followUser(person._id, token, toast));
     setFollowing((prev) => !prev);
   };
 
