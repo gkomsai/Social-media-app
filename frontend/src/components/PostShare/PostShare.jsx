@@ -11,6 +11,7 @@ import { Button, useToast } from "@chakra-ui/react";
 import axios from "axios";
 import { notify } from "../../utils/extraFunctions";
 import defaultProfile from "../../assets/defaultProfile.png";
+import { useEffect } from "react";
 
 const PostShare = () => {
   const imageRef = useRef();
@@ -24,6 +25,12 @@ const PostShare = () => {
   const { user } = useSelector((store) => store.AuthReducer);
   const { token } = useSelector((store) => store.AuthReducer);
 
+  const [width, setWidth] = useState(window.innerWidth);
+  const breakpoint = 990;
+
+  useEffect(() => {
+    window.addEventListener("resize", () => setWidth(window.innerWidth));
+  }, []);
   // console.log(token);
   const headers = {
     "Content-Type": "application/json",
@@ -133,7 +140,7 @@ const PostShare = () => {
             <UilLocationPoint />
             Location
           </div>
-          <div className="option" style={{ color: "var(--shedule)" }}>
+          <div  hidden={width < breakpoint ? true : false} className="option" style={{ color: "var(--shedule)" }}>
             <UilSchedule />
             Shedule
           </div>
