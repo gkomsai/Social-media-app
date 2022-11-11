@@ -15,12 +15,18 @@ const Home = () => {
       <Grid
         templateColumns={{
           base: "1",
-          md: "24rem auto",
-          lg: "24rem auto",
+          md: "45vw 50vw",
+          lg: "35vw 50vw",
           xl: "22rem auto 24rem",
         }}
         position={"relative"}
         gap={6}
+        justifyContent={{
+          base: "center",
+          md: "space-evenly",
+          lg: "space-around",
+        }}
+        mt={{ base: "2.5rem", xl: "0px" }}
       >
         <Leftside />
         <MiddleSide />

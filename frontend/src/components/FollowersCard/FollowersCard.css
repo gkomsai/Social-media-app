@@ -5,13 +5,12 @@
   display: grid;
   font-size: 13px;
   max-height: auto;
-  justify-content: flex-start;
+  justify-content: center;
 }
 .follower {
   display: flex;
   gap: 40px;
   align-items: center;
- 
 }
 
 .follower > div {
