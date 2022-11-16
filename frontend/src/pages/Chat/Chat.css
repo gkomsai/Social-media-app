@@ -51,13 +51,10 @@
   position: relative;
 }
 
-.online-dot {
-  background-color: greenyellow;
-  border-radius: 50%;
+.online-Indicator {
   position: absolute;
-  left: 2rem;
-  width: 1rem;
-  height: 1rem;
+  left: 2.4rem;
+  top:-1.2rem
 }
 
 @media screen and (max-width: 768px) {

@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { getUser } from "../../redux/user/action";
 import defaultProfile from "../../assets/defaultProfile.png";
 import { Box, Image, Text } from "@chakra-ui/react";
+import StatusIndicator from "./StatusIndicator";
 
 const Conversation = ({ singleChatMemberData, currentUser, online }) => {
   const [userData, setUserData] = useState(null);
@@ -29,7 +30,11 @@ const Conversation = ({ singleChatMemberData, currentUser, online }) => {
     <>
       <Box className="follower conversation">
         <Box>
-          {online && <Box className="online-dot"></Box>}
+          {online && (
+            <Box className="online-Indicator">
+              <StatusIndicator />{" "}
+            </Box>
+          )}
           <Image
             src={
               userData?.profilePicture
@@ -38,14 +43,14 @@ const Conversation = ({ singleChatMemberData, currentUser, online }) => {
             }
             alt="Profile"
             className="followerImage"
-            w="52px" h="52px"
-            
+            w="52px"
+            h="52px"
           />
           <Box ml="1rem" className="ChatUserNameBox" fontSize={".9rem"}>
             <Text fontWeight={"bold"}>
               {userData?.firstName} {userData?.lastName}
             </Text>
-            <Text  color={ online ? "#51e200" : "" }>
+            <Text color={online ? "#51e200" : ""}>
               {online ? "Online" : "Offline"}
             </Text>
           </Box>
