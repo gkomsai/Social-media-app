@@ -2,16 +2,14 @@ import { Grid, Hide, Show } from "@chakra-ui/react";
 import React from "react";
 import Leftside from "../../components/LeftSide/LeftSide";
 import MiddleSide from "../../components/MiddleSide/MiddleSide";
-import NavIcons from "../../components/NavIcons/Navicons";
+import NavIcons from "../../components/Navbar/Navbar";
 import RightSide from "../../components/RightSide/RightSide";
 
 const Home = () => {
   return (
     <>
-      <Show w="80%" m="auto" below="xl">
-        <NavIcons />
-      </Show>
       <Grid
+        p="0rem  1.5rem"
         templateColumns={{
           base: "1",
           md: "45vw 50vw",

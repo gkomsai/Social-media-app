@@ -24,9 +24,9 @@ const Signup = () => {
 
   return (
     <Box>
-      <Box ml="2rem" className={styles.birdLogo}>
+      {/* <Box ml="2rem" className={styles.birdLogo}>
         <img src={Logo} alt="" />
-      </Box>
+      </Box> */}
       <Box py={"10"}>
         <Box className={styles.signupdiv}>
           <Text className={styles.heading}>Register</Text>

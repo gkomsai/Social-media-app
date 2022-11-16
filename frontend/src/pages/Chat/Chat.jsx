@@ -3,12 +3,12 @@ import "./Chat.css";
 import { useSelector } from "react-redux";
 import Searchbar from "../../components/Searchbar/Searchbar";
 import Conversation from "../../components/Conversations/Conversations";
-import NavIcons from "../../components/NavIcons/Navicons";
+
 import { useEffect } from "react";
 import { findAllchatingUser } from "../../redux/chats/action";
 import ChatBox from "../../components/ChatBox/ChatBox";
 import { io } from "socket.io-client";
-import { Box, Hide, Show, Text } from "@chakra-ui/react";
+import { Box, Hide, Text } from "@chakra-ui/react";
 const Chat = () => {
   const { user } = useSelector((store) => store.AuthReducer);
   const { token } = useSelector((store) => store.AuthReducer);
@@ -72,17 +72,8 @@ const Chat = () => {
 
   return (
     <Box>
-      <Show below="lg">
-        <NavIcons />
-      </Show>
-
       <Box className="Chat" mt={{ base: "40px", lg: "0px" }}>
-       
         <Box className="Left-side-chat">
-          <Hide below="lg">
-            <Searchbar />
-          </Hide>
-
           <Box className="Chat-container">
             <Text>Chats</Text>
             <Box className="chatMembers-list">
@@ -104,14 +95,7 @@ const Chat = () => {
           </Box>
         </Box>
 
-     
         <Box className="Right-side-chat">
-          <Show above="lg"> 
-          <Box w={{lg:"40rem",xl:"55rem"}} alignSelf={'flex-end'}>
-          <NavIcons />
-        </Box>
-        </Show>
-
           <ChatBox
             currentChatData={currentChatData}
             currentUser={user._id}

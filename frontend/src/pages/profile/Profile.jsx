@@ -1,7 +1,6 @@
-import { Flex, Grid, Hide, Show } from "@chakra-ui/react";
+import { Flex, Grid, Hide } from "@chakra-ui/react";
 import React from "react";
 import MiddleSide from "../../components/MiddleSide/MiddleSide";
-import NavIcons from "../../components/NavIcons/Navicons";
 import ProfileCard from "../../components/ProfileCard/ProfileCard";
 import ProfileLeft from "../../components/ProfilePageLeft/ProfileLeft";
 import RightSide from "../../components/RightSide/RightSide";
@@ -9,11 +8,8 @@ import RightSide from "../../components/RightSide/RightSide";
 const Profile = () => {
   return (
     <>
-      <Show w="80%" m="auto" below="xl">
-        <NavIcons />
-      </Show>
-
       <Grid
+          p="0rem  1.5rem"
         templateColumns={{
           base: "1",
           md: "45vw 50vw",

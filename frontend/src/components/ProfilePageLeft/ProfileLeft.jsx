@@ -9,7 +9,6 @@ import { Box } from "@chakra-ui/react";
 const ProfileLeft = () => {
   return (
     <Box className="leftside">
-      <Searchbar />
       <InfoCard />
       <FollowersCard />
     </Box>
