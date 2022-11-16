@@ -7,7 +7,7 @@ import { UilSchedule } from "@iconscout/react-unicons";
 import { UilTimes } from "@iconscout/react-unicons";
 import { useDispatch, useSelector } from "react-redux";
 import { createPost } from "../../redux/posts/action";
-import { Box, Button, Heading, Image, useToast } from "@chakra-ui/react";
+import { Box, Button, Heading, Image, Input, useToast } from "@chakra-ui/react";
 import axios from "axios";
 import { notify } from "../../utils/extraFunctions";
 import defaultProfile from "../../assets/defaultProfile.png";
@@ -116,9 +116,10 @@ const PostShare = () => {
         alt=""
       />
       <Box>
-        <input
+        <Input
           type="text"
-          placeholder="What's happening?"
+          focusBorderColor="#F9802D"
+          placeholder="Share a Post"
           required
           ref={description}
         />

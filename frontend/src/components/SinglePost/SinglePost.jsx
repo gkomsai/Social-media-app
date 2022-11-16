@@ -118,13 +118,10 @@ dispatch(updatePost(postData._id, payload, token, toast));
         </Menu>
       </Box>
 
-      <span style={{ color: "var(--gray)", fontSize: "12px" }}>
+      <Text as="span" color={"grey"} fontSize="15px" >
         {likes} likes
-      </span>
+      </Text>
       <Box className="detail">
-        <span>
-          <b>{postData?.name} </b>
-        </span>
         <span>{postData?.description}</span>
       </Box>
     </Box>

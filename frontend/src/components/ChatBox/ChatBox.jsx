@@ -2,13 +2,12 @@ import React, { useEffect, useRef, useState } from "react";
 import { getUser } from "../../redux/user/action";
 import defaultProfile from "../../assets/defaultProfile.png";
 import "./ChatBox.css";
-import { format } from 'timeago.js';
-
+import { format } from "timeago.js";
 
 import { addMessage, getMessages } from "../../api/messageApi";
 import InputEmoji from "react-input-emoji";
 import { useSelector } from "react-redux";
-import { Box, Image } from "@chakra-ui/react";
+import { Box, Image, Text } from "@chakra-ui/react";
 
 const ChatBox = ({
   currentChatData,
@@ -22,15 +21,12 @@ const ChatBox = ({
   // console.log({ userData });
   const { token } = useSelector((state) => state.AuthReducer);
 
-
-
-
   const scroll = useRef();
   const userId = currentChatData?.members.find((id) => id !== currentUser);
 
   const getUserData = async () => {
     try {
-      getUser(userId,token).then((res) => {
+      getUser(userId, token).then((res) => {
         // console.log("getUseres in chatBox", res.data);
         setUserData(res.data);
       });
@@ -107,9 +103,9 @@ const ChatBox = ({
                       : defaultProfile
                   }
                   alt="Profile"
-                  w="52px" h="52px"
+                  w="52px"
+                  h="52px"
                   className="followerImage"
-                 
                 />
                 <Box className="name" fontSize={"1rem"}>
                   <span>
@@ -141,7 +137,9 @@ const ChatBox = ({
             ))}
           </Box>
           <Box className="chat-sender">
-            <Box>+</Box>
+            <Box>
+              <Text color={"black"}>+</Text>
+            </Box>
             <InputEmoji
               value={newMessage}
               onChange={setNewMessage}

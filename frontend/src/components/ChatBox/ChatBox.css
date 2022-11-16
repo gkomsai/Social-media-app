@@ -1,5 +1,5 @@
 .ChatBox-container {
-  background: var(--cardColor);
+  box-shadow: var(--cardShadow);
   border-radius: 1rem;
   display: grid;
   grid-template-rows: 14vh 60vh 13vh;

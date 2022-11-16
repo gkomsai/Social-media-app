@@ -9,6 +9,7 @@ import {
   useToast,
   Button,
   Box,
+  Input,
 } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -117,16 +118,18 @@ const ProfileModal = ({ onOpen, onClose, isOpen, userData }) => {
           <form className="infoForm" onSubmit={handleSubmit}>
             <h3>Your Info</h3>
             <Box>
-              <input
+              <Input
                 onChange={handleChange}
+                focusBorderColor="#F9802D"
                 type="text"
                 placeholder="First Name"
                 name="firstName"
                 className="infoInput"
                 value={formData.firstName}
               />
-              <input
+              <Input
                 onChange={handleChange}
+                focusBorderColor="#F9802D"
                 type="text"
                 placeholder="Last Name"
                 name="lastName"
@@ -136,8 +139,9 @@ const ProfileModal = ({ onOpen, onClose, isOpen, userData }) => {
             </Box>
 
             <Box>
-              <input
+              <Input
                 onChange={handleChange}
+                focusBorderColor="#F9802D"
                 type="text"
                 placeholder="Works at"
                 name="worksAt"
@@ -147,16 +151,18 @@ const ProfileModal = ({ onOpen, onClose, isOpen, userData }) => {
             </Box>
 
             <Box>
-              <input
+              <Input
                 onChange={handleChange}
+                focusBorderColor="#F9802D"
                 type="text"
                 placeholder="Lives in"
                 name="livesIn"
                 className="infoInput"
                 value={formData.livesIn}
               />
-              <input
+              <Input
                 onChange={handleChange}
+                focusBorderColor="#F9802D"
                 type="text"
                 placeholder="Country"
                 name="country"
@@ -166,8 +172,9 @@ const ProfileModal = ({ onOpen, onClose, isOpen, userData }) => {
             </Box>
 
             <Box>
-              <input
+              <Input
                 onChange={handleChange}
+                focusBorderColor="#F9802D"
                 type="text"
                 className="infoInput"
                 placeholder="Relationship status"
@@ -178,14 +185,16 @@ const ProfileModal = ({ onOpen, onClose, isOpen, userData }) => {
 
             <Box>
               Profile image
-              <input
+              <Input
                 type="file"
+                focusBorderColor="#F9802D"
                 name="profilePicture"
                 onChange={(e) => postDetails(e)}
               />
               Cover image
-              <input
+              <Input
                 type="file"
+                focusBorderColor="#F9802D"
                 name="coverPicture"
                 onChange={(e) => postDetails(e)}
               />

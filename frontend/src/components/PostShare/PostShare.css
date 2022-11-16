@@ -2,8 +2,8 @@
   margin-bottom: 2rem;
   display: flex;
   gap: 1rem;
-  background-color: var(--cardColor);
-  padding: 1rem;
+ box-shadow: var(--cardShadow);
+   padding: 1rem;
   border-radius: 1rem;
 }
 
