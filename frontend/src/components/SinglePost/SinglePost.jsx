@@ -15,7 +15,7 @@ import { useToast } from "@chakra-ui/toast";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/menu";
 import { MdAutoDelete } from "react-icons/md";
-import { Text } from "@chakra-ui/layout";
+import { Box, Text } from "@chakra-ui/layout";
 import { useDisclosure } from "@chakra-ui/hooks";
 import {
   Modal,
@@ -27,6 +27,7 @@ import {
   ModalCloseButton,
   Input,
   Button,
+  Image,
 } from "@chakra-ui/react";
 
 const SinglePost = ({ postData }) => {
@@ -67,20 +68,20 @@ dispatch(updatePost(postData._id, payload, token, toast));
 
 
   return (
-    <div className="SinglePost">
-      <img src={postData?.image} alt="" />
+    <Box className="SinglePost">
+      <Image src={postData?.image} alt="" />
 
-      <div className="postReactMain">
-        <div className="postReact">
-          <img
+      <Box className="postReactMain">
+        <Box className="postReact">
+          <Image
             src={liked ? Heart : NotLike}
             alt=""
             style={{ cursor: "pointer" }}
             onClick={handleLike}
           />
-          <img src={Comment} alt="" />
-          <img src={Share} alt="" />
-        </div>
+          <Image src={Comment} alt="" />
+          <Image src={Share} alt="" />
+        </Box>
 
         <Menu>
           <MenuButton>
@@ -115,18 +116,15 @@ dispatch(updatePost(postData._id, payload, token, toast));
             </MenuItem>
           </MenuList>
         </Menu>
-      </div>
+      </Box>
 
-      <span style={{ color: "var(--gray)", fontSize: "12px" }}>
+      <Text as="span" color={"grey"} fontSize="15px" >
         {likes} likes
-      </span>
-      <div className="detail">
-        <span>
-          <b>{postData?.name} </b>
-        </span>
+      </Text>
+      <Box className="detail">
         <span>{postData?.description}</span>
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 };
 

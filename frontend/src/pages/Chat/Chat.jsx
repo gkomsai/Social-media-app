@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import { findAllchatingUser } from "../../redux/chats/action";
 import ChatBox from "../../components/ChatBox/ChatBox";
 import { io } from "socket.io-client";
+import { Box, Hide, Show, Text } from "@chakra-ui/react";
 const Chat = () => {
   const { user } = useSelector((store) => store.AuthReducer);
   const { token } = useSelector((store) => store.AuthReducer);
@@ -17,14 +18,14 @@ const Chat = () => {
   // console.log({ currentChat });
   const [onlineUsers, setOnlineUsers] = useState([]);
   console.log({ onlineUsers });
-  const socket = useRef();  // creating the socket globally 
+  const socket = useRef(); // creating the socket globally
   const [sendMessage, setSendMessage] = useState(null);
   const [receivedMessage, setReceivedMessage] = useState(null);
 
   useEffect(() => {
     const getChatMembers = async () => {
       try {
-        findAllchatingUser(user._id,token).then((res) => {
+        findAllchatingUser(user._id, token).then((res) => {
           // console.log(res.data);
           setaAllChattingMembers(res.data);
         });
@@ -38,13 +39,15 @@ const Chat = () => {
   // Connect to Socket.io
   useEffect(() => {
     // socket.current = io("ws://localhost:8090");
-    socket.current = io("https://indian-social-media-app-chatting-backend.onrender.com/");
+    socket.current = io(
+      "https://indian-social-media-app-chatting-backend.onrender.com/"
+    );
     socket.current.emit("new-user-add", user._id);
-    socket.current.on("get-users", (users) => { // here we are getting the informaiton about the online users from the socket.io
+    socket.current.on("get-users", (users) => {
+      // here we are getting the informaiton about the online users from the socket.io
       setOnlineUsers(users);
     });
   }, [user]);
-
 
   // Sending Message to the socket server
   useEffect(() => {
@@ -56,60 +59,68 @@ const Chat = () => {
   // Geting the message from the socket server
   useEffect(() => {
     socket.current.on("recieve-message", (data) => {
-      console.log("receivedMessage from the socket.io",data);
+      console.log("receivedMessage from the socket.io", data);
       setReceivedMessage(data);
     });
   }, []);
 
-
-  
   const checkOnlineStatus = (chat) => {
-    const chatMember = chat.members.find((member) => member !== user._id);   //  since our members array only include only two members so finding the other member excluding the current user
-    const online = onlineUsers.find((user) => user.userId === chatMember); // now checking  those users whose are online 
+    const chatMember = chat.members.find((member) => member !== user._id); //  since our members array only include only two members so finding the other member excluding the current user
+    const online = onlineUsers.find((user) => user.userId === chatMember); // now checking  those users whose are online
     return online ? true : false;
   };
 
   return (
-    <div className="Chat">
-      {/* Left Side */}
-      <div className="Left-side-chat">
-        <Searchbar />
-        <div className="Chat-container">
-          <h2>Chats</h2>
-          <div className="Chat-list">
-            {allChattingMembers?.map((chatMember) => (
-              <div
-                key={Date.now() + user._id + Math.random()}
-                onClick={() => {
-                  setCurrentChatData(chatMember);
-                }}
-              >
-                <Conversation
-                  singleChatMemberData={chatMember}
-                  online={checkOnlineStatus(chatMember)}
-                  currentUser={user._id}
-                
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
+    <Box>
+      <Show below="lg">
+        <NavIcons />
+      </Show>
 
-      {/* Right Side */}
-      <div className="Right-side-chat">
-        <div style={{ width: "20rem", alignSelf: "flex-end" }}>
+      <Box className="Chat" mt={{ base: "40px", lg: "0px" }}>
+       
+        <Box className="Left-side-chat">
+          <Hide below="lg">
+            <Searchbar />
+          </Hide>
+
+          <Box className="Chat-container">
+            <Text>Chats</Text>
+            <Box className="chatMembers-list">
+              {allChattingMembers?.map((chatMember) => (
+                <Box
+                  key={Date.now() + user._id + Math.random()}
+                  onClick={() => {
+                    setCurrentChatData(chatMember);
+                  }}
+                >
+                  <Conversation
+                    singleChatMemberData={chatMember}
+                    online={checkOnlineStatus(chatMember)}
+                    currentUser={user._id}
+                  />
+                </Box>
+              ))}
+            </Box>
+          </Box>
+        </Box>
+
+     
+        <Box className="Right-side-chat">
+          <Show above="lg"> 
+          <Box w={{lg:"40rem",xl:"55rem"}} alignSelf={'flex-end'}>
           <NavIcons />
-        </div>
+        </Box>
+        </Show>
 
-        <ChatBox
-          currentChatData={currentChatData}
-          currentUser={user._id}
-          setSendMessage={setSendMessage}
-          receivedMessage={receivedMessage}
-        />
-      </div>
-    </div>
+          <ChatBox
+            currentChatData={currentChatData}
+            currentUser={user._id}
+            setSendMessage={setSendMessage}
+            receivedMessage={receivedMessage}
+          />
+        </Box>
+      </Box>
+    </Box>
   );
 };
 

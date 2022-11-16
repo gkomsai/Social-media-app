@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import ProfileModal from "../ProfileModal/ProfileModal";
 import "./InfoCard.css";
 import { UilPen } from "@iconscout/react-unicons";
-import { useDisclosure, useToast } from "@chakra-ui/react";
+import { Box, useDisclosure, useToast } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
@@ -42,11 +42,11 @@ const InfoCard = () => {
   }, [user]);
 
   return (
-    <div className="InfoCard">
-      <div className="infoHead">
+    <Box className="InfoCard">
+      <Box className="infoHead">
         <h4>Profile Info</h4>
         {user._id === id ? (
-          <div>
+          <Box>
             <UilPen
               width="2rem"
               height="1.2rem"
@@ -54,33 +54,33 @@ const InfoCard = () => {
               backgroundcolor="#24be6a"
             />
             <ProfileModal isOpen={isOpen}   userData = {user} onClose={onClose} />
-          </div>
+          </Box>
         ) : (
           ""
         )}
-      </div>
+      </Box>
 
-      <div className="info">
+      <Box className="info">
         <span>
           <b>Status </b>
         </span>
         <span>{currentUser.relationship}</span>
-      </div>
-      <div className="info">
+      </Box>
+      <Box className="info">
         <span>
           <b>Lives in </b>
         </span>
         <span>{currentUser.livesIn}</span>
-      </div>
-      <div className="info">
+      </Box>
+      <Box className="info">
         <span>
           <b>Works at </b>
         </span>
         <span>{currentUser.worksAt}</span>
-      </div>
+      </Box>
 
       <button className="button logout-button" onClick={handleLogOut}  >Log Out</button>
-    </div>
+    </Box>
   );
 };
 

@@ -8,6 +8,8 @@ import {
   ModalCloseButton,
   useToast,
   Button,
+  Box,
+  Input,
 } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -115,80 +117,88 @@ const ProfileModal = ({ onOpen, onClose, isOpen, userData }) => {
         <ModalBody>
           <form className="infoForm" onSubmit={handleSubmit}>
             <h3>Your Info</h3>
-            <div>
-              <input
+            <Box>
+              <Input
                 onChange={handleChange}
+                focusBorderColor="#F9802D"
                 type="text"
                 placeholder="First Name"
                 name="firstName"
                 className="infoInput"
                 value={formData.firstName}
               />
-              <input
+              <Input
                 onChange={handleChange}
+                focusBorderColor="#F9802D"
                 type="text"
                 placeholder="Last Name"
                 name="lastName"
                 className="infoInput"
                 value={formData.lastName}
               />
-            </div>
+            </Box>
 
-            <div>
-              <input
+            <Box>
+              <Input
                 onChange={handleChange}
+                focusBorderColor="#F9802D"
                 type="text"
                 placeholder="Works at"
                 name="worksAt"
                 className="infoInput"
                 value={formData.worksAt}
               />
-            </div>
+            </Box>
 
-            <div>
-              <input
+            <Box>
+              <Input
                 onChange={handleChange}
+                focusBorderColor="#F9802D"
                 type="text"
                 placeholder="Lives in"
                 name="livesIn"
                 className="infoInput"
                 value={formData.livesIn}
               />
-              <input
+              <Input
                 onChange={handleChange}
+                focusBorderColor="#F9802D"
                 type="text"
                 placeholder="Country"
                 name="country"
                 className="infoInput"
                 value={formData.country}
               />
-            </div>
+            </Box>
 
-            <div>
-              <input
+            <Box>
+              <Input
                 onChange={handleChange}
+                focusBorderColor="#F9802D"
                 type="text"
                 className="infoInput"
                 placeholder="Relationship status"
                 name="relationship"
                 value={formData.relationship}
               />
-            </div>
+            </Box>
 
-            <div>
+            <Box>
               Profile image
-              <input
+              <Input
                 type="file"
+                focusBorderColor="#F9802D"
                 name="profilePicture"
                 onChange={(e) => postDetails(e)}
               />
               Cover image
-              <input
+              <Input
                 type="file"
+                focusBorderColor="#F9802D"
                 name="coverPicture"
                 onChange={(e) => postDetails(e)}
               />
-            </div>
+            </Box>
 
             <Button
               bg="var(--buttonBg)"

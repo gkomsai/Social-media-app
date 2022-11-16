@@ -2,12 +2,12 @@ import React, { useEffect, useRef, useState } from "react";
 import { getUser } from "../../redux/user/action";
 import defaultProfile from "../../assets/defaultProfile.png";
 import "./ChatBox.css";
-import { format } from 'timeago.js';
-
+import { format } from "timeago.js";
 
 import { addMessage, getMessages } from "../../api/messageApi";
 import InputEmoji from "react-input-emoji";
 import { useSelector } from "react-redux";
+import { Box, Image, Text } from "@chakra-ui/react";
 
 const ChatBox = ({
   currentChatData,
@@ -21,15 +21,12 @@ const ChatBox = ({
   // console.log({ userData });
   const { token } = useSelector((state) => state.AuthReducer);
 
-
-
-
   const scroll = useRef();
   const userId = currentChatData?.members.find((id) => id !== currentUser);
 
   const getUserData = async () => {
     try {
-      getUser(userId,token).then((res) => {
+      getUser(userId, token).then((res) => {
         // console.log("getUseres in chatBox", res.data);
         setUserData(res.data);
       });
@@ -93,29 +90,30 @@ const ChatBox = ({
   }, [messages]);
 
   return (
-    <div className="ChatBox-container">
+    <Box className="ChatBox-container">
       {currentChatData ? (
         <>
-          <div className="chat-header">
-            <div className="follower">
-              <div>
-                <img
+          <Box className="chat-header">
+            <Box className="follower">
+              <Box>
+                <Image
                   src={
                     userData?.profilePicture
                       ? userData.profilePicture
                       : defaultProfile
                   }
                   alt="Profile"
+                  w="52px"
+                  h="52px"
                   className="followerImage"
-                  style={{ width: "50px", height: "50px" }}
                 />
-                <div className="name" style={{ fontSize: "0.9rem" }}>
+                <Box className="name" fontSize={"1rem"}>
                   <span>
                     {userData?.firstName} {userData?.lastName}
                   </span>
-                </div>
-              </div>
-            </div>
+                </Box>
+              </Box>
+            </Box>
             <hr
               style={{
                 width: "95%",
@@ -123,10 +121,10 @@ const ChatBox = ({
                 marginTop: "20px",
               }}
             />
-          </div>
-          <div className="chat-body">
+          </Box>
+          <Box className="chat-body">
             {messages.map((message, i) => (
-              <div
+              <Box
                 key={i}
                 ref={scroll}
                 className={
@@ -135,27 +133,29 @@ const ChatBox = ({
               >
                 <span>{message.text}</span>{" "}
                 <span>{format(message.createdAt)}</span>
-              </div>
+              </Box>
             ))}
-          </div>
-          <div className="chat-sender">
-            <div>+</div>
+          </Box>
+          <Box className="chat-sender">
+            <Box>
+              <Text color={"black"}>+</Text>
+            </Box>
             <InputEmoji
               value={newMessage}
               onChange={setNewMessage}
               onEnter={handleSend}
             />
-            <div className="send-button button" onClick={handleSend}>
+            <Box className="send-button button" onClick={handleSend}>
               Send
-            </div>
-          </div>
+            </Box>
+          </Box>
         </>
       ) : (
         <span className="chatbox-empty-message">
           Tap on a chat to start conversation...
         </span>
       )}
-    </div>
+    </Box>
   );
 };
 

@@ -1,11 +1,7 @@
 :root {
-  --yellow: #f5c32c;
-  --orange: #fca61f;
-  --black: #242d49;
-  --gray: rgba(36, 45, 73, 0.65);
   --profileShadow: 0px 4px 17px 2px rgba(0, 0, 0, 0.25);
   --hrColor: #cfcdcd;
-  --cardColor: rgba(255, 255, 255, 0.64);
+  --cardShadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   --buttonBg: linear-gradient(98.63deg, #f9a225 0%, #f95f35 100%);
   --inputColor: rgba(40, 52, 62, 0.07);
   --photo: #4cb256;
@@ -16,8 +12,6 @@
 
 .App {
   overflow: hidden;
-  color: var(--black);
-  background: #f3f3f3;
   padding: 1rem 1rem;
 }
 
@@ -44,19 +38,11 @@
 
 .button:hover {
   color: var(--orange);
-
   background: transparent;
 }
 
-.button:disabled {
-  background: silver;
-  pointer-events: none;
-}
-
-
-
 /* Form Styling */
-.infoForm{
+.infoForm {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -64,24 +50,46 @@
   gap: 2rem;
 }
 
-.infoInput{
+.infoInput {
   border: none;
   outline: none;
   background-color: var(--inputColor);
   border-radius: 8px;
   padding: 20px;
-  flex:1;
+  flex: 1;
 }
 
-.infoForm>div{
+.infoForm > div {
   display: flex;
   gap: 1rem;
   height: 2rem;
   width: 90%;
 }
 
-.infoButton{
+.infoButton {
   width: 6rem;
   height: 2rem;
   align-self: flex-end;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey; 
+  border-radius: 5px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: grey; 
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #b30000; 
 }

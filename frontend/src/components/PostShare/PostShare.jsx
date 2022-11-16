@@ -7,7 +7,7 @@ import { UilSchedule } from "@iconscout/react-unicons";
 import { UilTimes } from "@iconscout/react-unicons";
 import { useDispatch, useSelector } from "react-redux";
 import { createPost } from "../../redux/posts/action";
-import { Button, useToast } from "@chakra-ui/react";
+import { Box, Button, Heading, Image, Input, useToast } from "@chakra-ui/react";
 import axios from "axios";
 import { notify } from "../../utils/extraFunctions";
 import defaultProfile from "../../assets/defaultProfile.png";
@@ -107,43 +107,48 @@ const PostShare = () => {
   }
 
   if (!user) {
-    return <h1>user doesn't exist</h1>;
+    return <Heading>user doesn't exist</Heading>;
   }
   return (
-    <div className="PostShare">
-      <img
+    <Box className="PostShare">
+      <Image
         src={user.profilePicture ? user.profilePicture : defaultProfile}
         alt=""
       />
-      <div>
-        <input
+      <Box>
+        <Input
           type="text"
-          placeholder="What's happening?"
+          focusBorderColor="#F9802D"
+          placeholder="Share a Post"
           required
           ref={description}
         />
-        <div className="postOptions">
-          <div
+        <Box className="postOptions">
+          <Box
             className="option"
-            style={{ color: "var(--photo)" }}
+            color={"var(--photo)"}
             onClick={() => imageRef.current.click()}
           >
             <UilScenery />
             Photo
-          </div>
+          </Box>
 
-          <div className="option" style={{ color: "var(--video)" }}>
+          <Box className="option" color={"var(--video)"}>
             <UilPlayCircle />
             Video
-          </div>
-          <div className="option" style={{ color: "var(--location)" }}>
+          </Box>
+          <Box className="option" color={"var(--location)"}>
             <UilLocationPoint />
             Location
-          </div>
-          <div  hidden={width < breakpoint ? true : false} className="option" style={{ color: "var(--shedule)" }}>
+          </Box>
+          <Box
+            hidden={width < breakpoint ? true : false}
+            className="option"
+            color={"var(--shedule)"}
+          >
             <UilSchedule />
             Shedule
-          </div>
+          </Box>
           <Button
             bg="var(--buttonBg)"
             isLoading={isLoading}
@@ -153,19 +158,19 @@ const PostShare = () => {
             Share
           </Button>
 
-          <div style={{ display: "none" }}>
+          <Box style={{ display: "none" }}>
             <input type="file" ref={imageRef} onChange={onImageChange} />
-          </div>
-        </div>
+          </Box>
+        </Box>
 
         {image && (
-          <div className="previewImage">
+          <Box className="previewImage">
             <UilTimes onClick={() => setImage(null)} />
-            <img src={URL.createObjectURL(image)} alt="preview" />
-          </div>
+            <Image src={URL.createObjectURL(image)} alt="preview" />
+          </Box>
         )}
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 };
 

@@ -3,7 +3,7 @@ import "./FollowersCard.css";
 import User from "../User/User";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllUser } from "../../redux/user/action";
-import { useToast } from "@chakra-ui/react";
+import { Box, Text, useToast } from "@chakra-ui/react";
 
 const FollowersCard = () => {
   const dispatch = useDispatch();
@@ -25,14 +25,14 @@ const FollowersCard = () => {
   }, [allUser.length]);
 
   return (
-    <div className="FollowersCard">
-      <h3>Who is folllowing you</h3>
+    <Box className="FollowersCard">
+      <Text>Who is folllowing you</Text>
       {persons.map((el) => (
-        <div key={el._id}>
+        <Box key={el._id}>
           {(el._id !== user._id)?<User person={el} />:""}
-        </div>
+        </Box>
       ))}
-    </div>
+    </Box>
   );
 };
 

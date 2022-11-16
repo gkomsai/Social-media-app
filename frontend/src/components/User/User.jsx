@@ -1,4 +1,4 @@
-import { Avatar, useToast } from "@chakra-ui/react";
+import { Avatar, Box, useToast } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import defaultProfile from "../../assets/defaultProfile.png";
@@ -7,7 +7,6 @@ import { followUser, unfollowUser } from "../../redux/user/action";
 
 
 const User = ({ person }) => {
-
   const dispatch = useDispatch();
   const toast = useToast();
   const { user } = useSelector((state) => state.AuthReducer);
@@ -28,8 +27,8 @@ const User = ({ person }) => {
 
   
   return (
-    <div className="follower">
-      <div>
+    <Box className="follower">
+      <Box>
         <Avatar
           width={"50px"}
           height="50px"
@@ -37,11 +36,11 @@ const User = ({ person }) => {
           src={person.profilePicture ? person.profilePicture : defaultProfile}
           alt="profile"
         />
-        <div className="name">
+        <Box className="name">
           <span>{person.firstName}</span>
           <span>{person.email}</span>
-        </div>
-      </div>
+        </Box>
+      </Box>
       <button
         className={
           following ? "button fc-button UnfollowButton" : "button fc-button"
@@ -50,7 +49,7 @@ const User = ({ person }) => {
       >
         {following ? "Unfollow" : "Follow"}
       </button>
-    </div>
+    </Box>
   );
 };
 

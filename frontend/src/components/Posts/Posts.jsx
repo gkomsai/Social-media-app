@@ -1,4 +1,4 @@
-import { useToast } from "@chakra-ui/react";
+import { Box, useToast } from "@chakra-ui/react";
 import React from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -29,11 +29,11 @@ const Posts = () => {
   timeLinePosts = timeLinePosts.filter((post)=> post.userId===params.id);  
  } 
   return (
-    <div className="Posts">
+    <Box className="Posts">
       {timeLinePosts?.map((el) => {
         return <SinglePost postData={el} key={Date.now() + Math.random()} />;
       })}
-    </div>
+    </Box>
   );
 };
 
