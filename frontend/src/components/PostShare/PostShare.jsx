@@ -126,25 +126,25 @@ const PostShare = () => {
         <Box className="postOptions">
           <Box
             className="option"
-            color={"var(--photo)"}
+            color={"#4cb256"}
             onClick={() => imageRef.current.click()}
           >
             <UilScenery />
             Photo
           </Box>
 
-          <Box className="option" color={"var(--video)"}>
+          <Box className="option" color={"#4a4eb7"}>
             <UilPlayCircle />
             Video
           </Box>
-          <Box className="option" color={"var(--location)"}>
+          <Box className="option" color={"#ef5757"}>
             <UilLocationPoint />
             Location
           </Box>
           <Box
             hidden={width < breakpoint ? true : false}
             className="option"
-            color={"var(--shedule)"}
+            color={"#e1ae4a"}
           >
             <UilSchedule />
             Shedule

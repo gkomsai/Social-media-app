@@ -202,7 +202,8 @@ const ProfileModal = ({ onOpen, onClose, isOpen, userData }) => {
 
             <Button
               bg="var(--buttonBg)"
-              className="button infoButton"
+              className="button"
+              alignSelf={"flex-end"}
               onClick={onClose}
               type="submit"
               isLoading={picLoading}

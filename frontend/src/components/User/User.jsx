@@ -1,7 +1,6 @@
 import { Avatar, Box, useToast } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import defaultProfile from "../../assets/defaultProfile.png";
 import { followUser, unfollowUser } from "../../redux/user/action";
 
 
@@ -32,13 +31,13 @@ const User = ({ person }) => {
         <Avatar
           width={"50px"}
           height="50px"
-          name={person.firstName + person.lastName}
-          src={person.profilePicture ? person.profilePicture : defaultProfile}
+          name={person?.firstName}
+          src={ person?.profilePicture }
           alt="profile"
         />
         <Box className="name">
-          <span>{person.firstName}</span>
-          <span>{person.email}</span>
+          <span>{person?.firstName}</span>
+          <span>{person?.email}</span>
         </Box>
       </Box>
       <button
