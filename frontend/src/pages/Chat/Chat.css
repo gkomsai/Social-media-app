@@ -64,7 +64,7 @@
   .Chat {
      grid-template-columns: 16% auto;
    }
-    .follower.conversation>div>.name{
+   .ChatUserNameBox{
      display: none;
     }
  }
@@ -73,7 +73,7 @@
   .Chat {
      grid-template-columns:auto;
    }
-    .follower.conversation>div>.name{
+   .ChatUserNameBox{
      display: block;
     }
  }

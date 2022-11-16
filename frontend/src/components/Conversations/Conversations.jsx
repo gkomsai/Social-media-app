@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import { getUser } from "../../redux/user/action";
 import defaultProfile from "../../assets/defaultProfile.png";
-import { Box, Image } from "@chakra-ui/react";
+import { Box, Image, Text } from "@chakra-ui/react";
 
 const Conversation = ({ singleChatMemberData, currentUser, online }) => {
   const [userData, setUserData] = useState(null);
@@ -41,13 +41,13 @@ const Conversation = ({ singleChatMemberData, currentUser, online }) => {
             w="52px" h="52px"
             
           />
-          <Box className="name" fontSize={".9rem"}>
-            <span>
+          <Box ml="1rem" className="ChatUserNameBox" fontSize={".9rem"}>
+            <Text fontWeight={"bold"}>
               {userData?.firstName} {userData?.lastName}
-            </span>
-            <span style={{ color: online ? "#51e200" : "" }}>
+            </Text>
+            <Text  color={ online ? "#51e200" : "" }>
               {online ? "Online" : "Offline"}
-            </span>
+            </Text>
           </Box>
         </Box>
       </Box>
