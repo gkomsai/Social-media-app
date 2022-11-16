@@ -80,8 +80,8 @@ export const AuthReducer = (state = initialState, action) => {
         isError: false,
       };
     case types.GET_USER_SUCCESS:
-      console.log("get Alluser success", payload);
-      // saveItemToLocal("allUser", payload);
+      // console.log("get Alluser success", payload);
+
       return {
         ...state,
         allUser: [...payload],
@@ -102,7 +102,7 @@ export const AuthReducer = (state = initialState, action) => {
         isError: false,
       };
     case types.UPDATE_USER_SUCCESS:
-      console.log("upadate user request", payload);
+      // console.log("upadate user request", payload);
       saveItemToLocal("user", payload);
       return {
         ...state,

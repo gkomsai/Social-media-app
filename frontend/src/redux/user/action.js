@@ -2,27 +2,25 @@ import axios from "axios";
 import { notify } from "../../utils/extraFunctions";
 import * as types from "./actionTypes";
 
-
-
-export const getUser = (id,token) =>  {
+export const getUser = (id, token) => {
   return axios({
     method: "get",
     url: `/user/${id}`,
-    headers:{
+    headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     },
-  })
+  });
 };
 
-export const getAllUser = (token,toast) => (dispatch) => {
+export const getAllUser = (token, toast) => (dispatch) => {
   dispatch({ type: types.GET_USER_REQUEST });
   axios({
     method: "get",
     url: `/user`,
-    headers:{
+    headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     },
   })
     .then((res) => {
@@ -45,9 +43,9 @@ export const upadteUser = (id, payload, token, toast) => (dispatch) => {
     method: "patch",
     url: `/user/update/${id}`,
     data: payload,
-    headers:{
+    headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     },
   })
     .then((res) => {
@@ -68,9 +66,9 @@ export const deleteUser = (id, token, toast) => (dispatch) => {
   axios({
     method: "delete",
     url: `/user/delete/${id}`,
-    headers:{
+    headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     },
   })
     .then((res) => {
@@ -92,15 +90,15 @@ export const followUser = (id, token, toast) => (dispatch) => {
   axios({
     method: "patch",
     url: `/user/${id}/follow`,
-    headers:{
+    headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     },
   })
     .then((res) => {
       // console.log(res.data);
       if (res.data) {
-        dispatch({ type: types.FOLLOW_USER_SUCCESS, payload:id }); // user jise bhi follow karna chahta hai uski id
+        dispatch({ type: types.FOLLOW_USER_SUCCESS, payload: id }); // user jise bhi follow karna chahta hai uski id
         notify(toast, res.data.message, "success");
       }
     })
@@ -116,15 +114,15 @@ export const unfollowUser = (id, token, toast) => (dispatch) => {
   axios({
     method: "patch",
     url: `/user/${id}/unfollow`,
-    headers:{
+    headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     },
   })
     .then((res) => {
       // console.log(res.data);
       if (res.data) {
-        dispatch({ type: types.UNFOLLOW_USER_SUCCESS, payload:id });
+        dispatch({ type: types.UNFOLLOW_USER_SUCCESS, payload: id });
         notify(toast, res.data.message, "success");
       }
     })

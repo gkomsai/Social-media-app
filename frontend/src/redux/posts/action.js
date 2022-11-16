@@ -2,8 +2,6 @@ import axios from "axios";
 import { notify } from "../../utils/extraFunctions";
 import * as types from "./actionTypes";
 
-
-
 // export const uploadImage = (payload, toast) => (dispatch) => {
 //   dispatch({ type: types.UPLOAD_START });
 //   axios
@@ -39,9 +37,8 @@ import * as types from "./actionTypes";
 //       });
 //   };
 
-
 export const createPost = (payload, token, toast) => (dispatch) => {
-   dispatch({ type: "CREATING START" });
+  dispatch({ type: "CREATING START" });
   axios({
     method: "post",
     url: `/posts/create`,
@@ -54,18 +51,16 @@ export const createPost = (payload, token, toast) => (dispatch) => {
     .then((res) => {
       console.log("new created data", res.data);
       if (res.data) {
-        dispatch({ type: "CREATE SUCCESS", payload: res.data });
-        notify(toast, "post created Successfully in the Database", "success");
+        dispatch({ type: "CREATE SUCCESS" });
+        notify(toast, "Post created successfully", "success");
       }
     })
     .catch((err) => {
-      console.error(err);
+      // console.error(err);
       notify(toast, err.response.data.message, "error");
       dispatch({ type: "CREATE FAILURE" });
     });
 };
-
-
 
 export const getTimelinePosts = (id, token, toast) => async (dispatch) => {
   dispatch({ type: types.RETREIVING_START });
@@ -79,20 +74,20 @@ export const getTimelinePosts = (id, token, toast) => async (dispatch) => {
     },
   })
     .then((res) => {
-      console.log("timeline data", res.data);
+      // console.log("timeline data", res.data);
       if (res.data) {
         dispatch({ type: types.RETREIVING_SUCCESS, payload: res.data });
-        notify(toast, "post fetched Successfully from the database", "success");
+        notify(toast, "post fetched Successfully", "success");
       }
     })
     .catch((err) => {
-      console.error(err);
+      // console.error(err);
       notify(toast, err.response.data.message, "error");
       dispatch({ type: types.RETREIVING_FAILURE });
     });
 };
 
-export const handleLikeUnlikePost = (id, token,toast) => {
+export const handleLikeUnlikePost = (id, token, toast) => {
   try {
     return axios({
       method: "patch",
@@ -111,8 +106,7 @@ export const handleLikeUnlikePost = (id, token,toast) => {
   }
 };
 
-export const deletePost = (id, token,toast) =>(dispatch)=> {
-
+export const deletePost = (id, token, toast) => (dispatch) => {
   try {
     return axios({
       method: "delete",
@@ -130,8 +124,7 @@ export const deletePost = (id, token,toast) =>(dispatch)=> {
   }
 };
 
-
-export const updatePost = (id, payload, token,toast) =>(dispatch)=> {
+export const updatePost = (id, payload, token, toast) => (dispatch) => {
   try {
     return axios({
       method: "patch",
@@ -143,7 +136,7 @@ export const updatePost = (id, payload, token,toast) =>(dispatch)=> {
       },
     }).then((res) => {
       // console.log("upadate post",res.data)
-      dispatch({ type: "UPDATE SUCCESS", payload:res.data.updatedPost });
+      dispatch({ type: "UPDATE SUCCESS" });
       notify(toast, res.data.message, "success");
     });
   } catch (err) {

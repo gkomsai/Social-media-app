@@ -14,7 +14,6 @@ import {
 import { useToast } from "@chakra-ui/toast";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/menu";
-import { MdAutoDelete } from "react-icons/md";
 import { Box, Text } from "@chakra-ui/layout";
 import { useDisclosure } from "@chakra-ui/hooks";
 import {
@@ -49,10 +48,7 @@ const SinglePost = ({ postData }) => {
 
   const handleDeltePost = () => {
     dispatch(deletePost(postData._id, token, toast));
-    setTimeout(() => {
-      dispatch(getTimelinePosts(user._id, token, toast));
-    }, 2000);
-  };
+   };
 
 
 

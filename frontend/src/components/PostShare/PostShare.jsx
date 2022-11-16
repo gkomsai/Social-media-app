@@ -94,7 +94,7 @@ const PostShare = () => {
         });
     } else {
       setIsLoading(true);
-      dispatch(createPost(newPost, toast));
+      dispatch(createPost(newPost, token, toast));
       resetShare();
       setIsLoading(false);
     }
