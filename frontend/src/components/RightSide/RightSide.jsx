@@ -2,23 +2,23 @@ import React from "react";
 import "./RightSide.css";
 import TrendCard from "../TrendCard/TrendCard";
 import ShareModal from "../ShareModel/ShareModal";
-import { useDisclosure } from "@chakra-ui/react";
+import { Box, Button, useDisclosure } from "@chakra-ui/react";
 import NavIcons from "../NavIcons/Navicons";
 
 const RightSide = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
-    <div className="RightSide">
+    <Box className="RightSide">
      <NavIcons />
       <TrendCard />
-      <div>
-        <button onClick={onOpen} className="button right-share-btn">
+      <Box>
+        <Button w="95%" m="auto"  bg="var(--buttonBg)" onClick={onOpen} className="button">
           Share
-        </button>
-      </div>
+        </Button>
+      </Box>
       <ShareModal isOpen={isOpen} onClose={onClose} />
-    </div>
+    </Box>
   );
 };
 

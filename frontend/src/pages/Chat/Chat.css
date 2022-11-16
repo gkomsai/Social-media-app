@@ -3,12 +3,15 @@
   display: grid;
   grid-template-columns: 22% auto;
   gap: 1rem;
+  align-items: center;
 }
 
 .Left-side-chat {
+  margin-top: -20px;
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  
 }
 
 .Chat-container {
@@ -23,7 +26,7 @@
   overflow: hidden;
 }
 
-.Chat-list {
+.chatMembers-list {
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -32,7 +35,7 @@
 .Right-side-chat {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1rem; 
 }
 .conversation:hover {
   background: #80808038;
@@ -63,5 +66,14 @@
    }
     .follower.conversation>div>.name{
      display: none;
+    }
+ }
+
+ @media screen and (max-width: 610px) {
+  .Chat {
+     grid-template-columns:auto;
+   }
+    .follower.conversation>div>.name{
+     display: block;
     }
  }

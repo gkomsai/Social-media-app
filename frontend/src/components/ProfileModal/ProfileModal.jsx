@@ -8,6 +8,7 @@ import {
   ModalCloseButton,
   useToast,
   Button,
+  Box,
 } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -115,7 +116,7 @@ const ProfileModal = ({ onOpen, onClose, isOpen, userData }) => {
         <ModalBody>
           <form className="infoForm" onSubmit={handleSubmit}>
             <h3>Your Info</h3>
-            <div>
+            <Box>
               <input
                 onChange={handleChange}
                 type="text"
@@ -132,9 +133,9 @@ const ProfileModal = ({ onOpen, onClose, isOpen, userData }) => {
                 className="infoInput"
                 value={formData.lastName}
               />
-            </div>
+            </Box>
 
-            <div>
+            <Box>
               <input
                 onChange={handleChange}
                 type="text"
@@ -143,9 +144,9 @@ const ProfileModal = ({ onOpen, onClose, isOpen, userData }) => {
                 className="infoInput"
                 value={formData.worksAt}
               />
-            </div>
+            </Box>
 
-            <div>
+            <Box>
               <input
                 onChange={handleChange}
                 type="text"
@@ -162,9 +163,9 @@ const ProfileModal = ({ onOpen, onClose, isOpen, userData }) => {
                 className="infoInput"
                 value={formData.country}
               />
-            </div>
+            </Box>
 
-            <div>
+            <Box>
               <input
                 onChange={handleChange}
                 type="text"
@@ -173,9 +174,9 @@ const ProfileModal = ({ onOpen, onClose, isOpen, userData }) => {
                 name="relationship"
                 value={formData.relationship}
               />
-            </div>
+            </Box>
 
-            <div>
+            <Box>
               Profile image
               <input
                 type="file"
@@ -188,7 +189,7 @@ const ProfileModal = ({ onOpen, onClose, isOpen, userData }) => {
                 name="coverPicture"
                 onChange={(e) => postDetails(e)}
               />
-            </div>
+            </Box>
 
             <Button
               bg="var(--buttonBg)"

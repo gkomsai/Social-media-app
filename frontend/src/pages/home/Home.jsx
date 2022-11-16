@@ -11,7 +11,6 @@ const Home = () => {
       <Show w="80%" m="auto" below="xl">
         <NavIcons />
       </Show>
-
       <Grid
         templateColumns={{
           base: "1",

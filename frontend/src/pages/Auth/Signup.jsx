@@ -23,7 +23,7 @@ const Signup = () => {
   };
 
   return (
-    <div>
+    <Box>
       <Box ml="2rem" className={styles.birdLogo}>
         <img src={Logo} alt="" />
       </Box>
@@ -97,7 +97,7 @@ const Signup = () => {
           </Text>
         </Box>
       </Box>
-    </div>
+    </Box>
   );
 };
 

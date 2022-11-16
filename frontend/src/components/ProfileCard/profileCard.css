@@ -2,7 +2,7 @@
   border-radius: 1.5rem;
   display: flex;
   flex-direction: column;
-  /* position: relative; */
+  position: relative;
   gap: 1rem;
   overflow-x: clip;
   background-color: var(--cardColor);

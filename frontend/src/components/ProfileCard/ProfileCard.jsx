@@ -1,3 +1,4 @@
+import { Box, Image } from "@chakra-ui/react";
 import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -13,39 +14,39 @@ const ProfileCard = ({ location }) => {
     return <h1>user doesn't exist</h1>;
   }
   return (
-    <div className="profileCard">
-      <div className="profileImages">
-        <img src={user?.coverPicture ? user.coverPicture : cover} alt="" />
-        <img
+    <Box className="profileCard">
+      <Box className="profileImages">
+        <Image src={user?.coverPicture ? user.coverPicture : cover} alt="" />
+        <Image
           src={user?.profilePicture ? user.profilePicture : defaultProfile}
           alt=""
         />
-      </div>
-      <div className="profileName">
+      </Box>
+      <Box className="profileName">
         <span>
           {user?.firstName} {user?.lastName}
         </span>
         <span>{user?.worksAt ? user?.worksAt : "Write about yourself"}</span>
-      </div>
+      </Box>
 
-      <div className="followStatus">
+      <Box className="followStatus">
         <hr />
-        <div>
-          <div className="follow">
+        <Box>
+          <Box className="follow">
             <span>{user?.followers?.length}</span>
             <span>Followers</span>
-          </div>
-          <div className="vl"> </div>
+          </Box>
+          <Box className="vl"> </Box>
 
-          <div className="follow">
+          <Box className="follow">
             <span>{user?.following?.length}</span>
             <span>Following</span>
-          </div>
+          </Box>
 
           {location === "profilePage" && (
             <>
-              <div className="vl"></div>
-              <div className="follow">
+              <Box className="vl"></Box>
+              <Box className="follow">
                 <span>
                   {
                     timeLinePosts?.filter((post) => post.userId === user?._id)
@@ -53,26 +54,27 @@ const ProfileCard = ({ location }) => {
                   }
                 </span>
                 <span>Posts</span>
-              </div>{" "}
+              </Box>{" "}
             </>
           )}
-        </div>
+        </Box>
         <hr />
-      </div>
+      </Box>
 
       {location === "profilePage" ? (
         ""
       ) : (
         <span>
           <Link
-            to={`/profile/${user._id}`}
-            style={{ textDecoration: "none", color: "inherit" }}
-          >
+              to={`/profile/${user._id}`}
+              textDecoration="none"
+              color="inherit"
+                    >
             My Profile
           </Link>
         </span>
       )}
-    </div>
+    </Box>
   );
 };
 export default ProfileCard;
