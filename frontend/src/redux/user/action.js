@@ -1,5 +1,6 @@
 import axios from "axios";
 import { notify } from "../../utils/extraFunctions";
+import { getTimelinePosts } from "../posts/action";
 import * as types from "./actionTypes";
 
 export const getUser = (id, token) => {
@@ -85,7 +86,7 @@ export const deleteUser = (id, token, toast) => (dispatch) => {
     });
 };
 
-export const followUser = (id, token, toast) => (dispatch) => {
+export const followUser = (id, token, toast, currentUserId) => (dispatch) => {
   dispatch({ type: types.FOLLOW_USER_REQUEST });
   axios({
     method: "patch",
@@ -102,14 +103,15 @@ export const followUser = (id, token, toast) => (dispatch) => {
         notify(toast, res.data.message, "success");
       }
     })
+    .then(() => dispatch(getTimelinePosts(currentUserId, token, toast)))
     .catch((err) => {
       console.error(err);
-      // notify(toast, err.response.data.message, "error");
+      notify(toast, err.response.data.message, "error");
       dispatch({ type: types.FOLLOW_USER_FAILURE });
     });
 };
 
-export const unfollowUser = (id, token, toast) => (dispatch) => {
+export const unfollowUser = (id, token, toast, currentUserId) => (dispatch) => {
   dispatch({ type: types.UNFOLLOW_USER_REQUEST });
   axios({
     method: "patch",
@@ -126,6 +128,7 @@ export const unfollowUser = (id, token, toast) => (dispatch) => {
         notify(toast, res.data.message, "success");
       }
     })
+    .then(() => dispatch(getTimelinePosts(currentUserId, token, toast)))
     .catch((err) => {
       // console.error(err);
       notify(toast, err.response.data.message, "error");

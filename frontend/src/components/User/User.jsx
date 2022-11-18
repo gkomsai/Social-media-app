@@ -30,8 +30,8 @@ const User = ({ person, location }) => {
 
   const handleFollow = () => {
     following
-      ? dispatch(unfollowUser(person._id, token, toast))
-      : dispatch(followUser(person._id, token, toast));
+      ? dispatch(unfollowUser(person._id, token, toast,user._id))
+      : dispatch(followUser(person._id, token, toast,user._id));
     setFollowing((prev) => !prev);
   };
 
