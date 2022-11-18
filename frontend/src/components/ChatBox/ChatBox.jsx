@@ -1,13 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import { getUser } from "../../redux/user/action";
-import defaultProfile from "../../assets/defaultProfile.png";
 import "./ChatBox.css";
 import { format } from "timeago.js";
 
 import { addMessage, getMessages } from "../../api/messageApi";
 import InputEmoji from "react-input-emoji";
 import { useSelector } from "react-redux";
-import { Box, Image, Text } from "@chakra-ui/react";
+import { Avatar, Box, Flex, Text } from "@chakra-ui/react";
 
 const ChatBox = ({
   currentChatData,
@@ -94,26 +93,20 @@ const ChatBox = ({
       {currentChatData ? (
         <>
           <Box className="chat-header">
-            <Box className="follower">
-              <Box>
-                <Image
-                  src={
-                    userData?.profilePicture
-                      ? userData.profilePicture
-                      : defaultProfile
-                  }
-                  alt="Profile"
-                  w="52px"
-                  h="52px"
-                  className="followerImage"
-                />
-                <Box className="name" fontSize={"1rem"}>
-                  <span>
-                    {userData?.firstName} {userData?.lastName}
-                  </span>
-                </Box>
+            <Flex justify={"flex-start"} gap="5" alignItems={"center"}>
+              <Avatar
+                width={"52px"}
+                height="52px"
+                name={userData?.firstName}
+                src={userData?.profilePicture}
+                alt="profile"
+              />
+              <Box className="name" fontSize={"1rem"}>
+                <span>
+                  {userData?.firstName} {userData?.lastName}
+                </span>
               </Box>
-            </Box>
+            </Flex>
             <hr
               style={{
                 width: "95%",

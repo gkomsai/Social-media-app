@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { getUser } from "../../redux/user/action";
-import defaultProfile from "../../assets/defaultProfile.png";
-import { Box, Image, Text } from "@chakra-ui/react";
+import { Avatar, Box, Text } from "@chakra-ui/react";
 import StatusIndicator from "./StatusIndicator";
 
 const Conversation = ({ singleChatMemberData, currentUser, online }) => {
@@ -35,17 +34,14 @@ const Conversation = ({ singleChatMemberData, currentUser, online }) => {
               <StatusIndicator />{" "}
             </Box>
           )}
-          <Image
-            src={
-              userData?.profilePicture
-                ? userData.profilePicture
-                : defaultProfile
-            }
-            alt="Profile"
-            className="followerImage"
-            w="52px"
-            h="52px"
+          <Avatar
+            width={"50px"}
+            height="50px"
+            name={userData?.firstName}
+            src={userData?.profilePicture}
+            alt="profile"
           />
+
           <Box ml="1rem" className="ChatUserNameBox" fontSize={".9rem"}>
             <Text fontWeight={"bold"}>
               {userData?.firstName} {userData?.lastName}
