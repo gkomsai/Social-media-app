@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   Divider,
+  Flex,
   Image,
   Input,
   Text,
@@ -12,33 +13,42 @@ import React, { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { notify } from "../../utils/extraFunctions";
 import logo from "../../assets/logo.png";
+import { useSelector } from "react-redux";
 
-
-
-const ResetPassword = () => {
+const ChangePassord = () => {
   const navigate = useNavigate();
-  const { id, token } = useParams();
+  //   const { id } = useParams();
+  const { token } = useSelector((store) => store.AuthReducer);
   const toast = useToast();
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+
   const handlePasswordSubmit = (e) => {
     e.preventDefault();
+    console.log("inside");
     if (password && confirmPassword) {
       const payload = { password, confirmPassword };
 
       axios
-        .post(`/auth/reset-password/${id}/${token}`, payload)
+        .post(`/auth/change-password`, payload, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        })
         .then((res) => {
           console.log(res.data.message);
           if (res.data.message) {
             notify(toast, res.data.message, "success");
-            navigate("/auth/login");
+            navigate("/");
           }
         })
         .catch((err) => {
           console.log(err);
           notify(toast, err.response.data.message, "error");
         });
+    } else {
+      return notify(toast, "All fields are required", "success");
     }
   };
 
@@ -46,7 +56,9 @@ const ResetPassword = () => {
     <Box h="100vh">
       <Image marginLeft="30%" marginTop="80px" src={logo} alt="logo" />
 
-      <Box
+      <Flex
+        direction={"column"}
+        gap="8px"
         width="41%"
         boxShadow="lg"
         marginTop="10px"
@@ -57,7 +69,7 @@ const ResetPassword = () => {
         paddingBottom="20px"
       >
         <Text fontWeight="700" fontSize="18px" marginTop="30px">
-          Reset Password
+          Change Password
         </Text>
 
         <Divider width="96%" marginTop="20px" />
@@ -91,33 +103,22 @@ const ResetPassword = () => {
           />
         </Box>
         <Button
-          mt={15}
+          mt={"25px"}
+          w="180px"
+          _hover={{ bg: "green" }}
           fontSize="14px"
-        
+          alignSelf={"center"}
           marginTop="15px"
           color="white"
           bg="var(--buttonBg)"
           padding="5px 35px 5px 35px"
           onClick={handlePasswordSubmit}
         >
-          Save Settings
+          Update
         </Button>
-
-        <Divider width="96%" marginTop="40px" />
-
-        <Link to="/auth/login">
-          <Text
-            fontWeight="500"
-            fontSize="14px"
-            color="#F9802D"
-            marginTop="20px"
-          >
-            Return to Login
-          </Text>
-        </Link>
-      </Box>
+      </Flex>
     </Box>
   );
 };
 
-export default ResetPassword;
+export default ChangePassord;

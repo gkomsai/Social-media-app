@@ -179,12 +179,12 @@ authRouter.post(
 
 authRouter.post(
   "/change-password/",
-  checkUserAuth,
-  passwordValidator,
+  [checkUserAuth, passwordValidator],
   async (req, res) => {
-    const { password, password_confirmation, userId } = req.body;
-    if (password && password_confirmation) {
-      if (password !== password_confirmation) {
+    const { password, confirmPassword, userId } = req.body;
+ 
+    if (password && confirmPassword) {
+      if (password !== confirmPassword) {
         return res.status(500).send({
           status: "error",
           message: "New Password and Confirm New Password doesn't match",

@@ -128,6 +128,9 @@ const Navbar = () => {
             <MenuItem onClick={() => navigate(`/profile/${user._id}`)}>
               Profile
             </MenuItem>
+            <MenuItem onClick={() => navigate(`/changePassord/${user._id}`)}>
+            Change Password
+            </MenuItem>
             <MenuDivider />
             <MenuItem onClick={handleLogOut}>Logout</MenuItem>
             <MenuDivider />
