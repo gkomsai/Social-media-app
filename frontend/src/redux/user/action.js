@@ -75,8 +75,9 @@ export const deleteUser = (id, token, toast) => (dispatch) => {
     .then((res) => {
       // console.log(res.data);
       if (res.data) {
-        dispatch({ type: types.DELETE_USER_SUCCESS });
-        notify(toast, "user deleted successfully", "success");
+        notify(toast, "Your account deleted successfully", "success");
+       return dispatch({ type: types.DELETE_USER_SUCCESS });
+       
       }
     })
     .catch((err) => {

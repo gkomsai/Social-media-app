@@ -123,8 +123,11 @@ export const AuthReducer = (state = initialState, action) => {
         isError: false,
       };
     case types.DELETE_USER_SUCCESS:
+      localStorage.clear();
       return {
         ...state,
+        token: null,
+        user: null,
         isAuthLoading: false,
         isError: false,
       };

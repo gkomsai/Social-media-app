@@ -1,8 +1,7 @@
 import React from "react";
-import { RiNotification2Fill } from "react-icons/ri";
 import { BsFillChatDotsFill } from "react-icons/bs";
 import { AiFillHome } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Avatar,
   Box,
@@ -10,17 +9,27 @@ import {
   Grid,
   Hide,
   HStack,
-  IconButton,
   Text,
   useColorMode,
   useColorModeValue,
+  useDisclosure,
   useToast,
   VStack,
 } from "@chakra-ui/react";
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  Button,
+} from "@chakra-ui/react";
 import { FiChevronDown } from "react-icons/fi";
-import { ChevronDownIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
+import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import Searchbar from "../Searchbar/Searchbar";
-import { MdPeopleAlt, MdManageAccounts } from "react-icons/md";
+import { MdPeopleAlt } from "react-icons/md";
 import {
   Menu,
   MenuButton,
@@ -31,19 +40,26 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { logoutFun } from "../../redux/auth/action";
 import { notify } from "../../utils/extraFunctions";
+import { CgDanger } from "react-icons/cg";
+import { deleteUser } from "../../redux/user/action";
 
 const Navbar = () => {
   const { colorMode, toggleColorMode } = useColorMode();
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.AuthReducer);
+  const navigate = useNavigate();
+  const { user,token} = useSelector((state) => state.AuthReducer);
 
   const handleLogOut = () => {
     dispatch(logoutFun());
     notify(toast, "Logout Successfully", "success");
   };
 
-
+  const handleDeleteAccount = () => {
+    dispatch(deleteUser(user._id,token,toast))
+    return
+  };
 
   return (
     <Grid
@@ -109,9 +125,64 @@ const Navbar = () => {
             bg={useColorModeValue("white", "gray.900")}
             borderColor={useColorModeValue("gray.200", "gray.700")}
           >
-            <MenuItem>Profile</MenuItem>
+            <MenuItem onClick={() => navigate(`/profile/${user._id}`)}>
+              Profile
+            </MenuItem>
             <MenuDivider />
             <MenuItem onClick={handleLogOut}>Logout</MenuItem>
+            <MenuDivider />
+
+            <MenuItem onClick={onOpen}> Delete Your Account </MenuItem>
+            <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose}>
+              <ModalOverlay />
+              <ModalContent>
+                <ModalHeader>
+                  <Flex alignItems={"center"} gap="5px">
+                    <CgDanger color="red" />
+                    <Text as="span"> Alert!</Text>
+                  </Flex>{" "}
+                </ModalHeader>
+                <ModalCloseButton />
+
+                <ModalBody >
+                  <VStack align={"flex-start"} spacing={4}>
+
+                 
+                  <Text fontWeight={"bold"} fontSize="18px" >
+                    Hey {user?.firstName}, we’re sorry to see you go
+                  </Text>
+                  <Text>
+                    Just a quick reminder, Deleting your account means you’ll
+                    lose all of your Data like your followers, posts and
+                    everything
+                  </Text>
+                  <Text fontWeight={"bold"}>
+                    Still want to delete, then click on Delete Button
+                    </Text>
+                    </VStack>
+                </ModalBody>
+
+                <ModalFooter>
+                  <Button
+                    colorScheme={"red"}
+                    color={"white"}
+                    mr={3}
+                    onClick={() => {
+                      handleDeleteAccount();
+                      onClose();
+                    }}
+                  >
+                    Delete
+                  </Button>
+                </ModalFooter>
+              </ModalContent>
+            </Modal>
+
+            <MenuItem>
+              <Text as="span" color={"red"}>
+                {" "}
+              </Text>
+            </MenuItem>
           </MenuList>
         </Menu>
 
