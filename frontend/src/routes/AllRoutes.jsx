@@ -2,6 +2,7 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Error from "../components/Error/Error";
 import PrivateRoute from "../components/PrivateRoute/PrivateRoute";
+import ChangePassord from "../pages/Auth/ChangePassord";
 import Forgotpassword from "../pages/Auth/ForgotPassword";
 import Login from "../pages/Auth/Login";
 import ResetPassword from "../pages/Auth/ResetPassword";
@@ -43,6 +44,15 @@ const AllRoutes = () => {
             <PrivateRoute>
               {" "}
               <Users />{" "}
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/changePassord/:id"
+          element={
+            <PrivateRoute>
+              {" "}
+              <ChangePassord />{" "}
             </PrivateRoute>
           }
         />

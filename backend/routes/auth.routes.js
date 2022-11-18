@@ -9,6 +9,7 @@ const {
 const { passwordValidator } = require("../middleware/passwordValidator");
 const { emailValidator } = require("../middleware/emailValidator");
 const { transporter } = require("../config/emailConfig");
+const { checkUserAuth } = require("../middleware/authMiddleware");
 require("dotenv").config();
 
 const authRouter = Router();
@@ -142,7 +143,7 @@ authRouter.post(
   async (req, res) => {
     const { password, confirmPassword } = req.body;
     const { id, token } = req.params;
-   
+
     const user = await UserModel.findById(id);
 
     try {
@@ -176,12 +177,34 @@ authRouter.post(
   }
 );
 
+authRouter.post(
+  "/change-password/",
+  [checkUserAuth, passwordValidator],
+  async (req, res) => {
+    const { password, confirmPassword, userId } = req.body;
+ 
+    if (password && confirmPassword) {
+      if (password !== confirmPassword) {
+        return res.status(500).send({
+          status: "error",
+          message: "New Password and Confirm New Password doesn't match",
+        });
+      } else {
+        const salt = await bcrypt.genSalt(10);
+        const newHashPassword = await bcrypt.hash(password, salt);
 
-
-
-
-
-
-
+        await UserModel.findByIdAndUpdate(userId, {
+          $set: { password: newHashPassword },
+        });
+        res.send({
+          status: "success",
+          message: "Password changed succesfully",
+        });
+      }
+    } else {
+      res.send({ status: "failed", message: "All Fields are Required" });
+    }
+  }
+);
 
 module.exports = { authRouter };

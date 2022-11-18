@@ -78,9 +78,9 @@ userRouter.patch("/update/:id", async (req, res) => {
 userRouter.delete("/delete/:id", async (req, res) => {
   const id = req.params.id;
 
-  const { userId, currentUserAdmin } = req.body;
+  const {userId} = req.body;
 
-  if (userId === id || currentUserAdmin) {
+  if (userId === id) {
     try {
       const deletedUser = await UserModel.findByIdAndDelete(id);
       if (deletedUser) {
