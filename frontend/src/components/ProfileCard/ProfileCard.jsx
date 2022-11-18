@@ -66,10 +66,10 @@ const ProfileCard = ({ location }) => {
       ) : (
         <span>
           <Link
-              to={`/profile/${user._id}`}
-              textDecoration="none"
-              color="inherit"
-                    >
+            to={`/profile/${user._id}`}
+            textDecoration="none"
+            color="inherit"
+          >
             My Profile
           </Link>
         </span>

@@ -1,0 +1,13 @@
+.userFollwer {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 2rem;
+  width: 60vw;
+  min-height: 8rem;
+  margin: auto;
+  box-shadow: var(--cardShadow);
+}
+.userFollwer > div {
+  display: flex;
+}

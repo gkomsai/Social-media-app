@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllUser } from "../../redux/user/action";
 import { Box, Text, useToast } from "@chakra-ui/react";
 
-const FollowersCard = () => {
+const FollowersCard = ({ location }) => {
   const dispatch = useDispatch();
   const toast = useToast();
   const [persons, setPersons] = useState([]);
@@ -29,7 +29,7 @@ const FollowersCard = () => {
       <Text>Who is folllowing you</Text>
       {persons.map((el) => (
         <Box key={el._id}>
-          {(el._id !== user._id)?<User person={el} />:""}
+          {el._id !== user._id ? <User location={location} person={el} /> : ""}
         </Box>
       ))}
     </Box>
