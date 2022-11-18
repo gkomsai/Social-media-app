@@ -3,7 +3,7 @@ import "./RightSide.css";
 import TrendCard from "../TrendCard/TrendCard";
 import ShareModal from "../ShareModel/ShareModal";
 import { Box, Button, useDisclosure } from "@chakra-ui/react";
-import NavIcons from "../Navbar/Navbar";
+
 
 const RightSide = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Logo from "../../assets/logo.png";
 import { Box, Button, Input, Text, useToast, VStack } from "@chakra-ui/react";
 import styles from "./Auth.module.css";
 import { Link, useNavigate } from "react-router-dom";

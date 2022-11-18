@@ -9,6 +9,7 @@ import Auth from "../pages/Auth/Signup";
 import Chat from "../pages/Chat/Chat";
 import Home from "../pages/home/Home";
 import Profile from "../pages/profile/Profile";
+import Users from "../pages/Users/Users";
 
 const AllRoutes = () => {
   return (
@@ -33,6 +34,15 @@ const AllRoutes = () => {
             <PrivateRoute>
               {" "}
               <Chat />{" "}
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/users"
+          element={
+            <PrivateRoute>
+              {" "}
+              <Users />{" "}
             </PrivateRoute>
           }
         />

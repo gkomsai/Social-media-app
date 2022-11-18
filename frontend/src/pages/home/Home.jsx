@@ -1,8 +1,7 @@
-import { Grid, Hide, Show } from "@chakra-ui/react";
+import { Grid, Hide } from "@chakra-ui/react";
 import React from "react";
 import Leftside from "../../components/LeftSide/LeftSide";
 import MiddleSide from "../../components/MiddleSide/MiddleSide";
-import NavIcons from "../../components/Navbar/Navbar";
 import RightSide from "../../components/RightSide/RightSide";
 
 const Home = () => {

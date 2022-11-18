@@ -1,21 +1,24 @@
 import React, { useRef, useState } from "react";
 import "./Chat.css";
-import { useSelector } from "react-redux";
-import Searchbar from "../../components/Searchbar/Searchbar";
+import { useDispatch, useSelector } from "react-redux";
 import Conversation from "../../components/Conversations/Conversations";
 
 import { useEffect } from "react";
 import { findAllchatingUser } from "../../redux/chats/action";
 import ChatBox from "../../components/ChatBox/ChatBox";
 import { io } from "socket.io-client";
-import { Box, Hide, Text } from "@chakra-ui/react";
+import { Box, Text, useToast } from "@chakra-ui/react";
+
 const Chat = () => {
   const { user } = useSelector((store) => store.AuthReducer);
   const { token } = useSelector((store) => store.AuthReducer);
-  const [allChattingMembers, setaAllChattingMembers] = useState([]);
-  // console.log({allChattingMembers})
+  const { chatUsers } = useSelector((store) => store.ChatReducer);
+ 
+  const dispatch = useDispatch();
+  const toast = useToast();
+
   const [currentChatData, setCurrentChatData] = useState(null);
-  // console.log({ currentChat });
+
   const [onlineUsers, setOnlineUsers] = useState([]);
   console.log({ onlineUsers });
   const socket = useRef(); // creating the socket globally
@@ -23,17 +26,9 @@ const Chat = () => {
   const [receivedMessage, setReceivedMessage] = useState(null);
 
   useEffect(() => {
-    const getChatMembers = async () => {
-      try {
-        findAllchatingUser(user._id, token).then((res) => {
-          // console.log(res.data);
-          setaAllChattingMembers(res.data);
-        });
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getChatMembers();
+    if (chatUsers.length === 0) {
+      dispatch(findAllchatingUser(user._id,token,toast))
+    }
   }, [user._id]);
 
   // Connect to Socket.io
@@ -77,7 +72,7 @@ const Chat = () => {
           <Box className="Chat-container">
             <Text>Chats</Text>
             <Box className="chatMembers-list">
-              {allChattingMembers?.map((chatMember) => (
+              {chatUsers?.map((chatMember) => (
                 <Box
                   key={Date.now() + user._id + Math.random()}
                   onClick={() => {
