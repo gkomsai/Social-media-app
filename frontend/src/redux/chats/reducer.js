@@ -10,6 +10,10 @@ export const ChatReducer = (state = initialState, { type, payload }) => {
     case "FIND_SUCCESS":
       return { ...state, chats: [...payload] };
 
+    case "CREATE_NEW_CHAT_SUCCESS":
+      return { ...state, chatUsers:[] };
+    
+    
     case "GET_CHAT_USERS_SUCCESS":
       return { ...state, chatUsers: [...payload] };
     default:
