@@ -5,6 +5,7 @@ import styles from "./Auth.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { signupFun } from "../../redux/auth/action";
+import CustomButton from "../../components/Button/CustomButton";
 
 const Signup = () => {
   const [user, setUser] = useState();
@@ -74,19 +75,7 @@ const Signup = () => {
               onChange={handleChange}
             />
           </VStack>
-          <Button
-         bgColor={"#F9802D"}
-            marginTop="40px"
-            padding="25px 35px 25px 35px"
-            borderRadius="25px"
-            fontSize="15px"
-            color="white"
-            fontWeight="700"
-            _hover={{ backgroundcolor: "#25cf60" }}
-            onClick={handleSubmit}
-          >
-            Sign up
-          </Button>
+         <CustomButton onClick={handleSubmit} value="Signup" />
 
           <Text className={styles.note}>
             <Link to="/auth/login">

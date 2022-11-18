@@ -7,6 +7,7 @@ import { addMessage, getMessages } from "../../api/messageApi";
 import InputEmoji from "react-input-emoji";
 import { useSelector } from "react-redux";
 import { Avatar, Box, Flex, Text } from "@chakra-ui/react";
+import CustomButton from "../Button/CustomButton";
 
 const ChatBox = ({
   currentChatData,
@@ -138,9 +139,11 @@ const ChatBox = ({
               onChange={setNewMessage}
               onEnter={handleSend}
             />
-            <Box className="send-button button" onClick={handleSend}>
-              Send
-            </Box>
+            <CustomButton
+              onClick={handleSend}
+              marginTop="-10px"
+              value="  Send"
+            />
           </Box>
         </>
       ) : (

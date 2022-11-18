@@ -8,37 +8,33 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { logoutFun } from "../../redux/auth/action";
 import { notify } from "../../utils/extraFunctions";
-
+import CustomButton from "../Button/CustomButton";
 
 const InfoCard = () => {
   const [currentUser, setCurrentUser] = useState({});
-  const dispatch =useDispatch();
+  const dispatch = useDispatch();
   const toast = useToast();
   const { id } = useParams();
-// console.log(id);
+  // console.log(id);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { user } = useSelector((state) => state.AuthReducer);
   // console.log({user},"info card");
   // console.log(id,user._id);
 
-
-  const handleLogOut = ()=> {
-    dispatch(logoutFun())
+  const handleLogOut = () => {
+    dispatch(logoutFun());
     notify(toast, "Logout Successfully", "success");
-  }
-
+  };
 
   useEffect(() => {
-    if(user){
+    if (user) {
       if (id === user._id) {
         setCurrentUser(user);
-  }
+      }
     }
     // else{
     //   dispatch(getUser(id,toast)).then((user)=>setCurrentUser(user))
     // }
-   
-   
   }, [user]);
 
   return (
@@ -53,7 +49,7 @@ const InfoCard = () => {
               onClick={onOpen}
               backgroundcolor="#24be6a"
             />
-            <ProfileModal isOpen={isOpen}   userData = {user} onClose={onClose} />
+            <ProfileModal isOpen={isOpen} userData={user} onClose={onClose} />
           </Box>
         ) : (
           ""
@@ -78,8 +74,7 @@ const InfoCard = () => {
         </span>
         <span>{currentUser.worksAt}</span>
       </Box>
-
-      <button className="button logout-button" onClick={handleLogOut}  >Log Out</button>
+      <CustomButton className={"logout-button"} onClick={handleLogOut} value="Log Out" />
     </Box>
   );
 };

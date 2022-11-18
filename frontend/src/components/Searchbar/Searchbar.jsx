@@ -1,26 +1,26 @@
-import React from 'react'
-import logo from "../../assets/logo.png"
+import React from "react";
+import logo from "../../assets/logo.png";
 import { BiSearch } from "react-icons/bi";
-import "./searchbar.css"
-
-
+import "./searchbar.css";
+import { Box, Flex, Image, Input } from "@chakra-ui/react";
 
 const Searchbar = () => {
-
-  
   return (
-    <div className="LogoSearch">
-      <img src={logo} alt="" />
-      <div className="Search">
-          <input type="text" placeholder="#Explore"/>
-          <div className="s-icon">
-          <BiSearch/>
-          </div>
-      </div>
-    </div>
+    <Flex gap=".1rem">
+      <Image w="50px" src={logo} alt="" />
+      <Box className="Search">
+        <Input
+          w="150px"
+          focusBorderColor="none"
+          type="text"
+          placeholder="#Explore"
+        />
+        <Box className="s-icon">
+          <BiSearch size="20px" />
+        </Box>
+      </Box>
+    </Flex>
   );
 };
-  
 
-
-export default Searchbar
+export default Searchbar;

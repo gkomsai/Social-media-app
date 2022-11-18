@@ -4,6 +4,7 @@ import styles from "./Auth.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { loginFun } from "../../redux/auth/action";
+import CustomButton from "../../components/Button/CustomButton";
 
 const Login = () => {
   const [user, setUser] = useState();
@@ -55,7 +56,7 @@ const Login = () => {
 
             <Link to="/forgotten_password">
               <Text
-              color={"#F9802D"}
+                color={"#F9802D"}
                 marginTop="15px"
                 fontSize="14px"
                 cursor="pointer"
@@ -64,19 +65,7 @@ const Login = () => {
               </Text>
             </Link>
           </VStack>
-          <Button
-            bg="var(--buttonBg)"
-            marginTop="40px"
-            padding="25px 35px 25px 35px"
-            borderRadius="25px"
-            fontSize="15px"
-            color="white"
-            fontWeight="700"
-            _hover={{ backgroundcolor: "#25cf60" }}
-            onClick={handleSubmit}
-          >
-            Sign In
-          </Button>
+          <CustomButton onClick={handleSubmit} value="Login" />
 
           <Text className={styles.note}>
             <Link to="/auth/signup">

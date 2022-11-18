@@ -2,8 +2,8 @@
   margin-bottom: 2rem;
   display: flex;
   gap: 1rem;
- box-shadow: var(--cardShadow);
-   padding: 1rem;
+  box-shadow: var(--cardShadow);
+  padding: 1rem;
   border-radius: 1rem;
 }
 
@@ -21,9 +21,10 @@
 
 .PostShare > div > input {
   background-color: var(--inputColor);
-  border-radius: 10px;
+  border-radius: 50px;
   padding: 10px;
   font-size: 17px;
+  padding: 5px 18px;
   border: none;
   outline: none;
 }
@@ -54,14 +55,14 @@
 
 .previewImage {
   position: relative;
-  /* display: flex; */
 }
 
 .previewImage > svg {
   position: absolute;
-  right: 1rem;
-  top: 0.5rem;
+  right: 2.2rem;
+  top: 1rem;
   cursor: pointer;
+  z-index: 5;
 }
 
 .previewImage > img {
@@ -69,4 +70,6 @@
   max-height: 20rem;
   object-fit: cover;
   border-radius: 0.5rem;
+  margin-left: -2rem;
+  margin-top: 20px;
 }

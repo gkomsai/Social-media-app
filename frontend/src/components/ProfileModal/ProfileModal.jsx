@@ -7,7 +7,6 @@ import {
   ModalBody,
   ModalCloseButton,
   useToast,
-  Button,
   Box,
   Input,
 } from "@chakra-ui/react";
@@ -16,6 +15,8 @@ import { useParams } from "react-router-dom";
 import { upadteUser } from "../../redux/user/action";
 import { notify } from "../../utils/extraFunctions";
 import axios from "axios";
+import CustomButton from "../Button/CustomButton";
+import "./ProfileModal.css";
 
 const ProfileModal = ({ onOpen, onClose, isOpen, userData }) => {
   const dispatch = useDispatch();
@@ -40,7 +41,6 @@ const ProfileModal = ({ onOpen, onClose, isOpen, userData }) => {
     let { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-
 
   const postDetails = (e) => {
     if (e.target.files && e.target.files[0]) {
@@ -113,7 +113,9 @@ const ProfileModal = ({ onOpen, onClose, isOpen, userData }) => {
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>Update profile</ModalHeader>
+
         <ModalCloseButton />
+
         <ModalBody>
           <form className="infoForm" onSubmit={handleSubmit}>
             <h3>Your Info</h3>
@@ -199,17 +201,15 @@ const ProfileModal = ({ onOpen, onClose, isOpen, userData }) => {
                 onChange={(e) => postDetails(e)}
               />
             </Box>
-
-            <Button
-              bg="var(--buttonBg)"
+            <CustomButton
               className="button"
-              alignSelf={"flex-end"}
-              onClick={onClose}
               type="submit"
+              marginTop="0px"
               isLoading={picLoading}
-            >
-              Update
-            </Button>
+              onClick={onClose}
+              value="Update"
+              alignSelf="flex-end"
+            />
           </form>
         </ModalBody>
       </ModalContent>
