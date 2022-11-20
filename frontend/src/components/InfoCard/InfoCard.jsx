@@ -32,9 +32,6 @@ const InfoCard = () => {
         setCurrentUser(user);
       }
     }
-    // else{
-    //   dispatch(getUser(id,toast)).then((user)=>setCurrentUser(user))
-    // }
   }, [user]);
 
   return (

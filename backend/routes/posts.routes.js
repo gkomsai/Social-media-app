@@ -11,7 +11,7 @@ postsRouter.use(checkUserAuth);
 
 /*  ----------------------for uploading the images-------------------------------- */
 
-postsRouter.post("/upload", upload.single("file"), async (req, res) => { //note- this "file" keyword  should be also present in the frontend input tag under name atrribute other wise file will not be uploaded
+postsRouter.post("/upload", upload.single("file"), async (req, res) => { 
   try{
     const  result = await cloudinary.uploader.upload(req.file.path);
      if(result){
@@ -29,7 +29,6 @@ postsRouter.post("/upload", upload.single("file"), async (req, res) => { //note-
 /*  ----------------------for creating a new post-------------------------------- */
 
 postsRouter.post("/create",  async (req, res) => {
-  // console.log("req.body",req.body);
 
   try {
   const newPost = new PostModel({...req.body });
@@ -79,7 +78,6 @@ postsRouter.get("/", async (req, res) => {
 /*  ----------------------for updating a posts of a particular user-------------------------------- */
 
 postsRouter.patch("/update/:id", async (req, res) => {
-  // console.log("inside update post")
   const postId = req.params.id;
   const { userId } = req.body;
 
@@ -102,6 +100,7 @@ postsRouter.patch("/update/:id", async (req, res) => {
     return res.status(500).send({ status: "error", message: err.message });
   }
 });
+
 
 /*  ----------------------for deleting  a post of a particular user-------------------------------- */
 
@@ -131,10 +130,8 @@ postsRouter.delete("/delete/:id", async (req, res) => {
 postsRouter.patch("/like/:id", async (req, res) => {
   const id = req.params.id;
   const { userId } = req.body;
-  // console.log(req.body);
   try {
     const foundPost = await PostModel.findById(id);
-  
     if (foundPost.likes.includes(userId)) {
       await foundPost.updateOne({ $pull: { likes: userId } });
       res.status(200).send({ status: "success", message: "Post disliked" });
@@ -187,7 +184,7 @@ postsRouter.get("/:id/timeline", async (req, res) => {
       currentUserPosts
         .concat(...followingPostsMainArr[0].followingPosts)
         .sort((a, b) => {
-          return new Date(b.createdAt) - new Date(a.createdAt); // we are sorting so that we can get these posts in the latest order
+          return new Date(b.createdAt) - new Date(a.createdAt); 
         })
     );
   } catch (err) {

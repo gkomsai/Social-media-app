@@ -111,7 +111,7 @@ authRouter.post("/forgotten_password", async (req, res) => {
       });
       const link = `http://localhost:3000/reset-password/${user._id}/${token}`;
 
-      // console.log(link);
+    
 
       let info = await transporter.sendMail({
         from: process.env.EMAIL_FROM,

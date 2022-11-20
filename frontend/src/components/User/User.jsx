@@ -77,7 +77,7 @@ const User = ({ person, location }) => {
           onClick={handleChatRequest}
           marginTop="0px"
           w="110px"
-          className={following ? "alreadyfollowing" : "notfollowing"}
+          className={alreadyCreatedChat ? "alreadyfollowing" : "notfollowing"}
           value={alreadyCreatedChat ? "Chat Created" : "Create Chat"}
         />
       )}

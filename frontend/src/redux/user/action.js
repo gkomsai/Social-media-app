@@ -3,26 +3,18 @@ import { notify } from "../../utils/extraFunctions";
 import { getTimelinePosts } from "../posts/action";
 import * as types from "./actionTypes";
 
-export const getUser = (id, token) => {
+export const getUser = (id) => {
   return axios({
     method: "get",
     url: `/user/${id}`,
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
   });
 };
 
-export const getAllUser = (token, toast) => (dispatch) => {
+export const getAllUser = (toast) => (dispatch) => {
   dispatch({ type: types.GET_USER_REQUEST });
   axios({
     method: "get",
     url: `/user`,
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
   })
     .then((res) => {
       // console.log(res.data);
@@ -32,8 +24,8 @@ export const getAllUser = (token, toast) => (dispatch) => {
       }
     })
     .catch((err) => {
-      console.error(err);
-      // notify(toast, err.response.data.message, "error");
+      // console.error(err);
+      notify(toast, err.response.data.message, "error");
       dispatch({ type: types.GET_USER_FAILURE });
     });
 };
@@ -46,7 +38,7 @@ export const upadteUser = (id, payload, token, toast) => (dispatch) => {
     data: payload,
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+      "Authorization": `Bearer ${token}`,
     },
   })
     .then((res) => {
@@ -76,8 +68,7 @@ export const deleteUser = (id, token, toast) => (dispatch) => {
       // console.log(res.data);
       if (res.data) {
         notify(toast, "Your account deleted successfully", "success");
-       return dispatch({ type: types.DELETE_USER_SUCCESS });
-       
+        return dispatch({ type: types.DELETE_USER_SUCCESS });
       }
     })
     .catch((err) => {
@@ -94,7 +85,7 @@ export const followUser = (id, token, toast, currentUserId) => (dispatch) => {
     url: `/user/${id}/follow`,
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+      "Authorization": `Bearer ${token}`,
     },
   })
     .then((res) => {

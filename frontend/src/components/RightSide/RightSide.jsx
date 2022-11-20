@@ -7,6 +7,7 @@ import CustomButton from "../Button/CustomButton";
 
 const RightSide = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  console.log("RightSide")
 
   return (
     <Box className="RightSide">
@@ -25,4 +26,4 @@ const RightSide = () => {
   );
 };
 
-export default RightSide;
+export default RightSide ;
