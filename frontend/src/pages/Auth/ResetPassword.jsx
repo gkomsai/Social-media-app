@@ -12,8 +12,7 @@ import React, { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { notify } from "../../utils/extraFunctions";
 import logo from "../../assets/logo.png";
-
-
+import CustomButton from "../../components/Button/CustomButton";
 
 const ResetPassword = () => {
   const navigate = useNavigate();
@@ -90,18 +89,7 @@ const ResetPassword = () => {
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
         </Box>
-        <Button
-          mt={15}
-          fontSize="14px"
-        
-          marginTop="15px"
-          color="white"
-          bg="var(--buttonBg)"
-          padding="5px 35px 5px 35px"
-          onClick={handlePasswordSubmit}
-        >
-          Save Settings
-        </Button>
+        <CustomButton onClick={handlePasswordSubmit} value="Reset" />
 
         <Divider width="96%" marginTop="40px" />
 

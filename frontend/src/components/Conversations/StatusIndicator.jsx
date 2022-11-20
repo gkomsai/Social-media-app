@@ -47,7 +47,7 @@ export default function StatusIndicator() {
       overflow="hidden"
     >
       {/* Ideally, only the box should be used. The <Flex /> is used to style the preview. */}
-      <Tooltip placement='right' label={`Online`} bg='none' color={"green"}>
+      <Tooltip placement="right" label={`Online`} bg="none" color={"green"}>
         <Box
           as="div"
           h="14px"

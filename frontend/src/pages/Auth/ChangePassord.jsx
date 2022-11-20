@@ -10,14 +10,14 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import React, { useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { notify } from "../../utils/extraFunctions";
 import logo from "../../assets/logo.png";
 import { useSelector } from "react-redux";
+import CustomButton from "../../components/Button/CustomButton";
 
 const ChangePassord = () => {
   const navigate = useNavigate();
-  //   const { id } = useParams();
   const { token } = useSelector((store) => store.AuthReducer);
   const toast = useToast();
   const [password, setPassword] = useState("");
@@ -25,7 +25,6 @@ const ChangePassord = () => {
 
   const handlePasswordSubmit = (e) => {
     e.preventDefault();
-    console.log("inside");
     if (password && confirmPassword) {
       const payload = { password, confirmPassword };
 
@@ -37,7 +36,6 @@ const ChangePassord = () => {
           },
         })
         .then((res) => {
-          console.log(res.data.message);
           if (res.data.message) {
             notify(toast, res.data.message, "success");
             navigate("/");
@@ -102,20 +100,7 @@ const ChangePassord = () => {
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
         </Box>
-        <Button
-          mt={"25px"}
-          w="180px"
-          _hover={{ bg: "green" }}
-          fontSize="14px"
-          alignSelf={"center"}
-          marginTop="15px"
-          color="white"
-          bg="var(--buttonBg)"
-          padding="5px 35px 5px 35px"
-          onClick={handlePasswordSubmit}
-        >
-          Update
-        </Button>
+        <CustomButton onClick={handlePasswordSubmit} value={"Update"} />
       </Flex>
     </Box>
   );

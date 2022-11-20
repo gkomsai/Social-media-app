@@ -6,10 +6,10 @@ import StatusIndicator from "./StatusIndicator";
 
 const Conversation = ({ singleChatMemberData, currentUser, online }) => {
   const [userData, setUserData] = useState(null);
-  // const dispatch = useDispatch();
+
 
   const userId = singleChatMemberData?.members.find((id) => id !== currentUser); // finding the 2nd member userId
-  // console.log({ userId });
+
 
   const getUserData = async () => {
     try {
@@ -22,7 +22,10 @@ const Conversation = ({ singleChatMemberData, currentUser, online }) => {
   };
 
   useEffect(() => {
-    getUserData();
+    if (singleChatMemberData) {
+      getUserData();
+    }
+  
   }, [userId]);
 
   return (

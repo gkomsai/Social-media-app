@@ -14,11 +14,6 @@ app.use(express.json());
 app.use(cors());
 
 
-// to serve images from the uploads/images/ of the local server 
-// app.use(express.static('uploads')); 
-// app.use('/images', express.static('images'));
-
-
 
 
 

@@ -1,8 +1,9 @@
-import { Avatar, Box, useToast } from "@chakra-ui/react";
+import { Avatar, Box, Button, useToast } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createNewChat, findAllchatingUser } from "../../redux/chats/action";
 import { followUser, unfollowUser } from "../../redux/user/action";
+import CustomButton from "../Button/CustomButton";
 import "./User.css";
 
 const User = ({ person, location }) => {
@@ -30,8 +31,8 @@ const User = ({ person, location }) => {
 
   const handleFollow = () => {
     following
-      ? dispatch(unfollowUser(person._id, token, toast,user._id))
-      : dispatch(followUser(person._id, token, toast,user._id));
+      ? dispatch(unfollowUser(person._id, token, toast, user._id))
+      : dispatch(followUser(person._id, token, toast, user._id));
     setFollowing((prev) => !prev);
   };
 
@@ -44,13 +45,12 @@ const User = ({ person, location }) => {
       dispatch(createNewChat(payload, token, toast));
       setAlreadyCreatedChat((prev) => !prev);
     } else {
-      return
+      return;
     }
-
   };
 
   return (
-    <Box className={location === "usersPage" ? "userFollwer" : "follower"}>
+    <Box className={location === "usersPage" ? "userPage" : "follower"}>
       <Box>
         <Avatar
           width={"50px"}
@@ -64,25 +64,22 @@ const User = ({ person, location }) => {
           <span>{person?.email}</span>
         </Box>
       </Box>
-      <button
-        className={
-          following ? "button fc-button UnfollowButton" : "button fc-button"
-        }
+      <CustomButton
         onClick={handleFollow}
-      >
-        {following ? "Unfollow" : "Follow"}
-      </button>
+        marginTop="0px"
+        w="110px"
+        className={following ? "alreadyfollowing" : "notfollowing"}
+        value={following ? "Unfollow" : "Follow"}
+      />
+
       {location === "usersPage" && (
-        <button
-          className={
-            alreadyCreatedChat
-              ? "button fc-button UnfollowButton"
-              : "button fc-button"
-          }
+        <CustomButton
           onClick={handleChatRequest}
-        >
-          {alreadyCreatedChat ? "Chat Created" : "Create Chat"}
-        </button>
+          marginTop="0px"
+          w="110px"
+          className={alreadyCreatedChat ? "alreadyfollowing" : "notfollowing"}
+          value={alreadyCreatedChat ? "Chat Created" : "Create Chat"}
+        />
       )}
     </Box>
   );

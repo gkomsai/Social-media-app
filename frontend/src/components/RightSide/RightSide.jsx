@@ -2,30 +2,28 @@ import React from "react";
 import "./RightSide.css";
 import TrendCard from "../TrendCard/TrendCard";
 import ShareModal from "../ShareModel/ShareModal";
-import { Box, Button, useDisclosure } from "@chakra-ui/react";
-
+import { Box, useDisclosure } from "@chakra-ui/react";
+import CustomButton from "../Button/CustomButton";
 
 const RightSide = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  console.log("RightSide")
 
   return (
     <Box className="RightSide">
-      {/* <NavIcons /> */}
       <TrendCard />
       <Box>
-        <Button
-          w="95%"
-          m="auto"
+        <CustomButton
+          marginTop="0px"
           bg="var(--buttonBg)"
+          w="95%"
           onClick={onOpen}
-          className="button"
-        >
-          Share
-        </Button>
+          value="Share"
+        />
       </Box>
       <ShareModal isOpen={isOpen} onClose={onClose} />
     </Box>
   );
 };
 
-export default RightSide;
+export default RightSide ;

@@ -10,20 +10,18 @@ import { io } from "socket.io-client";
 import { Box, Text, useToast } from "@chakra-ui/react";
 
 const Chat = () => {
-  const { user } = useSelector((store) => store.AuthReducer);
-  const { token } = useSelector((store) => store.AuthReducer);
+  const { user,token } = useSelector((store) => store.AuthReducer);
   const { chatUsers } = useSelector((store) => store.ChatReducer);
- 
+
+  const socket = useRef(); // creating the socket globally
   const dispatch = useDispatch();
   const toast = useToast();
 
-  const [currentChatData, setCurrentChatData] = useState(null);
-
+  const [currentChatMemberChatSchema, setCurrentChatMemberChatSchema] = useState(null);
   const [onlineUsers, setOnlineUsers] = useState([]);
-  console.log({ onlineUsers });
-  const socket = useRef(); // creating the socket globally
   const [sendMessage, setSendMessage] = useState(null);
   const [receivedMessage, setReceivedMessage] = useState(null);
+
 
   useEffect(() => {
     if (chatUsers.length === 0) {
@@ -31,14 +29,17 @@ const Chat = () => {
     }
   }, [user._id]);
 
+
   // Connect to Socket.io
   useEffect(() => {
-    // socket.current = io("ws://localhost:8090");
-    socket.current = io(
-      "https://indian-social-media-app-chatting-backend.onrender.com/"
-    );
-    socket.current.emit("new-user-add", user._id);
-    socket.current.on("get-users", (users) => {
+    socket.current = io("ws://localhost:8800");
+
+    
+    // socket.current = io(
+    //   "https://indian-social-media-app-chatting-backend.onrender.com/"
+    // );
+    socket.current.emit("add-new-user", user._id);
+    socket.current.on("all-currently-online-users", (users) => {
       // here we are getting the informaiton about the online users from the socket.io
       setOnlineUsers(users);
     });
@@ -59,9 +60,9 @@ const Chat = () => {
     });
   }, []);
 
-  const checkOnlineStatus = (chat) => {
-    const chatMember = chat.members.find((member) => member !== user._id); //  since our members array only include only two members so finding the other member excluding the current user
-    const online = onlineUsers.find((user) => user.userId === chatMember); // now checking  those users whose are online
+  const checkOnlineStatus = (chatSchema) => {
+  const secondChatMemberId = chatSchema.members.find((id) => id !== user._id); //  since our members array only include only two members so finding the other member excluding the current user
+    const online = onlineUsers.some((el) => el.userId === secondChatMemberId); // now checking if the otherUser is online or not
     return online ? true : false;
   };
 
@@ -72,16 +73,16 @@ const Chat = () => {
           <Box className="Chat-container">
             <Text>Chats</Text>
             <Box className="chatMembers-list">
-              {chatUsers?.map((chatMember) => (
+              {chatUsers?.map((chatSchema) => (
                 <Box
                   key={Date.now() + user._id + Math.random()}
                   onClick={() => {
-                    setCurrentChatData(chatMember);
+                    setCurrentChatMemberChatSchema(chatSchema);
                   }}
                 >
                   <Conversation
-                    singleChatMemberData={chatMember}
-                    online={checkOnlineStatus(chatMember)}
+                    singleChatMemberData={chatSchema}
+                    online={checkOnlineStatus(chatSchema)}
                     currentUser={user._id}
                   />
                 </Box>
@@ -92,8 +93,8 @@ const Chat = () => {
 
         <Box className="Right-side-chat">
           <ChatBox
-            currentChatData={currentChatData}
-            currentUser={user._id}
+            currentChatMemberChatSchema={currentChatMemberChatSchema}
+            currentUserId={user._id}
             setSendMessage={setSendMessage}
             receivedMessage={receivedMessage}
           />

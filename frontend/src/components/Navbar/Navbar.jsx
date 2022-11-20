@@ -42,6 +42,7 @@ import { logoutFun } from "../../redux/auth/action";
 import { notify } from "../../utils/extraFunctions";
 import { CgDanger } from "react-icons/cg";
 import { deleteUser } from "../../redux/user/action";
+import CustomButton from "../Button/CustomButton";
 
 const Navbar = () => {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -49,7 +50,7 @@ const Navbar = () => {
   const toast = useToast();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { user,token} = useSelector((state) => state.AuthReducer);
+  const { user, token } = useSelector((state) => state.AuthReducer);
 
   const handleLogOut = () => {
     dispatch(logoutFun());
@@ -57,8 +58,8 @@ const Navbar = () => {
   };
 
   const handleDeleteAccount = () => {
-    dispatch(deleteUser(user._id,token,toast))
-    return
+    dispatch(deleteUser(user._id, token, toast));
+    return;
   };
 
   return (
@@ -129,7 +130,7 @@ const Navbar = () => {
               Profile
             </MenuItem>
             <MenuItem onClick={() => navigate(`/changePassord/${user._id}`)}>
-            Change Password
+              Change Password
             </MenuItem>
             <MenuDivider />
             <MenuItem onClick={handleLogOut}>Logout</MenuItem>
@@ -147,36 +148,31 @@ const Navbar = () => {
                 </ModalHeader>
                 <ModalCloseButton />
 
-                <ModalBody >
+                <ModalBody>
                   <VStack align={"flex-start"} spacing={4}>
-
-                 
-                  <Text fontWeight={"bold"} fontSize="18px" >
-                    Hey {user?.firstName}, we’re sorry to see you go
-                  </Text>
-                  <Text>
-                    Just a quick reminder, Deleting your account means you’ll
-                    lose all of your Data like your followers, posts and
-                    everything
-                  </Text>
-                  <Text fontWeight={"bold"}>
-                    Still want to delete, then click on Delete Button
+                    <Text fontWeight={"bold"} fontSize="18px">
+                      Hey {user?.firstName}, we’re sorry to see you go
                     </Text>
-                    </VStack>
+                    <Text>
+                      Just a quick reminder, Deleting your account means you’ll
+                      lose all of your Data like your followers, posts and
+                      everything
+                    </Text>
+                    <Text fontWeight={"bold"}>
+                      Still want to delete, then click on Delete Button
+                    </Text>
+                  </VStack>
                 </ModalBody>
 
                 <ModalFooter>
-                  <Button
-                    colorScheme={"red"}
-                    color={"white"}
-                    mr={3}
+                  <CustomButton
                     onClick={() => {
                       handleDeleteAccount();
                       onClose();
                     }}
-                  >
-                    Delete
-                  </Button>
+                    bg="red"
+                    value="Delete"
+                  />
                 </ModalFooter>
               </ModalContent>
             </Modal>

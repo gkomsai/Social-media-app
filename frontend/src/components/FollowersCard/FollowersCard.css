@@ -17,12 +17,6 @@
   display: flex;
 }
 
-.followerImage {
-  width: 3.2rem;
-  height: 3.2rem;
-  border-radius: 50%;
-}
-
 .name {
   display: flex;
   flex-direction: column;
@@ -33,24 +27,4 @@
 
 .name > span:nth-of-type(1) {
   font-weight: bold;
-}
-
-.fc-button {
-  height: 2rem;
-  padding-left: 20px;
-  padding-right: 20px;
-}
-
-.UnfollowButton {
-  color: var(--orange);
-  border: 2px solid var(--orange);
-  cursor: pointer;
-  background: transparent;
-}
-
-.FollowersCard > span {
-  font-weight: bold;
-  color: orange;
-  align-self: center;
-  cursor: pointer;
 }

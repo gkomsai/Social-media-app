@@ -28,13 +28,14 @@ import {
   Button,
   Image,
 } from "@chakra-ui/react";
+import CustomButton from "../Button/CustomButton";
 
 const SinglePost = ({ postData }) => {
   // console.log({postData})
   const toast = useToast();
   const dispatch = useDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [description,setDescription] = useState("")
+  const [description, setDescription] = useState("");
   const { user } = useSelector((state) => state.AuthReducer);
   const { token } = useSelector((state) => state.AuthReducer);
   const [liked, setLiked] = useState(postData.likes.includes(user._id));
@@ -48,20 +49,16 @@ const SinglePost = ({ postData }) => {
 
   const handleDeltePost = () => {
     dispatch(deletePost(postData._id, token, toast));
-   };
+  };
 
+  const hadleUpdatePost = (e) => {
+    e.preventDefault();
 
-
-const hadleUpdatePost = (e)=>{
-e.preventDefault();
-
-const payload = {
-  description
-}
-dispatch(updatePost(postData._id, payload, token, toast));
-
-}
-
+    const payload = {
+      description,
+    };
+    dispatch(updatePost(postData._id, payload, token, toast));
+  };
 
   return (
     <Box className="SinglePost">
@@ -92,15 +89,22 @@ dispatch(updatePost(postData._id, payload, token, toast));
                 <ModalHeader>Update your post description</ModalHeader>
                 <ModalCloseButton />
                 <form action="" onSubmit={hadleUpdatePost}>
-                <ModalBody>             
-                  <Input  defaultValue={postData?.description}  onChange={(e)=>setDescription(e.target.value)}  />
-                </ModalBody>
+                  <ModalBody>
+                    <Input
+                      defaultValue={postData?.description}
+                      onChange={(e) => setDescription(e.target.value)}
+                    />
+                  </ModalBody>
 
-                <ModalFooter>
-                  <Button type="submit" bg={"var(--buttonBg)"} mr={3} onClick={onClose}>
-                    UPDATE
-                  </Button>
-                </ModalFooter>
+                  <ModalFooter>
+                    <CustomButton
+                      type="submit"
+                      marginTop="0px"
+                      onClick={onClose}
+                      value="UPDATE"
+                    />
+                
+                  </ModalFooter>
                 </form>
               </ModalContent>
             </Modal>
@@ -114,7 +118,7 @@ dispatch(updatePost(postData._id, payload, token, toast));
         </Menu>
       </Box>
 
-      <Text as="span" color={"grey"} fontSize="15px" >
+      <Text as="span" color={"grey"} fontSize="15px">
         {likes} likes
       </Text>
       <Box className="detail">

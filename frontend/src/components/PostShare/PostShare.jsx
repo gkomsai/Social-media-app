@@ -12,6 +12,7 @@ import axios from "axios";
 import { notify } from "../../utils/extraFunctions";
 import defaultProfile from "../../assets/defaultProfile.png";
 import { useEffect } from "react";
+import CustomButton from "../Button/CustomButton";
 
 const PostShare = () => {
   const imageRef = useRef();
@@ -117,8 +118,10 @@ const PostShare = () => {
       />
       <Box>
         <Input
+          w="90%"
           type="text"
-          focusBorderColor="#F9802D"
+          focusBorderColor="none"
+          borderRadius={30}
           placeholder="Share a Post"
           required
           ref={description}
@@ -149,15 +152,13 @@ const PostShare = () => {
             <UilSchedule />
             Shedule
           </Box>
-          <Button
-            bg="var(--buttonBg)"
+          <CustomButton
+            marginTop="0px"
+            w="85px"
             isLoading={isLoading}
             onClick={handleUpload}
-            className="button ps-button"
-          >
-            Share
-          </Button>
-
+            value="Share"
+          />
           <Box style={{ display: "none" }}>
             <input type="file" ref={imageRef} onChange={onImageChange} />
           </Box>
