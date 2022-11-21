@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   Divider,
+  Flex,
   Image,
   Input,
   Text,
@@ -23,8 +24,8 @@ const Forgotpassword = () => {
     axios
       .post("/auth/forgotten_password", { email })
       .then((res) => {
-        console.log(res.data.message);
-        alert(res.data.message);
+        // console.log(res.data.message);
+        // alert(res.data.message);
         notify(toast, res.data.message, "success");
       })
       .catch((err) => {
@@ -34,18 +35,22 @@ const Forgotpassword = () => {
   };
 
   return (
-    <Box h={"100vh"}>
-      <Image marginLeft="30%" marginTop="80px" src={logo} alt="logo" />
+    <Box
+      h="100vh"
+      w={{ base: "90%", md: "80%", lg: "61%", xl: "45%" }}
+      m="auto"
+    >
+      <Image marginTop="80px" src={logo} alt="logo" />
 
-      <Box
-        width="41%"
+      <Flex
+        direction={"column"}
+        justifyContent="flex-start"
+        gap="8px"
         boxShadow="lg"
         marginTop="10px"
-        marginLeft="30%"
         border="1px solid silver"
         borderRadius="10px"
-        paddingLeft="2%"
-        paddingBottom="20px"
+        p="2rem"
       >
         <Text fontWeight="700" fontSize="18px" marginTop="30px">
           Forgotten Password?
@@ -53,12 +58,18 @@ const Forgotpassword = () => {
 
         <Divider width="96%" marginTop="20px" />
 
-        <Box display="flex" alignItems="center" marginTop="25px" gap="7%">
+        <Flex
+          direction={{ base: "column", md: "row" }}
+          alignItems="flex-start"
+          justifyContent={"flex-start"}
+          marginTop="25px"
+          gap="7%"
+        >
           <Text>E-mail</Text>
           <Input
             type="email"
             focusBorderColor="#F9802D"
-            width="80%"
+            w={{ base: "90%", md: "70%", lg: "70%" }}
             color="black"
             backgroundColor="#f8f8f8"
             fontSize="14px"
@@ -66,7 +77,7 @@ const Forgotpassword = () => {
             placeholder="Enter Your Email"
             onChange={(e) => setEmail(e.target.value)}
           />
-        </Box>
+        </Flex>
         <CustomButton onClick={handleEmailSubmit} value="Submit" />
         <Divider width="96%" marginTop="40px" />
 
@@ -80,7 +91,7 @@ const Forgotpassword = () => {
             Return to Login
           </Text>
         </Link>
-      </Box>
+      </Flex>
     </Box>
   );
 };
