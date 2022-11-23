@@ -1,17 +1,17 @@
 import React, { useRef, useState } from "react";
 import "./Chat.css";
-import { useDispatch, useSelector } from "react-redux";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import Conversation from "../../components/Conversations/Conversations";
-
 import { useEffect } from "react";
 import { findAllchatingUser } from "../../redux/chats/action";
 import ChatBox from "../../components/ChatBox/ChatBox";
 import { io } from "socket.io-client";
 import { Box, Text, useToast } from "@chakra-ui/react";
+import { useCallback } from "react";
 
 const Chat = () => {
-  const { user,token } = useSelector((store) => store.AuthReducer);
-  const { chatUsers } = useSelector((store) => store.ChatReducer);
+  const { user,token } = useSelector((store) => store.AuthReducer,shallowEqual);
+  const { chatUsers } = useSelector((store) => store.ChatReducer,shallowEqual);
 
   const socket = useRef(); // creating the socket globally
   const dispatch = useDispatch();
@@ -22,22 +22,24 @@ const Chat = () => {
   const [sendMessage, setSendMessage] = useState(null);
   const [receivedMessage, setReceivedMessage] = useState(null);
 
-
-  useEffect(() => {
+  const findChatUser = useCallback(() => {
     if (chatUsers.length === 0) {
+      // console.log("All ChatingUser inside the Chat page triggered")
       dispatch(findAllchatingUser(user._id,token,toast))
     }
+  },[user._id]) 
+
+  useEffect(() => {
+    findChatUser();
   }, [user._id]);
 
 
   // Connect to Socket.io
   useEffect(() => {
-    socket.current = io("ws://localhost:8800");
-
-    
-    // socket.current = io(
-    //   "https://indian-social-media-app-chatting-backend.onrender.com/"
-    // );
+    // socket.current = io("ws://localhost:8800");
+    socket.current = io(
+      "https://indian-social-media-app-chatting-backend.onrender.com/"
+    );
     socket.current.emit("add-new-user", user._id);
     socket.current.on("all-currently-online-users", (users) => {
       // here we are getting the informaiton about the online users from the socket.io
@@ -55,7 +57,6 @@ const Chat = () => {
   // Geting the message from the socket server
   useEffect(() => {
     socket.current.on("recieve-message", (data) => {
-      console.log("receivedMessage from the socket.io", data);
       setReceivedMessage(data);
     });
   }, []);
@@ -71,7 +72,7 @@ const Chat = () => {
       <Box className="Chat" mt={{ base: "40px", lg: "0px" }}>
         <Box className="Left-side-chat">
           <Box className="Chat-container">
-            <Text>Chats</Text>
+            <Text fontWeight={"bold"}>Chats</Text>
             <Box className="chatMembers-list">
               {chatUsers?.map((chatSchema) => (
                 <Box
@@ -104,4 +105,4 @@ const Chat = () => {
   );
 };
 
-export default Chat;
+export default React.memo(Chat);

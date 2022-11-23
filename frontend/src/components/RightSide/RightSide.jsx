@@ -1,16 +1,15 @@
 import React from "react";
-import "./RightSide.css";
 import TrendCard from "../TrendCard/TrendCard";
 import ShareModal from "../ShareModel/ShareModal";
-import { Box, useDisclosure } from "@chakra-ui/react";
+import { Box, Flex, useDisclosure } from "@chakra-ui/react";
 import CustomButton from "../Button/CustomButton";
 
 const RightSide = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  console.log("RightSide")
+
 
   return (
-    <Box className="RightSide">
+    <Flex direction={"column"} gap="1.9rem">
       <TrendCard />
       <Box>
         <CustomButton
@@ -22,7 +21,7 @@ const RightSide = () => {
         />
       </Box>
       <ShareModal isOpen={isOpen} onClose={onClose} />
-    </Box>
+    </Flex>
   );
 };
 

@@ -24,7 +24,6 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
-  Button,
 } from "@chakra-ui/react";
 import { FiChevronDown } from "react-icons/fi";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
@@ -37,7 +36,7 @@ import {
   MenuItem,
   MenuDivider,
 } from "@chakra-ui/react";
-import { useDispatch, useSelector } from "react-redux";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { logoutFun } from "../../redux/auth/action";
 import { notify } from "../../utils/extraFunctions";
 import { CgDanger } from "react-icons/cg";
@@ -50,7 +49,7 @@ const Navbar = () => {
   const toast = useToast();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { user, token } = useSelector((state) => state.AuthReducer);
+  const { user, token } = useSelector((state) => state.AuthReducer,shallowEqual);
 
   const handleLogOut = () => {
     dispatch(logoutFun());

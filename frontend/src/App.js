@@ -7,9 +7,8 @@ function App() {
   return (
     <Box className="App">
       <NavIcons />
-      <Box className="blur" top="-10%" right="0"></Box>
-      <Box className="blur" top="20%" left="-3rem"></Box>
-      
+      <Box className="blur" top="0%" right="0"></Box>
+      <Box className="blur" top="2%" left="-1rem"></Box>
       <AllRoutes />
     </Box>
   );

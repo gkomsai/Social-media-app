@@ -1,6 +1,6 @@
 import { Avatar, Box,  useToast } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { createNewChat, findAllchatingUser } from "../../redux/chats/action";
 import { followUser, unfollowUser } from "../../redux/user/action";
 import CustomButton from "../Button/CustomButton";
@@ -9,9 +9,9 @@ import "./User.css";
 const User = ({ person, location }) => {
   const dispatch = useDispatch();
   const toast = useToast();
-  const { user } = useSelector((state) => state.AuthReducer);
-  const { token } = useSelector((state) => state.AuthReducer);
-  const { chatUsers } = useSelector((store) => store.ChatReducer);
+  const { user,token } = useSelector((state) => state.AuthReducer,shallowEqual);
+ 
+  const { chatUsers } = useSelector((store) => store.ChatReducer, shallowEqual);
   console.log("chatUsers triggered",chatUsers)
 
   const [alreadyCreatedChat, setAlreadyCreatedChat] = useState(null);
@@ -25,6 +25,7 @@ const User = ({ person, location }) => {
 
   useEffect(() => {
     if (chatUsers.length === 0 && location === "usersPage") {
+      console.log("All ChatingUser inside the User page triggered")//this function is calling two times when the usersPage gets refreshed
       dispatch(findAllchatingUser(user._id,token,toast))
     }
   }, [chatUsers.length])

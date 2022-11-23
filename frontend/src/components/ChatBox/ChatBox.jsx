@@ -5,9 +5,10 @@ import { format } from "timeago.js";
 
 import { addMessage, getMessages } from "../../api/messageApi";
 import InputEmoji from "react-input-emoji";
-import { useSelector } from "react-redux";
+import { shallowEqual, useSelector } from "react-redux";
 import { Avatar, Box, Flex, Text } from "@chakra-ui/react";
 import CustomButton from "../Button/CustomButton";
+import { useCallback } from "react";
 
 const ChatBox = ({
   currentChatMemberChatSchema,
@@ -18,21 +19,24 @@ const ChatBox = ({
   const [userData, setUserData] = useState(null);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
-  // console.log({ userData });
-  const { token } = useSelector((state) => state.AuthReducer);
+
+  const { token } = useSelector((state) => state.AuthReducer, shallowEqual);
   const scroll = useRef();
 
-  const userId = currentChatMemberChatSchema?.members.find((id) => id !== currentUserId);
+  const userId = currentChatMemberChatSchema?.members.find(
+    (id) => id !== currentUserId
+  );
 
-  const getUserData = async () => {
-    try {
-      getUser(userId).then((res) => {
+  const getUserData = useCallback(() => {
+    getUser(userId)
+      .then((res) => {
+        // console.log("getuser triggered")
         setUserData(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
       });
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  }, [userId]);
 
   useEffect(() => {
     if (currentChatMemberChatSchema) {
@@ -44,7 +48,10 @@ const ChatBox = ({
   useEffect(() => {
     const fetchMessages = async () => {
       try {
-        const { data } = await getMessages(currentChatMemberChatSchema._id, token);
+        const { data } = await getMessages(
+          currentChatMemberChatSchema?._id,
+          token
+        );
         // console.log("fetch messages data", data);
         setMessages(data);
       } catch (error) {
@@ -60,12 +67,14 @@ const ChatBox = ({
     const message = {
       senderId: currentUserId,
       text: newMessage,
-      chatId: currentChatMemberChatSchema._id,
+      chatId: currentChatMemberChatSchema?._id,
     };
-    const receiverId = currentChatMemberChatSchema.members.find((id) => id !== currentUserId);
+    const receiverId = currentChatMemberChatSchema?.members.find(
+      (id) => id !== currentUserId
+    );
     // sending message to socket server
     setSendMessage({ ...message, receiverId });
-    
+
     // sending message to database
     try {
       const { data } = await addMessage(message, token);
@@ -78,8 +87,10 @@ const ChatBox = ({
 
   // Receiveing Message from parent component and will render as soon as our recevied message is changed so this code is enableling us the real-time chatting
   useEffect(() => {
-    // console.log("Message Arrived: ", receivedMessage);
-    if (receivedMessage && receivedMessage.chatId === currentChatMemberChatSchema._id) {
+    if (
+      receivedMessage &&
+      receivedMessage.chatId === currentChatMemberChatSchema?._id
+    ) {
       setMessages([...messages, receivedMessage]);
     }
   }, [receivedMessage]);
@@ -117,7 +128,7 @@ const ChatBox = ({
             />
           </Box>
           <Box className="chat-body">
-            {messages.map((message, i) => (
+            {messages?.map((message, i) => (
               <Box
                 key={i}
                 ref={scroll}
@@ -155,4 +166,4 @@ const ChatBox = ({
   );
 };
 
-export default ChatBox;
+export default React.memo(ChatBox);

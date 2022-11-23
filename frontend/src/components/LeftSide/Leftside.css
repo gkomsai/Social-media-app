@@ -1,8 +1,0 @@
-/* below css code is giving the gap between the top portion and middleportion of the leftside */
-.leftside{
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    align-items: center;
-    overflow: auto;
-}

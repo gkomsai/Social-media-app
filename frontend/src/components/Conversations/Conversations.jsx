@@ -3,29 +3,28 @@ import { useEffect } from "react";
 import { getUser } from "../../redux/user/action";
 import { Avatar, Box, Text } from "@chakra-ui/react";
 import StatusIndicator from "./StatusIndicator";
+import { useCallback } from "react";
 
 const Conversation = ({ singleChatMemberData, currentUser, online }) => {
   const [userData, setUserData] = useState(null);
 
-
   const userId = singleChatMemberData?.members.find((id) => id !== currentUser); // finding the 2nd member userId
 
-
-  const getUserData = async () => {
-    try {
-      getUser(userId).then((res) => {
+  const getUserData = useCallback(() => {
+    getUser(userId)
+      .then((res) => {
+        // console.log("getuser triggered inside conversation")
         setUserData(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
       });
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  }, [userId]);
 
   useEffect(() => {
     if (singleChatMemberData) {
       getUserData();
     }
-  
   }, [userId]);
 
   return (
@@ -60,4 +59,4 @@ const Conversation = ({ singleChatMemberData, currentUser, online }) => {
   );
 };
 
-export default Conversation;
+export default React.memo(Conversation);

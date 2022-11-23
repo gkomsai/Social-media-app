@@ -13,12 +13,12 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { notify } from "../../utils/extraFunctions";
 import logo from "../../assets/logo.png";
-import { useSelector } from "react-redux";
+import { shallowEqual, useSelector } from "react-redux";
 import CustomButton from "../../components/Button/CustomButton";
 
 const ChangePassord = () => {
   const navigate = useNavigate();
-  const { token } = useSelector((store) => store.AuthReducer);
+  const { token } = useSelector((store) => store.AuthReducer,shallowEqual);
   const toast = useToast();
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");

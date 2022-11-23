@@ -3,7 +3,7 @@ import ProfileModal from "../ProfileModal/ProfileModal";
 import "./InfoCard.css";
 import { UilPen } from "@iconscout/react-unicons";
 import { Box, useDisclosure, useToast } from "@chakra-ui/react";
-import { useDispatch, useSelector } from "react-redux";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { logoutFun } from "../../redux/auth/action";
@@ -17,7 +17,7 @@ const InfoCard = () => {
   const { id } = useParams();
   // console.log(id);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { user } = useSelector((state) => state.AuthReducer);
+  const { user } = useSelector((state) => state.AuthReducer,shallowEqual);
   // console.log({user},"info card");
   // console.log(id,user._id);
 
