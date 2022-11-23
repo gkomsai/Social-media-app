@@ -15,7 +15,7 @@ const User = ({ person, location }) => {
   console.log("chatUsers triggered",chatUsers)
 
   const [alreadyCreatedChat, setAlreadyCreatedChat] = useState(null);
-  // console.log({alreadyCreatedChat})
+ 
   const [following, setFollowing] = useState(person?.followers.includes(user._id));
 
   useEffect(() => {
