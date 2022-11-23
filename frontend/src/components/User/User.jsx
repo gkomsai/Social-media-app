@@ -1,6 +1,6 @@
-import { Avatar, Box, Button, useToast } from "@chakra-ui/react";
+import { Avatar, Box,  useToast } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { createNewChat, findAllchatingUser } from "../../redux/chats/action";
 import { followUser, unfollowUser } from "../../redux/user/action";
 import CustomButton from "../Button/CustomButton";
@@ -9,25 +9,26 @@ import "./User.css";
 const User = ({ person, location }) => {
   const dispatch = useDispatch();
   const toast = useToast();
-  const { user } = useSelector((state) => state.AuthReducer);
-  const { token } = useSelector((state) => state.AuthReducer);
-  const { chatUsers } = useSelector((store) => store.ChatReducer);
-  // console.log(chatUsers)
+  const { user,token } = useSelector((state) => state.AuthReducer,shallowEqual);
+ 
+  const { chatUsers } = useSelector((store) => store.ChatReducer, shallowEqual);
+  console.log("chatUsers triggered",chatUsers)
 
-  const [alreadyCreatedChat, setAlreadyCreatedChat] = useState(
-    chatUsers?.some((el) => el.members.includes(person._id))
-  );
+  const [alreadyCreatedChat, setAlreadyCreatedChat] = useState(null);
   // console.log({alreadyCreatedChat})
-  const [following, setFollowing] = useState(
-    person.followers.includes(user._id)
-  );
+  const [following, setFollowing] = useState(person?.followers.includes(user._id));
 
-  // useEffect(() => {
-  //   if (chatUsers.length === 0) {
-  //     dispatch(findAllchatingUser(user._id,token,toast))
-  //   }
+  useEffect(() => {
+   setAlreadyCreatedChat(chatUsers?.some((el) => el.members.includes(person._id)))
+  }, [chatUsers.length])
+ 
 
-  // }, [chatUsers.length])
+  useEffect(() => {
+    if (chatUsers.length === 0 && location === "usersPage") {
+      console.log("All ChatingUser inside the User page triggered")//this function is calling two times when the usersPage gets refreshed
+      dispatch(findAllchatingUser(user._id,token,toast))
+    }
+  }, [chatUsers.length])
 
   const handleFollow = () => {
     following

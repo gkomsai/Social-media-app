@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./FollowersCard.css";
 import User from "../User/User";
-import { useDispatch, useSelector } from "react-redux";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { getAllUser } from "../../redux/user/action";
 import { Box, Text, useToast } from "@chakra-ui/react";
 
@@ -9,8 +9,8 @@ const FollowersCard = ({ location }) => {
   const dispatch = useDispatch();
   const toast = useToast();
   const [persons, setPersons] = useState([]);
-  const { user } = useSelector((store) => store.AuthReducer);
-  const { allUser } = useSelector((store) => store.AuthReducer);
+  const { user,allUser } = useSelector((store) => store.AuthReducer, shallowEqual);
+
   // console.log("allUser",allUser);
 
   useEffect(() => {
@@ -25,7 +25,7 @@ const FollowersCard = ({ location }) => {
 
   return (
     <Box className="FollowersCard">
-      <Text>Who is folllowing you</Text>
+      <Text fontWeight={"bold"}>Who is folllowing you</Text>
       {persons.map((el) => (
         <Box key={el._id}>
           {el._id !== user._id ? <User location={location} person={el} /> : ""}

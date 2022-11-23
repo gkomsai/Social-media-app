@@ -5,7 +5,7 @@ import { UilPlayCircle } from "@iconscout/react-unicons";
 import { UilLocationPoint } from "@iconscout/react-unicons";
 import { UilSchedule } from "@iconscout/react-unicons";
 import { UilTimes } from "@iconscout/react-unicons";
-import { useDispatch, useSelector } from "react-redux";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { createPost } from "../../redux/posts/action";
 import { Box, Button, Heading, Image, Input, useToast } from "@chakra-ui/react";
 import axios from "axios";
@@ -23,8 +23,8 @@ const PostShare = () => {
   const [image, setImage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const { user } = useSelector((store) => store.AuthReducer);
-  const { token } = useSelector((store) => store.AuthReducer);
+  const { user,token } = useSelector((store) => store.AuthReducer, shallowEqual);
+ 
 
   const [width, setWidth] = useState(window.innerWidth);
   const breakpoint = 990;

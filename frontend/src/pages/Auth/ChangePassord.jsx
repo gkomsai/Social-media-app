@@ -13,12 +13,12 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { notify } from "../../utils/extraFunctions";
 import logo from "../../assets/logo.png";
-import { useSelector } from "react-redux";
+import { shallowEqual, useSelector } from "react-redux";
 import CustomButton from "../../components/Button/CustomButton";
 
 const ChangePassord = () => {
   const navigate = useNavigate();
-  const { token } = useSelector((store) => store.AuthReducer);
+  const { token } = useSelector((store) => store.AuthReducer,shallowEqual);
   const toast = useToast();
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -51,20 +51,22 @@ const ChangePassord = () => {
   };
 
   return (
-    <Box h="100vh">
-      <Image marginLeft="30%" marginTop="80px" src={logo} alt="logo" />
+    <Box
+      h="100vh"
+      w={{ base: "90%", md: "80%", lg: "61%", xl: "45%" }}
+      m="auto"
+    >
+      <Image marginTop="80px" src={logo} alt="logo" />
 
       <Flex
         direction={"column"}
+        justifyContent="flex-start"
         gap="8px"
-        width="41%"
         boxShadow="lg"
         marginTop="10px"
-        marginLeft="30%"
         border="1px solid silver"
         borderRadius="10px"
-        paddingLeft="2%"
-        paddingBottom="20px"
+        p="2rem"
       >
         <Text fontWeight="700" fontSize="18px" marginTop="30px">
           Change Password
@@ -72,12 +74,18 @@ const ChangePassord = () => {
 
         <Divider width="96%" marginTop="20px" />
 
-        <Box display="flex" alignItems="center" marginTop="25px" gap="7%">
+        <Flex
+          direction={{ base: "column", md: "row" }}
+          alignItems="flex-start"
+          justifyContent={"flex-start"}
+          marginTop="25px"
+          gap="7%"
+        >
           <Text width={"32"}>New Password</Text>
           <Input
             type="password"
             focusBorderColor="#F9802D"
-            width="60%"
+            w={{ base: "90%", md: "70%", lg: "70%" }}
             color="black"
             backgroundColor="#f8f8f8"
             fontSize="14px"
@@ -85,13 +93,19 @@ const ChangePassord = () => {
             placeholder="Enter your New Password"
             onChange={(e) => setPassword(e.target.value)}
           />
-        </Box>
-        <Box display="flex" alignItems="center" marginTop="25px" gap="7%">
+        </Flex>
+        <Flex
+          direction={{ base: "column", md: "row" }}
+          alignItems="flex-start"
+          justifyContent={"flex-start"}
+          marginTop="25px"
+          gap="7%"
+        >
           <Text width={"32"}>Confirm Password</Text>
           <Input
             type="password"
             focusBorderColor="#F9802D"
-            width="60%"
+            w={{ base: "90%", md: "80%", lg: "60%" }}
             color="black"
             backgroundColor="#f8f8f8"
             fontSize="14px"
@@ -99,7 +113,7 @@ const ChangePassord = () => {
             placeholder="confirm Password"
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
-        </Box>
+        </Flex>
         <CustomButton onClick={handlePasswordSubmit} value={"Update"} />
       </Flex>
     </Box>

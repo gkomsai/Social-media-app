@@ -1,10 +1,9 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { shallowEqual, useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 
 function PrivateRoute({ children }) {
-  const token = useSelector((store) => store.AuthReducer.token);
-  //   console.log(token);
+  const token = useSelector((store) => store.AuthReducer.token,shallowEqual);
   if (token) {
     return children;
   } else {

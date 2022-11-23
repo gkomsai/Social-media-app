@@ -1,15 +1,15 @@
 import { Box, Image } from "@chakra-ui/react";
 import React from "react";
-import { useSelector } from "react-redux";
+import { shallowEqual, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import cover from "../../assets/cover.jpg";
 import defaultProfile from "../../assets/defaultProfile.png";
 import "./profileCard.css";
 
 const ProfileCard = ({ location }) => {
-  const { user } = useSelector((store) => store.AuthReducer);
+  const { user } = useSelector((store) => store.AuthReducer,shallowEqual);
   // console.log({user});
-  const { timeLinePosts } = useSelector((store) => store.PostReducer);
+  const { timeLinePosts } = useSelector((store) => store.PostReducer,shallowEqual);
   if (!user) {
     return <h1>user doesn't exist</h1>;
   }

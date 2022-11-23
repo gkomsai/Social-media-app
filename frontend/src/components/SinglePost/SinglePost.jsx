@@ -4,10 +4,9 @@ import Comment from "../../assets/comment.png";
 import Share from "../../assets/share.png";
 import Heart from "../../assets/like.png";
 import NotLike from "../../assets/notlike.png";
-import { useDispatch, useSelector } from "react-redux";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import {
   deletePost,
-  getTimelinePosts,
   handleLikeUnlikePost,
   updatePost,
 } from "../../redux/posts/action";
@@ -25,7 +24,6 @@ import {
   ModalBody,
   ModalCloseButton,
   Input,
-  Button,
   Image,
 } from "@chakra-ui/react";
 import CustomButton from "../Button/CustomButton";
@@ -36,8 +34,8 @@ const SinglePost = ({ postData }) => {
   const dispatch = useDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [description, setDescription] = useState("");
-  const { user } = useSelector((state) => state.AuthReducer);
-  const { token } = useSelector((state) => state.AuthReducer);
+  const { user,token } = useSelector((state) => state.AuthReducer,shallowEqual);
+
   const [liked, setLiked] = useState(postData.likes.includes(user._id));
   const [likes, setLikes] = useState(postData.likes.length);
 

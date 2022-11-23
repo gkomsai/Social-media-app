@@ -10,7 +10,7 @@ import {
   Box,
   Input,
 } from "@chakra-ui/react";
-import { useDispatch, useSelector } from "react-redux";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { upadteUser } from "../../redux/user/action";
 import { notify } from "../../utils/extraFunctions";
@@ -31,7 +31,7 @@ const ProfileModal = ({ onOpen, onClose, isOpen, userData }) => {
 
   // console.log({profilePicture},{coverPicture})
 
-  const { token } = useSelector((store) => store.AuthReducer);
+  const { token } = useSelector((store) => store.AuthReducer,shallowEqual);
   const headers = {
     "Content-Type": "application/json",
     Authorization: `Bearer ${token}`,
