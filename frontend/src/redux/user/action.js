@@ -38,7 +38,7 @@ export const upadteUser = (id, payload, token, toast) => (dispatch) => {
     data: payload,
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     },
   })
     .then((res) => {
@@ -85,7 +85,7 @@ export const followUser = (id, token, toast, currentUserId) => (dispatch) => {
     url: `/user/${id}/follow`,
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     },
   })
     .then((res) => {
@@ -122,7 +122,7 @@ export const unfollowUser = (id, token, toast, currentUserId) => (dispatch) => {
     })
     .then(() => dispatch(getTimelinePosts(currentUserId, token, toast)))
     .catch((err) => {
-      // console.error(err);
+      console.error(err);
       notify(toast, err.response.data.message, "error");
       dispatch({ type: types.UNFOLLOW_USER_FAILURE });
     });

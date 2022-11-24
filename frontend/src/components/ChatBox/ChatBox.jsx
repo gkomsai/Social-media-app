@@ -16,7 +16,6 @@ const ChatBox = ({
   receivedMessage,
 }) => {
   const [chatSchema, setChatSchema] = useState(null);
-
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
 
@@ -31,8 +30,7 @@ const ChatBox = ({
           "Authorization": `Bearer ${token}`,
         },
       });
-      console.log("chatwala data",res.data);
-      setChatSchema({...res.Data});
+      setChatSchema({...res.data});
 
     } catch (err) {
       console.log(err);
@@ -56,10 +54,9 @@ const ChatBox = ({
           chatSchema?._id,
           token
         );
-        // console.log("fetch messages data", data);
         setMessages(data);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     };
     if (chatSchema) {

@@ -10,17 +10,17 @@ const User = ({ person, location }) => {
   const dispatch = useDispatch();
   const toast = useToast();
   const { user,token } = useSelector((state) => state.AuthReducer,shallowEqual);
- 
+//  console.log({person})
   const { chatUsers } = useSelector((store) => store.ChatReducer, shallowEqual);
-  console.log("chatUsers triggered",chatUsers)
+
 
   const [alreadyCreatedChat, setAlreadyCreatedChat] = useState(null);
  
   const [following, setFollowing] = useState(person?.followers.includes(user._id));
 
   useEffect(() => {
-   setAlreadyCreatedChat(chatUsers?.some((el) => el.members.includes(person._id)))
-  }, [chatUsers.length])
+    setAlreadyCreatedChat(chatUsers?.some((el) => el.members.includes(person._id)))
+  }, [chatUsers.length]);
  
 
   useEffect(() => {
@@ -35,6 +35,7 @@ const User = ({ person, location }) => {
       ? dispatch(unfollowUser(person._id, token, toast, user._id))
       : dispatch(followUser(person._id, token, toast, user._id));
     setFollowing((prev) => !prev);
+  
   };
 
   const handleChatRequest = () => {
@@ -86,4 +87,4 @@ const User = ({ person, location }) => {
   );
 };
 
-export default User;
+export default React.memo(User);

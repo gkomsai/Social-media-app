@@ -10,7 +10,7 @@ const FollowersCard = ({ location }) => {
   const toast = useToast();
 
   const { user,allUser } = useSelector((store) => store.AuthReducer, shallowEqual);
-
+console.log({allUser});
 
 
 
@@ -33,4 +33,4 @@ const FollowersCard = ({ location }) => {
   );
 };
 
-export default FollowersCard;
+export default React.memo(FollowersCard);

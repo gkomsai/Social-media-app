@@ -49,13 +49,7 @@ userRouter.patch("/update/:id", async (req, res) => {
   // console.log("req.body user ke patch req me", req.body);
 
   if (id === userId) {
-    try {
-      // if we also have to update password then password will be bcrypted again
-      if (password) {
-        const salt = await bcrypt.genSalt(10);
-        req.body.password = await bcrypt.hash(password, salt);
-      }
-
+    try {  
       const user = await UserModel.findByIdAndUpdate(id, req.body, {
         new: true,
       });
@@ -121,11 +115,11 @@ userRouter.patch("/:id/follow", async (req, res) => {
       const followingUser = await UserModel.findById(currentUserId);
 
       if (!followUser.followers.includes(currentUserId)) {
-        await followUser.updateOne({ $push: { followers: currentUserId } });
-        await followingUser.updateOne({ $push: { following: id } });
+        await followUser.updateOne({ $push: { followers: currentUserId } },{new:true});
+        await followingUser.updateOne({ $push: { following: id } },{new:true});
         res
           .status(200)
-          .send({ status: "success", message: "User followed Successfully!" });
+          .send({ status: "success", message: "User followed Successfully!"});
       } else {
         return res.status(403).send({
           status: "error",
@@ -156,11 +150,11 @@ userRouter.patch("/:id/unfollow", async (req, res) => {
       const unfollowingUser = await UserModel.findById(currentUserId); // curr user
 
       if (unfollowUser.followers.includes(currentUserId)) {
-        await unfollowUser.updateOne({ $pull: { followers: currentUserId } });
-        await unfollowingUser.updateOne({ $pull: { following: id } });
+        await unfollowUser.updateOne({ $pull: { followers: currentUserId } },{new:true});
+        await unfollowingUser.updateOne({ $pull: { following: id } },{new:true});
         res
           .status(200)
-          .send({ status: "success", message: "User unfollowed Successfully" });
+          .send({ status: "success", message: "User unfollowed Successfully"});
       } else {
         return res.status(403).send({
           status: "error",
