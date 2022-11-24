@@ -10,7 +10,7 @@ const FollowersCard = ({ location }) => {
   const toast = useToast();
 
   const { user,allUser } = useSelector((store) => store.AuthReducer, shallowEqual);
-console.log({allUser});
+
 
 
 

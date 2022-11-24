@@ -17,18 +17,17 @@ const User = ({ person, location }) => {
   const [alreadyCreatedChat, setAlreadyCreatedChat] = useState(null);
  
   const [following, setFollowing] = useState(person?.followers.includes(user._id));
-
-  useEffect(() => {
-    setAlreadyCreatedChat(chatUsers?.some((el) => el.members.includes(person._id)))
-  }, [chatUsers.length]);
  
 
   useEffect(() => {
     if (chatUsers.length === 0 && location === "usersPage") {
-      console.log("All ChatingUser inside the User page triggered")//this function is calling two times when the usersPage gets refreshed
       dispatch(findAllchatingUser(user._id,token,toast))
     }
   }, [chatUsers.length])
+
+  useEffect(() => {
+    setAlreadyCreatedChat(chatUsers?.some((el) => el.members.includes(person._id)))
+  }, [chatUsers.length]);
 
   const handleFollow = () => {
     following
