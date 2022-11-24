@@ -89,7 +89,7 @@ const PostShare = () => {
           setIsLoading(false);
           notify(
             toast,
-            " file type is not supported! Only jpg|jpeg|png|gif files are allowed",
+            " file type is not supported! Only jpg|jpeg|png|gif|webp files are allowed",
             "error"
           );
         });
