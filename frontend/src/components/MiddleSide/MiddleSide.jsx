@@ -1,13 +1,17 @@
 import { Box } from "@chakra-ui/react";
-import React from "react";
-import Posts from "../Posts/Posts";
+import React, { Suspense } from "react";
 import PostShare from "../PostShare/PostShare";
-
+const Posts = React.lazy(() => import("../Posts/Posts"));
 const MiddleSide = () => {
-  return <Box>
-    <PostShare/>
-    <Posts />
-  </Box>;
+  
+  return (
+    <Box>
+      <PostShare />
+      <Suspense fallback={<div>Loading...</div>}>
+        <Posts />
+      </Suspense>
+    </Box>
+  );
 };
 
 export default MiddleSide;

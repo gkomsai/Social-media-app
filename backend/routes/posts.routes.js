@@ -3,35 +3,40 @@ const mongoose = require("mongoose");
 const { checkUserAuth } = require("../middleware/authMiddleware");
 const { PostModel } = require("../models/postModel");
 const { UserModel } = require("../models/userModel");
-const {cloudinary} = require("../config/cloudinary");
+const { cloudinary } = require("../config/cloudinary");
 const upload = require("../config/multer");
 const postsRouter = Router();
+const webp = require("webp-converter");
 
 postsRouter.use(checkUserAuth);
 
 /*  ----------------------for uploading the images-------------------------------- */
 
-postsRouter.post("/upload", upload.single("file"), async (req, res) => { 
-  try{
-    const  result = await cloudinary.uploader.upload(req.file.path);
-     if(result){
-  return res.status(200).send(result);
-     }
- 
-  }catch(err){
+postsRouter.post("/upload", upload.single("file"), async (req, res) => {
+  const output_path = Date.now + "result.webp";
+  try {
+    const compressing = await webp.cwebp(
+      req.file.path,
+      output_path,
+      "-q 5",
+      (logging = "-quiet")
+    );
+    // console.log(compressing);
+    const result = await cloudinary.uploader.upload(output_path);
+    if (result) {
+      return res.status(200).send(result);
+    }
+  } catch (err) {
+    console.log(err);
     return res.status(500).send({ status: "error", message: err.message });
   }
-  });
-
-
-
+});
 
 /*  ----------------------for creating a new post-------------------------------- */
 
-postsRouter.post("/create",  async (req, res) => {
-
+postsRouter.post("/create", async (req, res) => {
   try {
-  const newPost = new PostModel({...req.body });
+    const newPost = new PostModel({ ...req.body });
     await newPost.save();
     res.status(200).send(newPost);
   } catch (err) {
@@ -73,8 +78,6 @@ postsRouter.get("/", async (req, res) => {
   }
 });
 
-
-
 /*  ----------------------for updating a posts of a particular user-------------------------------- */
 
 postsRouter.patch("/update/:id", async (req, res) => {
@@ -84,23 +87,24 @@ postsRouter.patch("/update/:id", async (req, res) => {
   try {
     const foundPost = await PostModel.findById(postId);
     if (foundPost.userId === userId) {
-    const updatedPost=  await foundPost.updateOne(req.body,{new:true});
+      const updatedPost = await foundPost.updateOne(req.body, { new: true });
       return res
         .status(200)
-        .send({ status: "success", message: "Post updated Successfully!", updatedPost });
-    } else {
-      return res
-        .status(403)
         .send({
-          status: "error",
-          message: "Action forbidden! you can't update other's posts",
+          status: "success",
+          message: "Post updated Successfully!",
+          updatedPost,
         });
+    } else {
+      return res.status(403).send({
+        status: "error",
+        message: "Action forbidden! you can't update other's posts",
+      });
     }
   } catch (err) {
     return res.status(500).send({ status: "error", message: err.message });
   }
 });
-
 
 /*  ----------------------for deleting  a post of a particular user-------------------------------- */
 
@@ -148,14 +152,13 @@ postsRouter.patch("/like/:id", async (req, res) => {
 
 /*  ----------------------for getting the timeline post of a user -------------------------------- */
 
-
-postsRouter.get("/:id/timeline", async (req, res) => {  
+postsRouter.get("/:id/timeline", async (req, res) => {
   // console.log("inside timeline post");
   // const userId = req.params.id
   const { userId } = req.body;
   // console.log({userId})
   try {
-    const currentUserPosts = await PostModel.find({userId });
+    const currentUserPosts = await PostModel.find({ userId });
     // return res.send(currentUserPosts);
 
     const followingPostsMainArr = await UserModel.aggregate([
@@ -184,11 +187,11 @@ postsRouter.get("/:id/timeline", async (req, res) => {
       currentUserPosts
         .concat(...followingPostsMainArr[0].followingPosts)
         .sort((a, b) => {
-          return new Date(b.createdAt) - new Date(a.createdAt); 
+          return new Date(b.createdAt) - new Date(a.createdAt);
         })
     );
   } catch (err) {
-    res.status(500).send({message:err.message});
+    res.status(500).send({ message: err.message });
   }
 });
 
