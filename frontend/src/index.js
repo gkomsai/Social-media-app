@@ -9,9 +9,9 @@ import axios from "axios";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
 
-// axios.defaults.baseURL="http://localhost:7000";
+axios.defaults.baseURL="http://localhost:7000";
 // axios.defaults.baseURL="https://social-media-app-backend-1.herokuapp.com";
-axios.defaults.baseURL="https://indian-social-media-app-backend.onrender.com";
+// axios.defaults.baseURL="https://indian-social-media-app-backend.onrender.com";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

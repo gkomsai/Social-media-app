@@ -144,10 +144,19 @@ export const AuthReducer = (state = initialState, action) => {
         isError: false,
       };
     case types.FOLLOW_USER_SUCCESS:
+    
+      let arr = state.allUser.map((el) => {
+        if (el._id === payload) {
+          el.followers.push(state.user._id);
+        }
+        return el;
+      });
+
+      // console.log("inside the follow success", arr);
       return {
         ...state,
         user: { ...state.user, following: [...state.user.following, payload] },
-        //first I am spreading the user then going inside the following array and again spreading everything inside the following array so that if any other userId will not get affected and then putting the follwer id .
+        allUser: [...arr],
         isAuthLoading: false,
         isError: false,
       };
@@ -164,12 +173,25 @@ export const AuthReducer = (state = initialState, action) => {
         isError: false,
       };
     case types.UNFOLLOW_USER_SUCCESS:
+      
+      let res = state.allUser.map((el) => {
+        if (el._id === payload) {
+        //  el.followers.filter((id) => id !== state.user._id);
+          let index = el.followers.indexOf(state.user._id);
+          el.followers.splice(index, 1);
+        }
+        return el;
+      });
+
+      // console.log("inside the unfollow success", res);
+
       return {
         ...state,
         user: {
           ...state.user,
           following: [...state.user.following.filter((id) => id !== payload)],
         },
+        allUser: [...res],
         isAuthLoading: false,
         isError: false,
       };

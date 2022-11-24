@@ -8,31 +8,52 @@ import ChatBox from "../../components/ChatBox/ChatBox";
 import { io } from "socket.io-client";
 import { Box, Text, useToast } from "@chakra-ui/react";
 import { useCallback } from "react";
+import { getAllUser } from "../../redux/user/action";
 
 const Chat = () => {
-  const { user,token } = useSelector((store) => store.AuthReducer,shallowEqual);
-  const { chatUsers } = useSelector((store) => store.ChatReducer,shallowEqual);
 
   const socket = useRef(); // creating the socket globally
   const dispatch = useDispatch();
   const toast = useToast();
 
-  const [currentChatMemberChatSchema, setCurrentChatMemberChatSchema] = useState(null);
+  const [currentChatUser, setCurrentChatUser] = useState(null);
   const [onlineUsers, setOnlineUsers] = useState([]);
   const [sendMessage, setSendMessage] = useState(null);
   const [receivedMessage, setReceivedMessage] = useState(null);
 
-  const findChatUser = useCallback(() => {
-    if (chatUsers.length === 0) {
-      // console.log("All ChatingUser inside the Chat page triggered")
-      dispatch(findAllchatingUser(user._id,token,toast))
+  const { user, allUser, token } = useSelector(
+    (store) => store.AuthReducer,
+    shallowEqual
+  );
+  const { chatUsers } = useSelector((store) => store.ChatReducer, shallowEqual);
+ 
+  let location = "chatPage";
+
+  let arr = allUser.filter((elem) =>
+    chatUsers.some((el) => el.members.includes(elem._id))
+  );
+  let finalChatUserData = arr.filter((el) => el._id !== user._id);
+  // console.log({ finalChatUserData });
+
+
+
+  useEffect(() => {
+    if (allUser.length === 0 && location==="chatPage") {
+      dispatch(getAllUser(toast));
     }
-  },[user._id]) 
+  }, [allUser.length]);
+
+  const findChatUser = useCallback(() => {
+    if (chatUsers.length === 0 && location==="chatPage") {
+      // console.log("All ChatingUser inside the Chat page triggered")
+      dispatch(findAllchatingUser(user._id, token, toast));
+    }
+  }, [user._id]);
+
 
   useEffect(() => {
     findChatUser();
   }, [user._id]);
-
 
   // Connect to Socket.io
   useEffect(() => {
@@ -61,9 +82,8 @@ const Chat = () => {
     });
   }, []);
 
-  const checkOnlineStatus = (chatSchema) => {
-  const secondChatMemberId = chatSchema.members.find((id) => id !== user._id); //  since our members array only include only two members so finding the other member excluding the current user
-    const online = onlineUsers.some((el) => el.userId === secondChatMemberId); // now checking if the otherUser is online or not
+  const checkOnlineStatus = (chatUser) => {
+    const online = onlineUsers.some((el) => el.userId === chatUser._id); 
     return online ? true : false;
   };
 
@@ -74,18 +94,14 @@ const Chat = () => {
           <Box className="Chat-container">
             <Text fontWeight={"bold"}>Chats</Text>
             <Box className="chatMembers-list">
-              {chatUsers?.map((chatSchema) => (
+              {finalChatUserData?.map((el) => (
                 <Box
-                  key={Date.now() + user._id + Math.random()}
+                  key={el._id}
                   onClick={() => {
-                    setCurrentChatMemberChatSchema(chatSchema);
+                    setCurrentChatUser(el);
                   }}
                 >
-                  <Conversation
-                    singleChatMemberData={chatSchema}
-                    online={checkOnlineStatus(chatSchema)}
-                    currentUser={user._id}
-                  />
+                  <Conversation userData={el} online={checkOnlineStatus(el)} />
                 </Box>
               ))}
             </Box>
@@ -94,8 +110,7 @@ const Chat = () => {
 
         <Box className="Right-side-chat">
           <ChatBox
-            currentChatMemberChatSchema={currentChatMemberChatSchema}
-            currentUserId={user._id}
+            currentChatUser={currentChatUser}
             setSendMessage={setSendMessage}
             receivedMessage={receivedMessage}
           />

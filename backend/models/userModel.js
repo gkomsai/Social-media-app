@@ -18,10 +18,6 @@ const UserSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    isAdmin: {
-      type: Boolean,
-      default: false,
-    },
     profilePicture: String,
     cloudinaryProfilePicture_id: String,
     coverPicture: String,

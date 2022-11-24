@@ -12,7 +12,7 @@ messageRouter.post("/", async (req, res) => {
     await newMessage.save();
     res.status(200).send(newMessage);
   } catch (err) {
-    return res.status(500).send({ status: "err", message: err.message });
+    return res.status(500).send({ status: "error", message: err.message });
   }
 });
 
@@ -21,7 +21,7 @@ messageRouter.get("/:chatId", async (req, res) => {
   try {
     const result = await MessageModel.find({ chatId });
     res.status(200).send(result);
-  } catch (error) {
+  } catch (err) {
     return res.status(500).send({ status: "error", message: err.message });
   }
 });

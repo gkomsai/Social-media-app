@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import { getUser } from "../../redux/user/action";
 import "./ChatBox.css";
 import { format } from "timeago.js";
 
@@ -8,70 +7,70 @@ import InputEmoji from "react-input-emoji";
 import { shallowEqual, useSelector } from "react-redux";
 import { Avatar, Box, Flex, Text } from "@chakra-ui/react";
 import CustomButton from "../Button/CustomButton";
-import { useCallback } from "react";
+
+import axios from "axios";
 
 const ChatBox = ({
-  currentChatMemberChatSchema,
-  currentUserId,
+  currentChatUser,
   setSendMessage,
   receivedMessage,
 }) => {
-  const [userData, setUserData] = useState(null);
+  const [chatSchema, setChatSchema] = useState(null);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
 
-  const { token } = useSelector((state) => state.AuthReducer, shallowEqual);
+  const { token, user } = useSelector((state) => state.AuthReducer, shallowEqual);
   const scroll = useRef();
 
-  const userId = currentChatMemberChatSchema?.members.find(
-    (id) => id !== currentUserId
-  );
-
-  const getUserData = useCallback(() => {
-    getUser(userId)
-      .then((res) => {
-        // console.log("getuser triggered")
-        setUserData(res.data);
-      })
-      .catch((error) => {
-        console.log(error);
+  const getchatSchema = async () => {
+    try {
+      let res =await axios.get(`/chats/find/${user._id}/${currentChatUser._id}`, {
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
       });
-  }, [userId]);
+      setChatSchema({...res.data});
 
-  useEffect(() => {
-    if (currentChatMemberChatSchema) {
-      getUserData();
+    } catch (err) {
+      console.log(err);
     }
-  }, [userId]);
+  }
+  useEffect(() => {
+    if (currentChatUser) {
+      getchatSchema();
+   }
+  
+},[currentChatUser?._id])
+
+ 
+ 
 
   //for fetching messages
   useEffect(() => {
     const fetchMessages = async () => {
       try {
         const { data } = await getMessages(
-          currentChatMemberChatSchema?._id,
+          chatSchema?._id,
           token
         );
-        // console.log("fetch messages data", data);
         setMessages(data);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     };
-    if (currentChatMemberChatSchema) {
+    if (chatSchema) {
       fetchMessages();
     }
-  }, [currentChatMemberChatSchema]);
+  }, [chatSchema]);
 
   const handleSend = async () => {
     const message = {
-      senderId: currentUserId,
+      senderId: user._id,
       text: newMessage,
-      chatId: currentChatMemberChatSchema?._id,
+      chatId: chatSchema?._id,
     };
-    const receiverId = currentChatMemberChatSchema?.members.find(
-      (id) => id !== currentUserId
-    );
+    const receiverId = currentChatUser._id;
     // sending message to socket server
     setSendMessage({ ...message, receiverId });
 
@@ -89,7 +88,7 @@ const ChatBox = ({
   useEffect(() => {
     if (
       receivedMessage &&
-      receivedMessage.chatId === currentChatMemberChatSchema?._id
+      receivedMessage.chatId === chatSchema?._id
     ) {
       setMessages([...messages, receivedMessage]);
     }
@@ -102,20 +101,20 @@ const ChatBox = ({
 
   return (
     <Box className="ChatBox-container">
-      {currentChatMemberChatSchema ? (
+      {chatSchema ? (
         <>
           <Box className="chat-header">
             <Flex justify={"flex-start"} gap="5" alignItems={"center"}>
               <Avatar
                 width={"52px"}
                 height="52px"
-                name={userData?.firstName}
-                src={userData?.profilePicture}
+                name={currentChatUser?.firstName}
+                src={currentChatUser?.profilePicture}
                 alt="profile"
               />
               <Box className="name" fontSize={"1rem"}>
                 <span>
-                  {userData?.firstName} {userData?.lastName}
+                  {currentChatUser?.firstName} {currentChatUser?.lastName}
                 </span>
               </Box>
             </Flex>
@@ -133,7 +132,7 @@ const ChatBox = ({
                 key={i}
                 ref={scroll}
                 className={
-                  message.senderId === currentUserId ? "message own" : "message"
+                  message.senderId ===  user._id ? "message own" : "message"
                 }
               >
                 <span>{message.text}</span>{" "}
