@@ -35,7 +35,7 @@ const Posts = () => {
   return (
     <Flex direction={"column"} gap="2rem">
       {timeLinePosts?.map((el) => {
-        return <SinglePost postData={el} key={Date.now() + Math.random()} />;
+        return <SinglePost  postData={el} key={el._id} />;
       })}
     </Flex>
   );
