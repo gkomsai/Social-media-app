@@ -102,7 +102,7 @@ const Navbar = () => {
           <BsFillChatDotsFill color="#F97430" size={"25px"} title="chats" />
         </Link>
 
-        <Menu>
+        <Menu isLazy>
           <MenuButton
             py={2}
             transition="all 0.3s"
@@ -192,4 +192,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default React.memo(Navbar);

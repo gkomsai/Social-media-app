@@ -1,15 +1,18 @@
 import { Flex, Hide } from "@chakra-ui/react";
-import React from "react";
-import FollowersCard from "../FollowersCard/FollowersCard";
+import React, { Suspense } from "react";
 import ProfileCard from "../ProfileCard/ProfileCard";
-
+const FollowersCard = React.lazy(() =>
+  import("../FollowersCard/FollowersCard")
+);
 const Leftside = () => {
   return (
     <Flex direction={"column"} gap="2rem" alignItems={"center"} overflow="auto">
       <ProfileCard location="homePage" />
-      <Hide below="md">
-        <FollowersCard />
-      </Hide>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Hide below="md">
+          <FollowersCard />
+        </Hide>
+      </Suspense>
     </Flex>
   );
 };

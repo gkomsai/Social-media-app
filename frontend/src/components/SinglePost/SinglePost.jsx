@@ -28,13 +28,18 @@ import {
 } from "@chakra-ui/react";
 import CustomButton from "../Button/CustomButton";
 
+import { LazyLoadImage } from "react-lazy-load-image-component";
+
 const SinglePost = ({ postData }) => {
   // console.log({postData})
   const toast = useToast();
   const dispatch = useDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [description, setDescription] = useState("");
-  const { user,token } = useSelector((state) => state.AuthReducer,shallowEqual);
+  const { user, token } = useSelector(
+    (state) => state.AuthReducer,
+    shallowEqual
+  );
 
   const [liked, setLiked] = useState(postData.likes.includes(user._id));
   const [likes, setLikes] = useState(postData.likes.length);
@@ -60,7 +65,7 @@ const SinglePost = ({ postData }) => {
 
   return (
     <Box className="SinglePost">
-      <Image src={postData?.image} alt="" />
+      <LazyLoadImage src={postData?.image} alt="" />
 
       <Box className="postReactMain">
         <Box className="postReact">
@@ -101,7 +106,6 @@ const SinglePost = ({ postData }) => {
                       onClick={onClose}
                       value="UPDATE"
                     />
-                
                   </ModalFooter>
                 </form>
               </ModalContent>
