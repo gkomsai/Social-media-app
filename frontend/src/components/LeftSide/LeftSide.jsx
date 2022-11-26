@@ -6,7 +6,7 @@ const FollowersCard = React.lazy(() =>
 );
 const Leftside = () => {
   return (
-    <Flex direction={"column"} gap="2rem" alignItems={"center"} overflow="auto">
+    <Flex className="leftside"  direction={"column"} gap="2rem" alignItems={"center"} position={{base:"static",md:"sticky"}} top="7rem" height={"calc(100vh - 7rem)"} overflowY="scroll" >
       <ProfileCard location="homePage" />
       <Suspense fallback={<div>Loading...</div>}>
         <Hide below="md">

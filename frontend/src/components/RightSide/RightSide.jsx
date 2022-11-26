@@ -9,7 +9,7 @@ const RightSide = () => {
 
 
   return (
-    <Flex direction={"column"} gap="1.9rem">
+    <Flex direction={"column"} gap="1.9rem" position={"sticky"} top="7rem" height={"calc(100vh - 7rem)"}>
       <TrendCard />
       <Box>
         <CustomButton

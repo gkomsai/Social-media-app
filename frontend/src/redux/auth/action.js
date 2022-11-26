@@ -67,7 +67,7 @@ export const signupFun = (payload, toast, navigate) => (dispatch) => {
       }
     })
     .catch((err) => {
-      notify(toast, err.response.data.message, "error");
+      notify(toast, err.response.data.message, "error",err.response.data.description);
       dispatch(signupFailure());
     });
 };
