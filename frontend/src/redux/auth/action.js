@@ -60,7 +60,6 @@ export const signupFun = (payload, toast, navigate) => (dispatch) => {
     .then((res) => {
       // console.log(res.data);
       if (res.data) {
-        // console.log(res.data);
         dispatch(signupSuccess(res.data));
         notify(toast, "Account Created Successfully", "success");
         navigate("/auth/login");

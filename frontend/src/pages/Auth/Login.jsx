@@ -23,10 +23,8 @@ const Login = () => {
   };
 
   return (
-    <div>
-      {/* <Box ml="2rem" className={styles.birdLogo}>
-        <img src={Logo} alt="" />
-      </Box> */}
+    <>
+  
       <Box py={"10"} h="100vh">
         <Box className={styles.signupdiv}>
           <Text className={styles.heading}>Login</Text>
@@ -76,7 +74,7 @@ const Login = () => {
           </Text>
         </Box>
       </Box>
-    </div>
+    </>
   );
 };
 

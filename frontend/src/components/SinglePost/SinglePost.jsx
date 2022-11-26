@@ -124,7 +124,7 @@ const SinglePost = ({ postData }) => {
         {likes} likes
       </Text>
       <Box className="detail">
-        <span>{postData?.description}</span>
+        <p style={{whiteSpace: "pre-line"}}>{postData?.description}</p>
       </Box>
     </Box>
   );
