@@ -1,7 +1,7 @@
 .FollowersCard {
   width: 100%;
   border-radius: 0.7rem;
-  gap: 1rem;
+  gap: 2rem;
   display: grid;
   font-size: 13px;
   max-height: auto;

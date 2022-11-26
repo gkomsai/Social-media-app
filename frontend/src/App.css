@@ -28,6 +28,9 @@
   background: #b30000;
 }
 
+.leftside::-webkit-scrollbar {
+  display: none !important; 
+}
 /* blur */
 .blur {
   position: absolute;

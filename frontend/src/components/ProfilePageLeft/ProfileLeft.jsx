@@ -7,7 +7,16 @@ import { Flex, Hide } from "@chakra-ui/react";
 
 const ProfileLeft = () => {
   return (
-    <Flex direction={"column"} gap="2rem" alignItems={"center"} overflow="auto">
+    <Flex
+      className="leftside"
+      direction={"column"}
+      gap="2rem"
+      alignItems={"center"}
+      position={{ base: "static", md: "sticky" }}
+      top="7rem"
+      height={"calc(100vh - 7rem)"}
+      overflowY="scroll"
+    >
       <InfoCard />
       <Hide below="md">
         <FollowersCard />
