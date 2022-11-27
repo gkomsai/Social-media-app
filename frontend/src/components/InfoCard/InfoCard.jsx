@@ -17,7 +17,7 @@ const InfoCard = () => {
   const { id } = useParams();
   // console.log(id);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { user } = useSelector((state) => state.AuthReducer,shallowEqual);
+  const { user } = useSelector((state) => state.AuthReducer, shallowEqual);
   // console.log({user},"info card");
   // console.log(id,user._id);
 
@@ -55,23 +55,27 @@ const InfoCard = () => {
 
       <Box className="info">
         <span>
-          <b>Status </b>
+          <b>Status: </b>
         </span>
         <span>{currentUser.relationship}</span>
       </Box>
       <Box className="info">
         <span>
-          <b>Lives in </b>
+          <b>Lives in: </b>
         </span>
         <span>{currentUser.livesIn}</span>
       </Box>
       <Box className="info">
         <span>
-          <b>Works at </b>
+          <b>workStatus: </b>
         </span>
-        <span>{currentUser.worksAt}</span>
+        <span>{currentUser.workStatus}</span>
       </Box>
-      <CustomButton className={"logout-button"} onClick={handleLogOut} value="Log Out" />
+      <CustomButton
+        className={"logout-button"}
+        onClick={handleLogOut}
+        value="Log Out"
+      />
     </Box>
   );
 };

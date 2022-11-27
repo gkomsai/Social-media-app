@@ -31,6 +31,9 @@
 .leftside::-webkit-scrollbar {
   display: none !important; 
 }
+textarea::-webkit-scrollbar {
+  display: none !important; 
+}
 /* blur */
 .blur {
   position: absolute;

@@ -7,7 +7,7 @@ import { UilSchedule } from "@iconscout/react-unicons";
 import { UilTimes } from "@iconscout/react-unicons";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { createPost } from "../../redux/posts/action";
-import { Box, Button, Heading, Image, Input, useToast } from "@chakra-ui/react";
+import { Box,  Heading, Image,  useToast } from "@chakra-ui/react";
 import axios from "axios";
 import { notify } from "../../utils/extraFunctions";
 import defaultProfile from "../../assets/defaultProfile.png";
@@ -117,11 +117,7 @@ const PostShare = () => {
         alt=""
       />
       <Box>
-        <Input
-          w="90%"
-          type="text"
-          focusBorderColor="none"
-          borderRadius={30}
+        <textarea
           placeholder="Share a Post"
           required
           ref={description}

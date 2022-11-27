@@ -157,6 +157,7 @@ postsRouter.get("/:id/timeline", async (req, res) => {
   // const userId = req.params.id
   const { userId } = req.body;
   // console.log({userId})
+
   try {
     const currentUserPosts = await PostModel.find({ userId });
     // return res.send(currentUserPosts);
@@ -174,23 +175,21 @@ postsRouter.get("/:id/timeline", async (req, res) => {
           foreignField: "userId",
           as: "followingPosts",
         },
-      },
+      },     
       {
         $project: {
           followingPosts: 1,
           _id: 1,
         },
-      },
+      }, 
     ]);
-    // console.log("afteraggregate");
-    res.status(200).send(
-      currentUserPosts
-        .concat(...followingPostsMainArr[0].followingPosts)
-        .sort((a, b) => {
-          return new Date(b.createdAt) - new Date(a.createdAt);
-        })
-    );
+    // console.log("followingPostsMainArr", followingPostsMainArr);
+    let final= currentUserPosts
+    .concat(...followingPostsMainArr[0].followingPosts)
+      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+   return res.status(200).send(final);
   } catch (err) {
+    // console.error(err);
     res.status(500).send({ message: err.message });
   }
 });
