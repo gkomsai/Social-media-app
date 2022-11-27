@@ -145,10 +145,10 @@ const ProfileModal = ({ onOpen, onClose, isOpen, userData }) => {
                 onChange={handleChange}
                 focusBorderColor="#F9802D"
                 type="text"
-                placeholder="Works at"
-                name="worksAt"
+                placeholder="workStatus"
+                name="workStatus"
                 className="infoInput"
-                value={formData.worksAt}
+                value={formData.workStatus}
               />
             </Box>
 

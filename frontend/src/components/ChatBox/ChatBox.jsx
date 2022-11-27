@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./ChatBox.css";
-import { format } from "timeago.js";
+import TimeAgo from "timeago-react";
 
 import { addMessage, getMessages } from "../../api/messageApi";
 import InputEmoji from "react-input-emoji";
@@ -10,50 +10,44 @@ import CustomButton from "../Button/CustomButton";
 
 import axios from "axios";
 
-const ChatBox = ({
-  currentChatUser,
-  setSendMessage,
-  receivedMessage,
-}) => {
+const ChatBox = ({ currentChatUser, setSendMessage, receivedMessage }) => {
   const [chatSchema, setChatSchema] = useState(null);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
 
-  const { token, user } = useSelector((state) => state.AuthReducer, shallowEqual);
+  const { token, user } = useSelector(
+    (state) => state.AuthReducer,
+    shallowEqual
+  );
   const scroll = useRef();
 
   const getchatSchema = async () => {
     try {
-      let res =await axios.get(`/chats/find/${user._id}/${currentChatUser._id}`, {
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`,
-        },
-      });
-      setChatSchema({...res.data});
-
+      let res = await axios.get(
+        `/chats/find/${user._id}/${currentChatUser._id}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setChatSchema({ ...res.data });
     } catch (err) {
       console.log(err);
     }
-  }
+  };
   useEffect(() => {
     if (currentChatUser) {
       getchatSchema();
-   }
-  
-},[currentChatUser?._id])
-
- 
- 
+    }
+  }, [currentChatUser?._id]);
 
   //for fetching messages
   useEffect(() => {
     const fetchMessages = async () => {
       try {
-        const { data } = await getMessages(
-          chatSchema?._id,
-          token
-        );
+        const { data } = await getMessages(chatSchema?._id, token);
         setMessages(data);
       } catch (error) {
         console.error(error);
@@ -86,10 +80,7 @@ const ChatBox = ({
 
   // Receiveing Message from parent component and will render as soon as our recevied message is changed so this code is enableling us the real-time chatting
   useEffect(() => {
-    if (
-      receivedMessage &&
-      receivedMessage.chatId === chatSchema?._id
-    ) {
+    if (receivedMessage && receivedMessage.chatId === chatSchema?._id) {
       setMessages([...messages, receivedMessage]);
     }
   }, [receivedMessage]);
@@ -132,11 +123,13 @@ const ChatBox = ({
                 key={i}
                 ref={scroll}
                 className={
-                  message.senderId ===  user._id ? "message own" : "message"
+                  message.senderId === user._id ? "message own" : "message"
                 }
               >
                 <span>{message.text}</span>{" "}
-                <span>{format(message.createdAt)}</span>
+                <span>
+                  <TimeAgo datetime={message.createdAt} locale="zh_CN" />{" "}
+                </span>
               </Box>
             ))}
           </Box>

@@ -108,7 +108,7 @@ userRouter.patch("/:id/follow", async (req, res) => {
   if (currentUserId == id) {
     return res
       .status(403)
-      .send({ status: "error", message: "Action Forbidden" });
+      .send({ status: "error", message: "You can't follow yourself" });
   } else {
     try {
       const followUser = await UserModel.findById(id);

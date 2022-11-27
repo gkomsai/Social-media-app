@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./SinglePost.css";
 import Comment from "../../assets/comment.png";
 import Share from "../../assets/share.png";
@@ -13,7 +13,7 @@ import {
 import { useToast } from "@chakra-ui/toast";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/menu";
-import { Box, Text } from "@chakra-ui/layout";
+import { Box, Flex, Text } from "@chakra-ui/layout";
 import { useDisclosure } from "@chakra-ui/hooks";
 import {
   Modal,
@@ -25,10 +25,14 @@ import {
   ModalCloseButton,
   Input,
   Image,
+  Avatar,
 } from "@chakra-ui/react";
 import CustomButton from "../Button/CustomButton";
-
 import { LazyLoadImage } from "react-lazy-load-image-component";
+import TimeAgo from "timeago-react";
+import { MdComment } from "react-icons/md";
+import { FaShareAlt } from "react-icons/fa";
+import { useMemo } from "react";
 
 const SinglePost = ({ postData }) => {
   // console.log({postData})
@@ -36,13 +40,24 @@ const SinglePost = ({ postData }) => {
   const dispatch = useDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [description, setDescription] = useState("");
-  const { user, token } = useSelector(
+  let { user, token, allUser } = useSelector(
     (state) => state.AuthReducer,
     shallowEqual
   );
-
+  const [showFullText, setShowFullText] = useState(false);
   const [liked, setLiked] = useState(postData.likes.includes(user._id));
   const [likes, setLikes] = useState(postData.likes.length);
+
+  const truncate = (string, n) => {
+    return string?.length > n ? string.substr(0, n - 1)+"..." : string;
+  };
+
+
+  if (allUser.length>0) {
+ var postUser = allUser.filter((el) => el._id === postData.userId);
+}
+  
+
 
   const handleLike = () => {
     handleLikeUnlikePost(postData._id, token, toast);
@@ -65,6 +80,32 @@ const SinglePost = ({ postData }) => {
 
   return (
     <Box className="SinglePost">
+      {postUser.length > 0 ? (
+        <Flex alignItems={"flex-start"} gap="1rem">
+          <Avatar
+            name={postUser[0].firstName}
+            src={postUser[0].profilePicture}
+            alt="profile"
+          />
+          <Box>
+            <Text
+              fontWeight={"bold"}
+              _hover={{ color: "green", textDecoration: "underline" }}
+            >
+              {postUser[0].firstName}  {postUser[0].lastName}
+            </Text>
+            <Text fontSize={"13px"} >{truncate(postUser[0].workStatus, 55)  }</Text>
+            <Box fontSize={"10px"}>
+            <TimeAgo
+             size="12px"
+              datetime={postData.createdAt}
+           
+            />
+            </Box>
+         
+          </Box>
+        </Flex>
+      ) : null}
       <LazyLoadImage src={postData?.image} alt="" />
 
       <Box className="postReactMain">
@@ -72,11 +113,11 @@ const SinglePost = ({ postData }) => {
           <Image
             src={liked ? Heart : NotLike}
             alt=""
-            style={{ cursor: "pointer" }}
+            cursor={"pointer"}
             onClick={handleLike}
           />
-          <Image src={Comment} alt="" />
-          <Image src={Share} alt="" />
+        <MdComment size="27px" cursor={"pointer"}/>
+        <FaShareAlt size="27px"  cursor={"pointer"}/>
         </Box>
 
         <Menu>
@@ -124,7 +165,24 @@ const SinglePost = ({ postData }) => {
         {likes} likes
       </Text>
       <Box className="detail">
-        <p style={{whiteSpace: "pre-line"}}>{postData?.description}</p>
+        {showFullText ? (
+          <Text onClick={() => setShowFullText(false)}>
+            {postData?.description + "  "}{" "}
+            <Text as="span"  ml="20px" cursor={"pointer"} color="blue">
+              see less...
+            </Text>
+          </Text>
+        ) : (
+         
+          <Text onClick={() => setShowFullText(true)} whiteSpace="pre-line">
+            {truncate(postData?.description, 110)}{" "}
+            {postData?.description.length > 110 ? (
+              <Text ml="20px" as="span" cursor={"pointer"} color="blue">
+                See more...
+              </Text>
+            ) : null}
+          </Text>
+        )}
       </Box>
     </Box>
   );
