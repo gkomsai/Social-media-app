@@ -1,8 +1,9 @@
-import { Avatar, Box,  useToast } from "@chakra-ui/react";
+import { Avatar, Box, Text, useToast } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { createNewChat, findAllchatingUser } from "../../redux/chats/action";
 import { followUser, unfollowUser } from "../../redux/user/action";
+import { truncate } from "../../utils/extraFunctions";
 import CustomButton from "../Button/CustomButton";
 import "./User.css";
 
@@ -61,8 +62,13 @@ const User = ({ person, location }) => {
           alt="profile"
         />
         <Box className="name">
-          <span>{person?.firstName}</span>
-          <span>{person?.email}</span>
+          <Text
+              fontWeight={"bold"}
+              _hover={{ color: "green", textDecoration: "underline" }}
+            >
+              {person.firstName}  {person.lastName}
+            </Text>
+            <Text fontSize={"12px"} >{truncate(person.workStatus, 25)  }</Text>
         </Box>
       </Box>
       <CustomButton

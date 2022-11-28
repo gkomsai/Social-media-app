@@ -9,7 +9,7 @@ export const createNewChat = (payload, token, toast) => (dispatch) => {
       data: payload,
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+        "Authorization": `Bearer ${token}`,
       },
     }).then((res) => {
       // console.log(res.data);
@@ -28,14 +28,14 @@ export const findAllchatingUser = (id, token, toast) => (dispatch) => {
     url: `/chats/${id}`,
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+      "Authorization": `Bearer ${token}`,
     },
   })
     .then((res) => {
       // console.log("All Chat Users Data", res.data);
       if (res.data) {
         dispatch({ type: "GET_CHAT_USERS_SUCCESS", payload: res.data });
-        notify(toast, "Chat Users fetched successfully", "success");
+        // notify(toast, "Chat Users fetched successfully", "success");
       }
     })
     .catch((err) => {

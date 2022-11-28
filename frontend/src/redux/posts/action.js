@@ -45,11 +45,11 @@ export const createPost = (payload, token, toast) => (dispatch) => {
     data: payload,
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+      "Authorization": `Bearer ${token}`,
     },
   })
     .then((res) => {
-      console.log("new created data", res.data);
+      // console.log("new created data", res.data);
       if (res.data) {
         dispatch({ type: "CREATE SUCCESS" });
         notify(toast, "Post created successfully", "success");
@@ -77,7 +77,7 @@ export const getTimelinePosts = (id, token, toast) => async (dispatch) => {
       // console.log("timeline data", res.data);
       if (res.data) {
         dispatch({ type: types.RETREIVING_SUCCESS, payload: res.data });
-        notify(toast, "post fetched Successfully", "success");
+        // notify(toast, "post fetched Successfully", "success");
       }
     })
     .catch((err) => {
@@ -88,58 +88,56 @@ export const getTimelinePosts = (id, token, toast) => async (dispatch) => {
 };
 
 export const handleLikeUnlikePost = (id, token, toast) => {
-  try {
-    return axios({
-      method: "patch",
-      url: `posts/like/${id}`,
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    }).then((res) => {
+  return axios({
+    method: "patch",
+    url: `posts/like/${id}`,
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((res) => {
       // console.log("likes res", res);
       notify(toast, res.data.message, "success");
+    })
+    .catch((err) => {
+      notify(toast, err.response.data.message, "error");
     });
-  } catch (err) {
-    // console.log(err);
-    notify(toast, err.response.data.message, "error");
-  }
 };
 
 export const deletePost = (id, token, toast) => (dispatch) => {
-  try {
-    return axios({
-      method: "delete",
-      url: `posts/delete/${id}`,
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    }).then((res) => {
+  return axios({
+    method: "delete",
+    url: `posts/delete/${id}`,
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((res) => {
       dispatch({ type: "DELETE SUCCESS" });
       notify(toast, res.data.message, "success");
+    })
+    .catch((err) => {
+      notify(toast, err.response.data.message, "error");
     });
-  } catch (err) {
-    notify(toast, err.response.data.message, "error");
-  }
 };
-
 export const updatePost = (id, payload, token, toast) => (dispatch) => {
-  try {
-    return axios({
-      method: "patch",
-      url: `posts/update/${id}`,
-      data: payload,
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    }).then((res) => {
+  return axios({
+    method: "patch",
+    url: `posts/update/${id}`,
+    data: payload,
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((res) => {
       // console.log("upadate post",res.data)
       dispatch({ type: "UPDATE SUCCESS" });
       notify(toast, res.data.message, "success");
+    })
+    .catch((err) => {
+      notify(toast, err.response.data.message, "error");
     });
-  } catch (err) {
-    notify(toast, err.response.data.message, "error");
-  }
 };

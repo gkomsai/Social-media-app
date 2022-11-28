@@ -38,21 +38,29 @@ const Chat = () => {
 
 
   useEffect(() => {
-    if (allUser.length === 0 && location==="chatPage") {
+    let isCancelled = false;
+    if (allUser.length === 0 && location === "chatPage") {
+      if (!isCancelled) {
       dispatch(getAllUser(toast));
-    }
+    }     
+  }
+  return () => {
+    isCancelled=true;
+  }
   }, [allUser.length]);
 
-  const findChatUser = useCallback(() => {
-    if (chatUsers.length === 0 && location==="chatPage") {
-      // console.log("All ChatingUser inside the Chat page triggered")
-      dispatch(findAllchatingUser(user._id, token, toast));
-    }
-  }, [user._id]);
-
+ 
 
   useEffect(() => {
-    findChatUser();
+    let isCancelled = false;
+    if (chatUsers.length === 0 && location === "chatPage") {
+      if (!isCancelled) {
+        dispatch(findAllchatingUser(user._id, token, toast));
+      }     
+    }
+    return () => {
+      isCancelled=true;
+    }
   }, [user._id]);
 
   // Connect to Socket.io

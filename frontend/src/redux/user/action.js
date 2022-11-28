@@ -20,7 +20,7 @@ export const getAllUser = (toast) => (dispatch) => {
       // console.log(res.data);
       if (res.data) {
         dispatch({ type: types.GET_USER_SUCCESS, payload: res.data });
-        notify(toast, "All user fetched successfully", "success");
+        // notify(toast, "All user fetched successfully", "success");
       }
     })
     .catch((err) => {
@@ -38,7 +38,7 @@ export const upadteUser = (id, payload, token, toast) => (dispatch) => {
     data: payload,
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+      "Authorization": `Bearer ${token}`,
     },
   })
     .then((res) => {
@@ -61,7 +61,7 @@ export const deleteUser = (id, token, toast) => (dispatch) => {
     url: `/user/delete/${id}`,
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+      "Authorization": `Bearer ${token}`,
     },
   })
     .then((res) => {
@@ -80,12 +80,12 @@ export const deleteUser = (id, token, toast) => (dispatch) => {
 
 export const followUser = (id, token, toast, currentUserId) => (dispatch) => {
   dispatch({ type: types.FOLLOW_USER_REQUEST });
-  axios({
+ return axios({
     method: "patch",
     url: `/user/${id}/follow`,
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+      "Authorization": `Bearer ${token}`,
     },
   })
     .then((res) => {
@@ -105,12 +105,12 @@ export const followUser = (id, token, toast, currentUserId) => (dispatch) => {
 
 export const unfollowUser = (id, token, toast, currentUserId) => (dispatch) => {
   dispatch({ type: types.UNFOLLOW_USER_REQUEST });
-  axios({
+ return axios({
     method: "patch",
     url: `/user/${id}/unfollow`,
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+      "Authorization": `Bearer ${token}`,
     },
   })
     .then((res) => {
@@ -122,7 +122,7 @@ export const unfollowUser = (id, token, toast, currentUserId) => (dispatch) => {
     })
     .then(() => dispatch(getTimelinePosts(currentUserId, token, toast)))
     .catch((err) => {
-      console.error(err);
+      // console.error(err);
       notify(toast, err.response.data.message, "error");
       dispatch({ type: types.UNFOLLOW_USER_FAILURE });
     });
