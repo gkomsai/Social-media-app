@@ -51,9 +51,8 @@
 ## 🚀 Responsiveness
 
 <h4 align="center">All Pages are fully responsive for all screen sizes</h4>
-<p align="center">
+
 ![mockup](https://user-images.githubusercontent.com/101813593/204578055-46c1e240-7290-4b2e-9873-5a767b558e81.png)
-</p>
 
 
 
@@ -78,85 +77,91 @@
 
 
 
+<h1>Some visuals of my project </h1>
+ </hr>
+
+<h3>Home page: </h3>
+
+![homeFull](https://user-images.githubusercontent.com/101813593/204586647-e061b0ad-e7e0-4bbf-8f87-23989a6996e5.png)
+
+<h3>Profile page: </h3>
+
+![Profilefull](https://user-images.githubusercontent.com/101813593/204586696-cd5937ee-a789-4e08-9a39-04c52f8ca6db.png)
+
+<h3>Chat page: </h3>
+
+![mychatfull](https://user-images.githubusercontent.com/101813593/204588758-6dbdd9d4-a5af-4aa6-bb84-45969e84e7dc.png)
+
+<h3>Reat-time-chatting: </h3>
+
+![Real-time-chatting](https://user-images.githubusercontent.com/101813593/204590112-d3666ce7-1f10-46ac-ba31-fc81df29f613.png)
+
+<h3>Users page: </h3>
+
+![Users Page](https://user-images.githubusercontent.com/101813593/204588942-959995a7-80db-42a3-a10d-1c909e2a9102.png)
+
+<h3>Signup page: </h3>
+
+![Signup](https://user-images.githubusercontent.com/101813593/204589014-9252a2de-093d-4d41-a356-d0b128768395.png)
+
+<h3>Login page: </h3>
+
+![Login](https://user-images.githubusercontent.com/101813593/204589096-371b4c74-1e42-48c6-bd78-cb6ff84716bb.png)
+
+<h3>forget password page: </h3>
+
+![forgetPassword](https://user-images.githubusercontent.com/101813593/204589235-d9c1bbdf-c2dc-4d15-9425-5cad446c93e4.png)
+
+<h3>Change password page: </h3>
+
+![change password](https://user-images.githubusercontent.com/101813593/204589858-b151ef65-f281-40a2-9cea-acefd72aefb4.png)
+
+
+<br />
+
+
+### Environment Variables
+
+To run this project, you will need to add the following environment variables to your .env file in server folder
+
+`MONGO_URL`
+
+`JWT_SECRET_KEY`
+
+`EMAIL_HOST`
+
+`EMAIL_PORT`
+
+`EMAIL_USER`
+
+`EMAIL_PASS`
+
+`EMAIL_FROM`
+
+`CLOUD_NAME`
+
+`CLOUDINARY_API_KEY`
+
+`CLOUDINARY_API_SECRET`
+
+
+
+### Steps to run this Project:-
+
+1. Create a folder on your system.
+
+2. Open with Visual Studio Code.
+
+3.  clone the repo using
+``` 
+ git clone https://github.com/gkomsai/Social-media-app.git
+```
+
+4. Do "yarn install" in frontend and "npm install" in the backend and socket folder  (To install all the dependencies)
+
+5. Then "yarn start" in the frontend and "npm start" in the backend and socket folder to run the project on your local system
 
 
 
 
 
-
-
-
-
-
-
-
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `yarn start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `yarn test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
