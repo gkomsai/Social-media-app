@@ -30,7 +30,7 @@ const Forgotpassword = () => {
       })
       .catch((err) => {
         console.log(err);
-        notify(toast, err.response.data.message, "error");
+        // notify(toast, err.response.data.message, "error");
       });
   };
 

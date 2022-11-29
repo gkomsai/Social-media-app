@@ -173,16 +173,15 @@ useEffect(() => {
         {showFullText ? (
           <Text onClick={() => setShowFullText(false)} whiteSpace="pre-line">
             {postData?.description}{" "}
-            <Text as="span"  ml="30px" cursor={"pointer"} color="blue">
+            <Text as="span"  ml="30px" cursor={"pointer"}  color="blue.400">
               see less...
             </Text>
           </Text>
-        ) : (
-         
+        ) : (  
           <Text onClick={() => setShowFullText(true)} whiteSpace="pre-line">
             {truncate(postData?.description, 110)}{" "}
             {postData?.description.length > 110 ? (
-              <Text ml="20px" as="span" cursor={"pointer"} color="blue">
+              <Text ml="20px" as="span" cursor={"pointer"}  color="blue.400">
                 See more...
               </Text>
             ) : null}

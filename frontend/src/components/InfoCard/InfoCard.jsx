@@ -27,10 +27,17 @@ const InfoCard = () => {
   };
 
   useEffect(() => {
+    let isCancelled = false;
     if (user) {
       if (id === user._id) {
-        setCurrentUser(user);
+        if (!isCancelled) {
+          setCurrentUser(user);
+        }
+      
       }
+    }
+    return () => {
+      isCancelled = true;
     }
   }, [user]);
 

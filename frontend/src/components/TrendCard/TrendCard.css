@@ -14,9 +14,4 @@
   gap: 0.5rem;
 }
 
-.trend > span:nth-of-type(1) {
-  font-weight: bold;
-}
-.trend > span:nth-of-type(2) {
-  font-size: 13px;
-}
+

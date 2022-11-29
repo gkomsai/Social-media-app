@@ -7,8 +7,6 @@ function App() {
   return (
     <Box className="App">
       <Navbar />
-      <Box className="blur" top="0%" right="0"></Box>
-      <Box className="blur" top="2%" left="-1rem"></Box>
       <AllRoutes />
     </Box>
   );

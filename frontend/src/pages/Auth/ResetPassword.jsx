@@ -28,14 +28,14 @@ const ResetPassword = () => {
       axios
         .post(`/auth/reset-password/${id}/${token}`, payload)
         .then((res) => {
-          console.log(res.data.message);
+          // console.log(res.data.message);
           if (res.data.message) {
             notify(toast, res.data.message, "success");
             navigate("/auth/login");
           }
         })
         .catch((err) => {
-          console.log(err);
+          // console.log(err);
           notify(toast, err.response.data.message, "error");
         });
     }
