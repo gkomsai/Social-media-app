@@ -27,7 +27,7 @@ postsRouter.post("/upload", upload.single("file"), async (req, res) => {
       return res.status(200).send(result);
     }
   } catch (err) {
-    console.log(err);
+    // console.log(err);
     return res.status(500).send({ status: "error", message: err.message });
   }
 });
