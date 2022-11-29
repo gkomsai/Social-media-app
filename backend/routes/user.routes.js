@@ -56,7 +56,7 @@ userRouter.patch("/update/:id", async (req, res) => {
 
       return res.status(200).send(user);
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       res.status(500).send({ status: "error", message: err.message });
     }
   } else {
@@ -127,7 +127,7 @@ userRouter.patch("/:id/follow", async (req, res) => {
         });
       }
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       res.status(500).send({ status: "error", message: err.message });
     }
   }
@@ -162,7 +162,7 @@ userRouter.patch("/:id/unfollow", async (req, res) => {
         });
       }
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       res.status(500).send({ status: "error", message: err.message });
     }
   }

@@ -103,16 +103,15 @@ authRouter.post("/login", emailPassRequiredValidator, async (req, res) => {
 
 authRouter.post("/forgotten_password", async (req, res) => {
   const { email } = req.body;
+  // console.log(email);
+  try {
   if (email) {
     const user = await UserModel.findOne({ email: email });
     if (user) {
       const token = jwt.sign({ userID: user._id }, process.env.JWT_SECRET_KEY, {
         expiresIn: "15m",
       });
-      const link = `http://localhost:3000/reset-password/${user._id}/${token}`;
-
-    
-
+      const link = `https://indian-social-media.vercel.app/reset-password/${user._id}/${token}`;
       let info = await transporter.sendMail({
         from: process.env.EMAIL_FROM,
         to: user.email,
@@ -134,6 +133,10 @@ authRouter.post("/forgotten_password", async (req, res) => {
     res
       .status(400)
       .send({ status: "error", message: "Email Field is Required" });
+    }
+    
+  } catch (error) {
+    console.error(error);
   }
 });
 
@@ -171,7 +174,7 @@ authRouter.post(
           .send({ status: "error", message: "All Fields are Required" });
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       res.status(400).send({ status: "error", message: "Invalid Token" });
     }
   }

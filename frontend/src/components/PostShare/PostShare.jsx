@@ -71,9 +71,9 @@ const PostShare = () => {
       axios
         .post(`/posts/upload`, data, { headers })
         .then((res) => {
-          console.log("upload wala", res.data);
+          // console.log("upload wala", res.data);
           if (res.data) {
-            notify(toast, "Image uploaded Successfully", "success");
+            // notify(toast, "Image uploaded Successfully", "success");
             newPost = {
               ...newPost,
               image: res.data.secure_url,

@@ -27,7 +27,7 @@ postsRouter.post("/upload", upload.single("file"), async (req, res) => {
       return res.status(200).send(result);
     }
   } catch (err) {
-    console.log(err);
+    // console.log(err);
     return res.status(500).send({ status: "error", message: err.message });
   }
 });
@@ -122,7 +122,7 @@ postsRouter.delete("/delete/:id", async (req, res) => {
     } else {
       return res
         .status(403)
-        .send({ status: "error", message: "You can't delete other's posts" });
+        .send({ status: "error", message: "Access Denied! You are not autorize to delete other's posts" });
     }
   } catch (err) {
     return res.status(500).send({ status: "error", message: err.message });

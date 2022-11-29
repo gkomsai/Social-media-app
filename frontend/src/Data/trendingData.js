@@ -4,7 +4,7 @@ export const trendingData = [
     shares: 97,
   },
   {
-    name: "Avangers",
+    name: "Masai",
     shares: 80.5,
   },
   {
@@ -20,7 +20,7 @@ export const trendingData = [
     shares: 71.9,
   },
   {
-    name: "Need for Speed",
+    name: "AI & ML",
     shares: 20,
   },
 ];

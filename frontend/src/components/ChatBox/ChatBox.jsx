@@ -34,7 +34,7 @@ const ChatBox = ({ currentChatUser, setSendMessage, receivedMessage }) => {
       );
       setChatSchema({ ...res.data });
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   };
   useEffect(() => {
@@ -128,7 +128,7 @@ const ChatBox = ({ currentChatUser, setSendMessage, receivedMessage }) => {
               >
                 <span>{message.text}</span>{" "}
                 <span>
-                  <TimeAgo datetime={message.createdAt} locale="zh_CN" />{" "}
+                  <TimeAgo datetime={message.createdAt}  />{" "}
                 </span>
               </Box>
             ))}

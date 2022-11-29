@@ -41,7 +41,7 @@ const ChangePassord = () => {
           }
         })
         .catch((err) => {
-          console.log(err);
+          // console.log(err);
           notify(toast, err.response.data.message, "error");
         });
     } else {

@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "./SinglePost.css";
-import Comment from "../../assets/comment.png";
-import Share from "../../assets/share.png";
 import Heart from "../../assets/like.png";
 import NotLike from "../../assets/notlike.png";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
@@ -23,7 +21,6 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
-  Input,
   Image,
   Avatar,
 } from "@chakra-ui/react";
@@ -32,7 +29,8 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import TimeAgo from "timeago-react";
 import { MdComment } from "react-icons/md";
 import { FaShareAlt } from "react-icons/fa";
-import { useMemo } from "react";
+import { truncate } from "../../utils/extraFunctions";
+
 
 const SinglePost = ({ postData }) => {
   // console.log({postData})
@@ -47,16 +45,22 @@ const SinglePost = ({ postData }) => {
   const [showFullText, setShowFullText] = useState(false);
   const [liked, setLiked] = useState(postData.likes.includes(user._id));
   const [likes, setLikes] = useState(postData.likes.length);
+  const [currentPostUser, setCurrentPostUser] = useState(null);
+  // console.log(currentPostUser);
+ 
+useEffect(() => {
+  let isCancelled = false;
+  if (!isCancelled && allUser.length) {
+    let postUser = allUser.filter((el) => el._id === postData.userId);
+    setCurrentPostUser({...postUser[0]})
+  }
+  return () => {
+   isCancelled = true;
+  }
+}, [])
 
-  const truncate = (string, n) => {
-    return string?.length > n ? string.substr(0, n - 1)+"..." : string;
-  };
 
 
-  if (allUser.length>0) {
- var postUser = allUser.filter((el) => el._id === postData.userId);
-}
-  
 
 
   const handleLike = () => {
@@ -80,11 +84,11 @@ const SinglePost = ({ postData }) => {
 
   return (
     <Box className="SinglePost">
-      {postUser.length > 0 ? (
+      {currentPostUser ? (
         <Flex alignItems={"flex-start"} gap="1rem">
           <Avatar
-            name={postUser[0].firstName}
-            src={postUser[0].profilePicture}
+            name={currentPostUser.firstName}
+            src={currentPostUser.profilePicture}
             alt="profile"
           />
           <Box>
@@ -92,9 +96,9 @@ const SinglePost = ({ postData }) => {
               fontWeight={"bold"}
               _hover={{ color: "green", textDecoration: "underline" }}
             >
-              {postUser[0].firstName}  {postUser[0].lastName}
+              {currentPostUser.firstName}  {currentPostUser.lastName}
             </Text>
-            <Text fontSize={"13px"} >{truncate(postUser[0].workStatus, 55)  }</Text>
+            <Text fontSize={"13px"} >{truncate(currentPostUser.workStatus, 55)  }</Text>
             <Box fontSize={"10px"}>
             <TimeAgo
              size="12px"
@@ -134,7 +138,8 @@ const SinglePost = ({ postData }) => {
                 <ModalCloseButton />
                 <form action="" onSubmit={hadleUpdatePost}>
                   <ModalBody>
-                    <Input
+                    <textarea
+                      className="updateTextarea"
                       defaultValue={postData?.description}
                       onChange={(e) => setDescription(e.target.value)}
                     />
@@ -166,18 +171,17 @@ const SinglePost = ({ postData }) => {
       </Text>
       <Box className="detail">
         {showFullText ? (
-          <Text onClick={() => setShowFullText(false)}>
-            {postData?.description + "  "}{" "}
-            <Text as="span"  ml="20px" cursor={"pointer"} color="blue">
+          <Text onClick={() => setShowFullText(false)} whiteSpace="pre-line">
+            {postData?.description}{" "}
+            <Text as="span"  ml="30px" cursor={"pointer"}  color="blue.400">
               see less...
             </Text>
           </Text>
-        ) : (
-         
+        ) : (  
           <Text onClick={() => setShowFullText(true)} whiteSpace="pre-line">
             {truncate(postData?.description, 110)}{" "}
             {postData?.description.length > 110 ? (
-              <Text ml="20px" as="span" cursor={"pointer"} color="blue">
+              <Text ml="20px" as="span" cursor={"pointer"}  color="blue.400">
                 See more...
               </Text>
             ) : null}

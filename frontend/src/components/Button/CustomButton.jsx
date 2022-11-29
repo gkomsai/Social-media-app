@@ -9,6 +9,7 @@ const CustomButton = ({
   value,
   color = "white",
   w = "",
+  fontSize="15px",
   className,
   alignSelf = "",
   marginTop = "40px",
@@ -23,7 +24,7 @@ const CustomButton = ({
         mt={marginTop}
         padding="25px 35px 25px 35px"
         borderRadius="25px"
-        fontSize="15px"
+        fontSize={"15px"}
         color={color}
         fontWeight="700"
         alignSelf={alignSelf}

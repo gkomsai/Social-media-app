@@ -2,7 +2,8 @@
   border-radius: 1.5rem;
   display: flex;
   flex-direction: column;
-  position: relative;
+  justify-content: center;
+  text-align: center;
   gap: 1rem;
   overflow-x: clip;
   box-shadow: var(--cardShadow);
