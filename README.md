@@ -80,6 +80,7 @@
 - Able to optimise the performance by not making a single extra api call in the whole app unless it necessary.
 - Used useCallback, useMemo and React.memo where ever required.
 - Used Shallequal from react-redux to avoid unnecessery rendering.
+- Applied code Splitting through dynamic import by using React.Lazy and Suspence.
 - Used react-lazy-load-image-component library for loading the images lazy.
 - where ever possible written the cleanup inside the UseEffect in case of setting the data.
 - Converting the images into the webp format by using the webp convertor before uploading to the cloudinary server.
@@ -177,9 +178,10 @@ To run this project, you will need to add the following environment variables to
 
 If you want to contact me, you can reach me through below handles.
 
-[![LinkedIn](https://camo.githubusercontent.com/a80d00f23720d0bc9f55481cfcd77ab79e141606829cf16ec43f8cacc7741e46/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f4c696e6b6564496e2d3030373742353f7374796c653d666f722d7468652d6261646765266c6f676f3d6c696e6b6564696e266c6f676f436f6c6f723d7768697465)](https://linkedin.com/in/gautam-kumar-9bba54222/) 
+[![linkedin](https://img.shields.io/badge/Gautam_Kumar-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/gautam-kumar-9bba54222/)
+[![Gmail](https://img.shields.io/badge/Gautam_Kumar-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:gkomsai788@gmail.com)
+[![GitHub](https://img.shields.io/badge/Gautam_Kumar-20232A?style=for-the-badge&logo=Github&logoColor=white)](https://github.com/gkomsai/)
 
-[![Gmail](https://user-images.githubusercontent.com/101813593/185589447-6fb65c33-987a-4ecc-b467-03333934276b.png)](mailto:gkomsai788@gmail.com)
 
 
 ## Show your support
