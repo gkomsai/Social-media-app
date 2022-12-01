@@ -75,7 +75,18 @@
 
 <br />
 
+## 🚀 Performance optimisation
 
+- Able to optimise the performance by not making a single extra api call in the whole app unless it necessary.
+- Used useCallback, useMemo and React.memo where ever required.
+- Used Shallequal from react-redux to avoid unnecessery rendering.
+- Used react-lazy-load-image-component library for loading the images lazy.
+- where ever possible written the cleanup inside the UseEffect in case of setting the data.
+- Converting the images into the webp format by using the webp convertor before uploading to the cloudinary server.
+- Applied gzip compression for compressing the serverData before sending to the client.
+- Applied custom indexing in MongoDb for faster query processing. 
+
+<br />
 
 <h1>Some visuals of my project </h1>
  </hr>
