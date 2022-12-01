@@ -1,4 +1,5 @@
 const io = require("socket.io")(8800, {
+  pingTimeout: 60000,
     cors: {
       origin: ["http://localhost:3000","https://indian-social-media.vercel.app"],
     },
