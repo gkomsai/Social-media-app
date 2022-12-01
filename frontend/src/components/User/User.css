@@ -5,6 +5,7 @@
   gap: 2rem;
   min-width: 60vw;
   min-height: 8rem;
+padding: 5px 10px;
   margin: auto;
   box-shadow: var(--cardShadow);
 }
@@ -20,9 +21,18 @@
 .alreadyfollowing:hover {
   background: black !important;
 }
+@media only screen and (max-width: 900px) {
+  .userPage {
+    min-width: 90vw;
+  }
+}
 @media only screen and (max-width: 500px) {
   .userPage {
-    flex-direction: column;
-    justify-content: center;
+    gap: .1rem;
+  }
+  .userPage button{
+    width: 70px;
+    font-size: 10px;
+    padding: 1px 2px !important;;
   }
 }

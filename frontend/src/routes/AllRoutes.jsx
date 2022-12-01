@@ -1,5 +1,6 @@
 import React,{ Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
+import Loading from "../components/Loading/Loading";
 import PrivateRoute from "../components/PrivateRoute/PrivateRoute";
 import Login from "../pages/Auth/Login";
 import Auth from "../pages/Auth/Signup";
@@ -11,12 +12,12 @@ const Chat = React.lazy(() => import("../pages/Chat/Chat"));
 const Profile = React.lazy(() => import("../pages/profile/Profile"));
 const Users = React.lazy(() => import("../pages/Users/Users"));
 const ChangePassord = React.lazy(() => import("../pages/Auth/ChangePassord"));
-const Error = React.lazy(() => import("../components/Error/Error"));
+const Error = React.lazy(() => import("../components/Error/PageNotFoundError"));
 
 const AllRoutes = () => {
   return (
     <>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<div><Loading /></div>}>
         <Routes>
           <Route path="/auth/login" element={<Login />} />
           <Route path="/auth/signup" element={<Auth />} />

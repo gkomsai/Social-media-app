@@ -1,16 +1,18 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./ChatBox.css";
 import TimeAgo from "timeago-react";
-
 import { addMessage, getMessages } from "../../api/messageApi";
 import InputEmoji from "react-input-emoji";
 import { shallowEqual, useSelector } from "react-redux";
-import { Avatar, Box, Flex, Text } from "@chakra-ui/react";
+import { Avatar, Box, Flex, Text, useToast } from "@chakra-ui/react";
 import CustomButton from "../Button/CustomButton";
-
 import axios from "axios";
+import { notify } from "../../utils/extraFunctions";
 
 const ChatBox = ({ currentChatUser, setSendMessage, receivedMessage }) => {
+  const scroll = useRef();
+  const toast = useToast();
+
   const [chatSchema, setChatSchema] = useState(null);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
@@ -19,7 +21,6 @@ const ChatBox = ({ currentChatUser, setSendMessage, receivedMessage }) => {
     (state) => state.AuthReducer,
     shallowEqual
   );
-  const scroll = useRef();
 
   const getchatSchema = async () => {
     try {
@@ -28,7 +29,7 @@ const ChatBox = ({ currentChatUser, setSendMessage, receivedMessage }) => {
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
+            "Authorization": `Bearer ${token}`,
           },
         }
       );
@@ -37,6 +38,7 @@ const ChatBox = ({ currentChatUser, setSendMessage, receivedMessage }) => {
       // console.log(err);
     }
   };
+
   useEffect(() => {
     if (currentChatUser) {
       getchatSchema();
@@ -49,8 +51,9 @@ const ChatBox = ({ currentChatUser, setSendMessage, receivedMessage }) => {
       try {
         const { data } = await getMessages(chatSchema?._id, token);
         setMessages(data);
-      } catch (error) {
-        console.error(error);
+      } catch (err) {
+        notify(toast, err.message, "err");
+        // console.error(error);
       }
     };
     if (chatSchema) {
@@ -85,7 +88,7 @@ const ChatBox = ({ currentChatUser, setSendMessage, receivedMessage }) => {
     }
   }, [receivedMessage]);
 
-  //  whenever our message changes, then the below code will handle scroll to last Message
+
   useEffect(() => {
     scroll.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
@@ -103,17 +106,16 @@ const ChatBox = ({ currentChatUser, setSendMessage, receivedMessage }) => {
                 src={currentChatUser?.profilePicture}
                 alt="profile"
               />
-              <Box className="name" fontSize={"1rem"}>
-                <span>
-                  {currentChatUser?.firstName} {currentChatUser?.lastName}
-                </span>
-              </Box>
+
+              <Text fontSize={"1rem"} fontWeight="bold">
+                {currentChatUser?.firstName} {currentChatUser?.lastName}
+              </Text>
             </Flex>
             <hr
               style={{
                 width: "95%",
                 border: "0.1px solid #ececec",
-                marginTop: "20px",
+                marginTop: "21px",
               }}
             />
           </Box>
@@ -128,7 +130,7 @@ const ChatBox = ({ currentChatUser, setSendMessage, receivedMessage }) => {
               >
                 <span>{message.text}</span>{" "}
                 <span>
-                  <TimeAgo datetime={message.createdAt}  />{" "}
+                  <TimeAgo datetime={message.createdAt} />{" "}
                 </span>
               </Box>
             ))}
@@ -142,11 +144,7 @@ const ChatBox = ({ currentChatUser, setSendMessage, receivedMessage }) => {
               onChange={setNewMessage}
               onEnter={handleSend}
             />
-            <CustomButton
-              onClick={handleSend}
-              marginTop="-10px"
-              value="  Send"
-            />
+            <CustomButton onClick={handleSend} marginTop="-10px" value="Send" />
           </Box>
         </>
       ) : (

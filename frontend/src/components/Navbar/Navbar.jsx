@@ -96,13 +96,13 @@ const Navbar = () => {
           <AiFillHome color="#F97430" size={"25px"} title="home" />
         </Link>
         <Link to="/users">
-          <MdPeopleAlt size={"28px"} />
+          <MdPeopleAlt size={"28px"} title="Users" />
         </Link>
         <Link to="/chats">
           <BsFillChatDotsFill color="#F97430" size={"25px"} title="chats" />
         </Link>
 
-        <Menu isLazy>
+        <Menu>
           <MenuButton
             py={2}
             transition="all 0.3s"
@@ -136,7 +136,7 @@ const Navbar = () => {
             <MenuDivider />
 
             <MenuItem onClick={onOpen}> Delete Your Account </MenuItem>
-            <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose}>
+            <Modal  isOpen={isOpen} onClose={onClose}>
               <ModalOverlay />
               <ModalContent>
                 <ModalHeader>

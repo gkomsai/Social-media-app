@@ -1,14 +1,14 @@
 import React, { useRef, useState } from "react";
 import "./Chat.css";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import Conversation from "../../components/Conversations/Conversations";
+import ChatUsersList from "../../components/ChatUsersList/ChatUsersList";
 import { useEffect } from "react";
 import { findAllchatingUser } from "../../redux/chats/action";
 import ChatBox from "../../components/ChatBox/ChatBox";
 import { io } from "socket.io-client";
 import { Box, Text, useToast } from "@chakra-ui/react";
-import { useCallback } from "react";
 import { getAllUser } from "../../redux/user/action";
+
 
 const Chat = () => {
 
@@ -63,12 +63,12 @@ const Chat = () => {
     }
   }, [user._id]);
 
-  // Connect to Socket.io
+  // Connecting to the Socket.io
   useEffect(() => {
-    // socket.current = io("ws://localhost:8800");
-    socket.current = io(
-      "https://indian-social-media-app-chatting-backend.onrender.com/"
-    );
+    socket.current = io("ws://localhost:8800");
+    // socket.current = io(
+    //   "https://indian-social-media-app-chatting-backend.onrender.com/"
+    // );
     socket.current.emit("add-new-user", user._id);
     socket.current.on("all-currently-online-users", (users) => {
       // here we are getting the informaiton about the online users from the socket.io
@@ -96,11 +96,10 @@ const Chat = () => {
   };
 
   return (
-    <Box>
-      <Box className="Chat" mt={{ base: "40px", lg: "0px" }}>
-        <Box className="Left-side-chat">
-          <Box className="Chat-container">
-            <Text fontWeight={"bold"}>Chats</Text>
+    <>
+      <Box className="Chat-Parent" mt={{ base: "40px", lg: "0px" }}>
+          <Box className="Left-side-chat" >
+            <Text ml="15px" fontWeight={"bold"}>Chats</Text>
             <Box className="chatMembers-list">
               {finalChatUserData?.map((el) => (
                 <Box
@@ -109,22 +108,22 @@ const Chat = () => {
                     setCurrentChatUser(el);
                   }}
                 >
-                  <Conversation userData={el} online={checkOnlineStatus(el)} />
+                  <ChatUsersList userData={el} online={checkOnlineStatus(el)} />
                 </Box>
               ))}
             </Box>
           </Box>
-        </Box>
+
 
         <Box className="Right-side-chat">
-          <ChatBox
+          <ChatBox  
             currentChatUser={currentChatUser}
             setSendMessage={setSendMessage}
             receivedMessage={receivedMessage}
           />
         </Box>
       </Box>
-    </Box>
+    </>
   );
 };
 

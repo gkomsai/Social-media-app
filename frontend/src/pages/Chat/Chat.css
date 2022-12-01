@@ -1,78 +1,69 @@
-.Chat {
-  position: relative;
+.Chat-Parent {
   display: grid;
-  grid-template-columns: 22% auto;
+  grid-template-columns: 28% auto;
   gap: 1rem;
   align-items: center;
 }
 
 .Left-side-chat {
-  margin-top: -20px;
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  
-}
-
-.Chat-container {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+  justify-content: flex-start;
   box-shadow: var(--cardShadow);
   border-radius: 1rem;
-  padding: 1rem;
-  height: auto;
+  padding: 0.5rem;
   min-height: 80vh;
-  overflow: hidden;
+  overflow-y: scroll;
+  /* border: 2px solid red; */
 }
 
 .chatMembers-list {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 2rem;
 }
 
 .Right-side-chat {
   display: flex;
   flex-direction: column;
-  gap: 1rem; 
+  gap: 1rem;
 }
-.conversation:hover {
+.singleChatUser {
+  border-radius: 0.8rem;
+  padding: 14px;
+  position: relative;
+  gap: 0.1rem;
+}
+.singleChatUser:hover {
   background: #80808038;
   cursor: pointer;
 }
-
-.conversation {
-  border-radius: 0.5rem;
-  padding: 10px;
-}
-
-.conversation > div {
-  position: relative;
-}
-
 .online-Indicator {
   position: absolute;
-  left: 2.1rem;
-  top:-.1rem;
+  left: 3.3rem;
+  top: 2rem;
   z-index: 4;
-  
 }
 
-@media screen and (max-width: 768px) {
-  .Chat {
-     grid-template-columns: 16% auto;
-   }
-   .ChatUserNameBox{
-     display: none;
-    }
- }
+@media screen and (max-width: 1024px) {
+  .Chat-Parent {
+    grid-template-columns: 16% auto;
+  }
+  .ChatUserNameBox {
+    display: none;
+  }
+}
 
- @media screen and (max-width: 610px) {
-  .Chat {
-     grid-template-columns:auto;
-   }
-   .ChatUserNameBox{
-     display: block;
-    }
- }
+@media screen and (max-width: 610px) {
+  .Chat-Parent {
+    grid-template-columns: auto;
+  }
+  .ChatUserNameBox {
+    display: block;
+  }
+  .Left-side-chat {
+    min-height: auto;
+    max-height: 30vh;
+  }
+}

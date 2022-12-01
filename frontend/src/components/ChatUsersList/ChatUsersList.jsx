@@ -1,15 +1,14 @@
 import React from "react";
-import { Avatar, Box, Text } from "@chakra-ui/react";
+import { Avatar, Box, Flex, Text } from "@chakra-ui/react";
 import StatusIndicator from "./StatusIndicator";
 
 
-const Conversation = ({ userData, online }) => {
+const ChatUsersList = ({ userData, online }) => {
 
 
   return (
     <>
-      <Box className="follower conversation">
-        <Box>
+        <Flex className="singleChatUser">
           {online && (
             <Box className="online-Indicator">
               <StatusIndicator />{" "}
@@ -31,11 +30,11 @@ const Conversation = ({ userData, online }) => {
               {online ? "Online" : "Offline"}
             </Text>
           </Box>
-        </Box>
-      </Box>
+        </Flex>
+     
       <hr style={{ width: "85%", border: "0.1px solid #ececec" }} />
     </>
   );
 };
 
-export default React.memo(Conversation);
+export default React.memo(ChatUsersList);

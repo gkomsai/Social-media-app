@@ -1,18 +1,24 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import "./FollowersCard.css";
 import User from "../User/User";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { getAllUser } from "../../redux/user/action";
 import { Box, Text, useToast } from "@chakra-ui/react";
+import { findAllchatingUser } from "../../redux/chats/action";
 
 const FollowersCard = ({ location }) => {
   const dispatch = useDispatch();
   const toast = useToast();
 
-  const { user,allUser } = useSelector((store) => store.AuthReducer, shallowEqual);
+  const { user,allUser,token } = useSelector((store) => store.AuthReducer, shallowEqual);
 
+  const { chatUsers } = useSelector((store) => store.ChatReducer, shallowEqual);
 
-
+  useEffect(() => {
+    if (chatUsers.length === 0 && location === "usersPage") {
+      dispatch(findAllchatingUser(user._id,token,toast))
+    }
+  }, [chatUsers.length, location, user._id])
 
 
   useEffect(() => {
@@ -26,7 +32,7 @@ const FollowersCard = ({ location }) => {
       <Text fontWeight={"bold"}>Who is folllowing you</Text>
       {allUser?.map((el) => (
         <Box key={el._id}>
-          {el._id !== user._id ? <User location={location} person={el} /> : ""}
+          {el._id !== user._id ? <User chatUsers={chatUsers}  location={location} person={el} /> : ""}
         </Box>
       ))}
     </Box>

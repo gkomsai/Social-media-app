@@ -2,13 +2,18 @@
   box-shadow: var(--cardShadow);
   border-radius: 1rem;
   display: grid;
-  grid-template-rows: 14vh 60vh 13vh;
+  grid-template-rows: 17vh 50vh 13vh;
 }
 
 .chat-header {
-  padding: 1rem 1rem 0rem 1rem;
+  padding: 10px 10px 30px 10px;
   display: flex;
   flex-direction: column;
+  position: relative;
+  z-index: 5;
+  /* border: 2px solid red; */
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px,
+    rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
 }
 
 .chat-body {

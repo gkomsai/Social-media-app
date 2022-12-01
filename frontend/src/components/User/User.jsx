@@ -1,40 +1,38 @@
 import { Avatar, Box, Text, useToast } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import { createNewChat, findAllchatingUser } from "../../redux/chats/action";
+import { createNewChat} from "../../redux/chats/action";
 import { followUser, unfollowUser } from "../../redux/user/action";
 import { truncate } from "../../utils/extraFunctions";
 import CustomButton from "../Button/CustomButton";
 import "./User.css";
 
-const User = ({ person, location }) => {
+const User = ({ person, location,chatUsers }) => {
   const dispatch = useDispatch();
   const toast = useToast();
   const { user,token } = useSelector((state) => state.AuthReducer,shallowEqual);
-//  console.log({person})
-  const { chatUsers } = useSelector((store) => store.ChatReducer, shallowEqual);
-
 
   const [alreadyCreatedChat, setAlreadyCreatedChat] = useState(null);
- 
   const [following, setFollowing] = useState(person?.followers.includes(user._id));
  
 
-  useEffect(() => {
-    if (chatUsers.length === 0 && location === "usersPage") {
-      dispatch(findAllchatingUser(user._id,token,toast))
-    }
-  }, [chatUsers.length])
 
   useEffect(() => {
-    setAlreadyCreatedChat(chatUsers?.some((el) => el.members.includes(person._id)))
-  }, [chatUsers.length]);
+    let isCancelled = false
+    if (chatUsers.length > 0 && !isCancelled) {
+      setAlreadyCreatedChat(chatUsers?.some((el) => el.members.includes(person._id)))
+    }
+    return () => {
+      isCancelled = true;
+    }
+  }, [chatUsers, person._id]);
+
 
   const handleFollow = () => {
     following
       ? dispatch(unfollowUser(person._id, token, toast, user._id))
       : dispatch(followUser(person._id, token, toast, user._id));
-    setFollowing((prev) => !prev);
+      setFollowing((prev) => !prev);
   
   };
 
