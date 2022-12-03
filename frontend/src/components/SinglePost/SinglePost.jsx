@@ -46,20 +46,23 @@ const SinglePost = ({ postData }) => {
   const [liked, setLiked] = useState(postData.likes.includes(user._id));
   const [likes, setLikes] = useState(postData.likes.length);
   const [currentPostUser, setCurrentPostUser] = useState(null);
-  // console.log(currentPostUser);
  
+
 useEffect(() => {
   let isCancelled = false;
   if (!isCancelled && allUser.length) {
-    let postUser = allUser.filter((el) => el._id === postData.userId);
-    setCurrentPostUser({...postUser[0]})
+    if (postData.userId === user._id) {
+      setCurrentPostUser({ ...user });
+    } else {
+      let postUser = allUser.filter((el) => el._id === postData.userId);
+      setCurrentPostUser({...postUser[0]})
+    }
+   
   }
   return () => {
    isCancelled = true;
   }
-}, [])
-
-
+}, [user])
 
 
 
