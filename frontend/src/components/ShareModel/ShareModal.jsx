@@ -20,7 +20,7 @@ const ShareModal = ({ onOpen, onClose, isOpen }) => {
         <ModalHeader>Share Something</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <PostShare />
+          <PostShare onClose={onClose} />
         </ModalBody>
       </ModalContent>
     </Modal>

@@ -17,7 +17,7 @@ import CustomButton from "../../components/Button/CustomButton";
 
 const ChangePassord = () => {
   const navigate = useNavigate();
-  const { token } = useSelector((store) => store.AuthReducer,shallowEqual);
+  const { token } = useSelector((store) => store.AuthReducer, shallowEqual);
   const toast = useToast();
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -41,7 +41,6 @@ const ChangePassord = () => {
           }
         })
         .catch((err) => {
-          // console.log(err);
           notify(toast, err.response.data.message, "error");
         });
     } else {

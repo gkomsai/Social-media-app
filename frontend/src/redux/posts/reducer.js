@@ -17,10 +17,10 @@ export const PostReducer = (state = initialState, { type, payload }) => {
     case "CREATE FAILURE":
       return { ...state, uploading: false, error: true };
     case "DELETE SUCCESS":
-      return { ...state, timeLinePosts: [], uploading: false, error: true };
+      return { ...state, timeLinePosts: [], uploading: false, error: false };
     case "UPDATE SUCCESS":
       // console.log("Post update payload", payload);
-      return { ...state, timeLinePosts: [], uploading: false, error: true };
+      return { ...state, timeLinePosts: [], uploading: false, error: false };
 
     case types.RETREIVING_START:
       return { ...state, loading: true, error: false };

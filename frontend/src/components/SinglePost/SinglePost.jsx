@@ -76,14 +76,22 @@ useEffect(() => {
     dispatch(deletePost(postData._id, token, toast));
   };
 
-  const hadleUpdatePost = (e) => {
-    e.preventDefault();
-
+  const hadleUpdatePost = () => {
     const payload = {
       description,
     };
     dispatch(updatePost(postData._id, payload, token, toast));
   };
+
+  const handleEnter = (e) => {
+    if (e.keyCode === 13 && !e.shiftKey) {
+      e.preventDefault();
+      hadleUpdatePost();
+    }
+  }
+
+
+
 
   return (
     <Box className="SinglePost">
@@ -143,6 +151,7 @@ useEffect(() => {
                   <ModalBody>
                     <textarea
                       className="updateTextarea"
+                      onKeyDown={handleEnter}
                       defaultValue={postData?.description}
                       onChange={(e) => setDescription(e.target.value)}
                     />

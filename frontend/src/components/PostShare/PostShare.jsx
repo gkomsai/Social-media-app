@@ -14,7 +14,7 @@ import defaultProfile from "../../assets/defaultProfile.png";
 import { useEffect } from "react";
 import CustomButton from "../Button/CustomButton";
 
-const PostShare = () => {
+const PostShare = ({onClose}) => {
   const imageRef = useRef();
   const description = useRef();
   const toast = useToast();
@@ -32,10 +32,9 @@ const PostShare = () => {
   useEffect(() => {
     window.addEventListener("resize", () => setWidth(window.innerWidth));
   }, []);
-  // console.log(token);
   const headers = {
     "Content-Type": "application/json",
-    Authorization: `Bearer ${token}`,
+    "Authorization": `Bearer ${token}`,
   };
 
   const onImageChange = (e) => {
@@ -45,8 +44,8 @@ const PostShare = () => {
     }
   };
   // handle post upload
-  const handleUpload = async (e) => {
-    e.preventDefault();
+  const handleUpload = async () => {
+    // e.preventDefault();
 
     //post data
     let newPost = {
@@ -101,6 +100,12 @@ const PostShare = () => {
     }
   };
 
+  const handleEnter = (e) => {
+    if (e.keyCode === 13 && !e.shiftKey) {
+      e.preventDefault();
+      handleUpload();
+    }
+  }
   // Reset Post Share
   function resetShare() {
     setImage(null);
@@ -118,8 +123,10 @@ const PostShare = () => {
       />
       <Box>
         <textarea
+          id="mytextarea"
           placeholder="Share a Post"
           required
+          onKeyDown={handleEnter}
           ref={description}
         />
         <Box className="postOptions">
@@ -152,7 +159,10 @@ const PostShare = () => {
             marginTop="0px"
             w="85px"
             isLoading={isLoading}
-            onClick={handleUpload}
+            onClick={() => {
+              handleUpload()
+              onClose()
+            }}
             value="Share"
           />
           <Box style={{ display: "none" }}>

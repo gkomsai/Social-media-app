@@ -4,7 +4,7 @@ import error from "../../assets/error.gif"
 const Error = () => {
   return (
     <Container maxW={"30%"} m="3rem auto">
-      <Image src={error} />
+      <Image src={error} alt="error" />
     </Container>
   );
 };

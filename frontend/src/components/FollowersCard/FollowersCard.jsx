@@ -10,7 +10,7 @@ const FollowersCard = ({ location }) => {
   const dispatch = useDispatch();
   const toast = useToast();
 
-  const { user,allUser,token } = useSelector((store) => store.AuthReducer, shallowEqual);
+  let { user,allUser,token } = useSelector((store) => store.AuthReducer, shallowEqual);
 
   const { chatUsers } = useSelector((store) => store.ChatReducer, shallowEqual);
 
@@ -27,12 +27,16 @@ const FollowersCard = ({ location }) => {
     }
   }, [allUser.length]);
 
+  if (allUser.length>0) {
+    allUser = allUser.filter((el) => el._id !== user._id);
+  }
+
   return (
     <Box className="FollowersCard">
       <Text fontWeight={"bold"}>Who is folllowing you</Text>
       {allUser?.map((el) => (
         <Box key={el._id}>
-          {el._id !== user._id ? <User chatUsers={chatUsers}  location={location} person={el} /> : ""}
+          <User chatUsers={chatUsers}  location={location} person={el} />
         </Box>
       ))}
     </Box>

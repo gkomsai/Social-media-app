@@ -3,12 +3,12 @@ import React from "react";
 import { shallowEqual, useSelector } from "react-redux";
 import Error from "../../components/Error/Error";
 import Leftside from "../../components/LeftSide/LeftSide";
-import Loading from "../../components/Loading/Loading";
 import MiddleSide from "../../components/MiddleSide/MiddleSide";
 import RightSide from "../../components/RightSide/RightSide";
 
 const Home = () => {
-  const { error } = useSelector((state) => state.PostReducer,shallowEqual);
+  const { error } = useSelector((state) => state.PostReducer, shallowEqual);
+
   return (
     <>
       { error ? (

@@ -64,13 +64,12 @@ export const createPost = (payload, token, toast) => (dispatch) => {
 
 export const getTimelinePosts = (id, token, toast) => async (dispatch) => {
   dispatch({ type: types.RETREIVING_START });
-  // console.log({headers})
   return axios({
     method: "get",
     url: `/posts/${id}/timeline`,
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+      "Authorization": `Bearer ${token}`,
     },
   })
     .then((res) => {
@@ -93,7 +92,7 @@ export const handleLikeUnlikePost = (id, token, toast) => {
     url: `posts/like/${id}`,
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+      "Authorization": `Bearer ${token}`,
     },
   })
     .then((res) => {
@@ -111,7 +110,7 @@ export const deletePost = (id, token, toast) => (dispatch) => {
     url: `posts/delete/${id}`,
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+      "Authorization": `Bearer ${token}`,
     },
   })
     .then((res) => {

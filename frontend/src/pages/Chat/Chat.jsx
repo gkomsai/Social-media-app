@@ -65,10 +65,10 @@ const Chat = () => {
 
   // Connecting to the Socket.io
   useEffect(() => {
-    socket.current = io("ws://localhost:8800");
-    // socket.current = io(
-    //   "https://indian-social-media-app-chatting-backend.onrender.com/"
-    // );
+    socket.current = io(
+      "https://indian-social-media-app-chatting-backend.onrender.com/"
+    );
+
     socket.current.emit("add-new-user", user._id);
     socket.current.on("all-currently-online-users", (users) => {
       // here we are getting the informaiton about the online users from the socket.io
