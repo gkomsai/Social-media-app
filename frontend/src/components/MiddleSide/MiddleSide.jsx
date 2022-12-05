@@ -1,12 +1,14 @@
-import { Box } from "@chakra-ui/react";
 import React, { Suspense } from "react";
 import Loading from "../Loading/Loading";
+import { Box } from "@chakra-ui/react";
 import PostShare from "../PostShare/PostShare";
 const Posts = React.lazy(() => import("../Posts/Posts"));
+
+
 const MiddleSide = () => {
   return (
     <Box>
-      <PostShare />
+      <PostShare location={"middleside"} />
       <Suspense
         fallback={
           <div>

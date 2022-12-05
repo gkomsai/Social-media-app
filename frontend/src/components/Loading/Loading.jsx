@@ -1,7 +1,9 @@
 import { CircularProgress, Container } from "@chakra-ui/react";
 import React from "react";
 
+
 const Loading = () => {
+  
   return (
     <Container align="center" maxW={"30%"} m="2rem auto">
       <CircularProgress

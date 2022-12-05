@@ -16,21 +16,20 @@ import logo from "../../assets/logo.png";
 import CustomButton from "../../components/Button/CustomButton";
 
 const Forgotpassword = () => {
+
   const toast = useToast();
   const [email, setEmail] = useState("");
+
 
   const handleEmailSubmit = (e) => {
     e.preventDefault();
     axios
       .post("/auth/forgotten_password", { email })
       .then((res) => {
-        // console.log(res.data.message);
-        // alert(res.data.message);
         notify(toast, res.data.message, "success");
       })
       .catch((err) => {
-        console.log(err);
-        // notify(toast, err.response.data.message, "error");
+        notify(toast, err.response.data.message, "error");
       });
   };
 
@@ -78,6 +77,7 @@ const Forgotpassword = () => {
             onChange={(e) => setEmail(e.target.value)}
           />
         </Flex>
+        
         <CustomButton onClick={handleEmailSubmit} value="Submit" />
         <Divider width="96%" marginTop="40px" />
 

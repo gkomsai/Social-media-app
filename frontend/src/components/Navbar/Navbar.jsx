@@ -44,12 +44,15 @@ import { deleteUser } from "../../redux/user/action";
 import CustomButton from "../Button/CustomButton";
 
 const Navbar = () => {
+
   const { colorMode, toggleColorMode } = useColorMode();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const { user, token } = useSelector((state) => state.AuthReducer,shallowEqual);
+
 
   const handleLogOut = () => {
     dispatch(logoutFun());
@@ -61,6 +64,7 @@ const Navbar = () => {
     return;
   };
 
+  
   return (
     <Grid
       p="1.5rem 2rem"

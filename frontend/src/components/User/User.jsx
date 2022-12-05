@@ -7,9 +7,12 @@ import { truncate } from "../../utils/extraFunctions";
 import CustomButton from "../Button/CustomButton";
 import "./User.css";
 
-const User = ({ person, location,chatUsers }) => {
+
+const User = ({ person, location, chatUsers }) => {
+  
   const dispatch = useDispatch();
   const toast = useToast();
+
   const { user,token } = useSelector((state) => state.AuthReducer,shallowEqual);
 
   const [alreadyCreatedChat, setAlreadyCreatedChat] = useState(null);
@@ -36,6 +39,7 @@ const User = ({ person, location,chatUsers }) => {
   
   };
 
+
   const handleChatRequest = () => {
     if (!alreadyCreatedChat) {
       const payload = {
@@ -48,6 +52,7 @@ const User = ({ person, location,chatUsers }) => {
       return;
     }
   };
+
 
   return (
     <Box className={location === "usersPage" ? "userPage" : "follower"}>
@@ -65,9 +70,11 @@ const User = ({ person, location,chatUsers }) => {
               _hover={{ color: "green", textDecoration: "underline" }}
             >
               {person.firstName}  {person.lastName}
-            </Text>
-            <Text fontSize={"12px"} >{truncate(person.workStatus, 25)  }</Text>
+          </Text>
+          {person.workStatus? <Text fontSize={"12px"} >{truncate(person.workStatus, 25)}</Text>: <Text fontSize={"12px"} >{truncate(person.email, 25)  }</Text> }
+           
         </Box>
+        
       </Box>
       <CustomButton
         onClick={handleFollow}

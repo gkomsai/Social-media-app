@@ -12,7 +12,7 @@ userRouter.get("/:id", async (req, res) => {
   try {
     const user = await UserModel.findById(id);
     if (user) {
-      const { password, ...otherDetails } = user._doc; // note- all the details we are receiving in the response  will lie under this ._doc
+      const { password, ...otherDetails } = user._doc; 
       res.status(200).send(otherDetails);
     } else {
       return res

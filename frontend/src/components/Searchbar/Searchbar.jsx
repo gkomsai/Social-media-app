@@ -5,6 +5,8 @@ import "./searchbar.css";
 import { Box, Flex, Image, Input } from "@chakra-ui/react";
 
 const Searchbar = () => {
+
+  
   return (
     <Flex gap=".1rem">
       <Image w="50px" src={logo} alt="" />

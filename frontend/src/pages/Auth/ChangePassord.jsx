@@ -15,12 +15,15 @@ import logo from "../../assets/logo.png";
 import { shallowEqual, useSelector } from "react-redux";
 import CustomButton from "../../components/Button/CustomButton";
 
+
 const ChangePassord = () => {
+
   const navigate = useNavigate();
   const { token } = useSelector((store) => store.AuthReducer, shallowEqual);
   const toast = useToast();
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+
 
   const handlePasswordSubmit = (e) => {
     e.preventDefault();
@@ -31,7 +34,7 @@ const ChangePassord = () => {
         .post(`/auth/change-password`, payload, {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
+            "Authorization": `Bearer ${token}`,
           },
         })
         .then((res) => {
@@ -48,6 +51,7 @@ const ChangePassord = () => {
     }
   };
 
+  
   return (
     <Box
       h="100vh"
@@ -83,7 +87,7 @@ const ChangePassord = () => {
           <Input
             type="password"
             focusBorderColor="#F9802D"
-            w={{ base: "90%", md: "70%", lg: "70%" }}
+            w={{ base: "90%", md: "80%", lg: "60%" }}
             color="black"
             backgroundColor="#f8f8f8"
             fontSize="14px"

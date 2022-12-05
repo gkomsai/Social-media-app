@@ -2,6 +2,7 @@ import { Box, Flex, keyframes, Tooltip } from "@chakra-ui/react";
 import React from "react";
 
 export default function StatusIndicator() {
+  
   const activeColor = "green.500";
   const ringScaleMin = 0.33;
   const ringScaleMax = 0.66;
@@ -46,7 +47,6 @@ export default function StatusIndicator() {
       flexDir="column"
       overflow="hidden"
     >
-      {/* Ideally, only the box should be used. The <Flex /> is used to style the preview. */}
       <Tooltip placement="right" label={`Online`} bg="none" color={"green"}>
         <Box
           as="div"

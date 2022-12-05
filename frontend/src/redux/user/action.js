@@ -3,6 +3,8 @@ import { notify } from "../../utils/extraFunctions";
 import { getTimelinePosts } from "../posts/action";
 import * as types from "./actionTypes";
 
+/*  ----------------------for getting a single User  -------------------------------- */
+
 export const getUser = (id) => {
   return axios({
     method: "get",
@@ -10,6 +12,8 @@ export const getUser = (id) => {
   });
 };
 
+
+/*  ----------------------for getting all User  -------------------------------- */
 export const getAllUser = (toast) => (dispatch) => {
   dispatch({ type: types.GET_USER_REQUEST });
   axios({
@@ -17,18 +21,18 @@ export const getAllUser = (toast) => (dispatch) => {
     url: `/user`,
   })
     .then((res) => {
-      // console.log(res.data);
       if (res.data) {
         dispatch({ type: types.GET_USER_SUCCESS, payload: res.data });
-        // notify(toast, "All user fetched successfully", "success");
       }
     })
     .catch((err) => {
-      // console.error(err);
       notify(toast, err.response.data.message, "error");
       dispatch({ type: types.GET_USER_FAILURE });
     });
 };
+
+
+/*  ----------------------for Updating a  User  -------------------------------- */
 
 export const upadteUser = (id, payload, token, toast) => (dispatch) => {
   dispatch({ type: types.UPDATE_USER_REQUEST });
@@ -42,7 +46,6 @@ export const upadteUser = (id, payload, token, toast) => (dispatch) => {
     },
   })
     .then((res) => {
-      // console.log("upadteUser res.data",res.data);
       if (res.data) {
         dispatch({ type: types.UPDATE_USER_SUCCESS, payload: res.data });
         notify(toast, "user updated successfully", "success");
@@ -53,6 +56,8 @@ export const upadteUser = (id, payload, token, toast) => (dispatch) => {
       dispatch({ type: types.UPDATE_USER_FAILURE });
     });
 };
+
+/*  ----------------------for deleting a  User  -------------------------------- */
 
 export const deleteUser = (id, token, toast) => (dispatch) => {
   dispatch({ type: types.DELETE_USER_REQUEST });
@@ -65,18 +70,18 @@ export const deleteUser = (id, token, toast) => (dispatch) => {
     },
   })
     .then((res) => {
-      // console.log(res.data);
       if (res.data) {
         notify(toast, "Your account deleted successfully", "success");
         return dispatch({ type: types.DELETE_USER_SUCCESS });
       }
     })
     .catch((err) => {
-      // console.error(err);
       notify(toast, err.response.data.message, "error");
       dispatch({ type: types.DELETE_USER_FAILURE });
     });
 };
+
+/*  ----------------------for following a User  -------------------------------- */
 
 export const followUser = (id, token, toast, currentUserId) => (dispatch) => {
   dispatch({ type: types.FOLLOW_USER_REQUEST });
@@ -89,9 +94,8 @@ export const followUser = (id, token, toast, currentUserId) => (dispatch) => {
     },
   })
     .then((res) => {
-      // console.log(res.data);
       if (res.data) {
-        dispatch({ type: types.FOLLOW_USER_SUCCESS, payload: id }); // user jise bhi follow karna chahta hai uski id
+        dispatch({ type: types.FOLLOW_USER_SUCCESS, payload: id });
         notify(toast, res.data.message, "success");
       }
     })
@@ -102,6 +106,9 @@ export const followUser = (id, token, toast, currentUserId) => (dispatch) => {
       dispatch({ type: types.FOLLOW_USER_FAILURE });
     });
 };
+
+
+/*  ----------------------for Unfollowing a User  -------------------------------- */
 
 export const unfollowUser = (id, token, toast, currentUserId) => (dispatch) => {
   dispatch({ type: types.UNFOLLOW_USER_REQUEST });
@@ -114,7 +121,6 @@ export const unfollowUser = (id, token, toast, currentUserId) => (dispatch) => {
     },
   })
     .then((res) => {
-      // console.log(res.data);
       if (res.data) {
         dispatch({ type: types.UNFOLLOW_USER_SUCCESS, payload: id });
         notify(toast, res.data.message, "success");
@@ -122,7 +128,6 @@ export const unfollowUser = (id, token, toast, currentUserId) => (dispatch) => {
     })
     .then(() => dispatch(getTimelinePosts(currentUserId, token, toast)))
     .catch((err) => {
-      // console.error(err);
       notify(toast, err.response.data.message, "error");
       dispatch({ type: types.UNFOLLOW_USER_FAILURE });
     });

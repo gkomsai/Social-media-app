@@ -28,12 +28,16 @@ export const AuthReducer = (state = initialState, action) => {
         isAuthLoading: true,
         isError: false,
       };
+    
+    
     case USER_SIGNUP_SUCCESS:
       return {
         ...state,
         isAuthLoading: false,
         isError: false,
       };
+    
+    
     case USER_SIGNUP_FAILURE:
       return {
         ...state,
@@ -41,12 +45,16 @@ export const AuthReducer = (state = initialState, action) => {
         token: null,
         isError: true,
       };
+    
+    
     case USER_LOGIN_REQUEST:
       return {
         ...state,
         isAuthLoading: true,
         isError: false,
       };
+    
+    
     case USER_LOGIN_SUCCESS:
       saveItemToLocal("token", payload.token);
       saveItemToLocal("user", payload.user);
@@ -57,6 +65,8 @@ export const AuthReducer = (state = initialState, action) => {
         user: payload.user,
         isError: false,
       };
+    
+    
     case USER_LOGIN_FAILURE:
       return {
         ...state,
@@ -64,6 +74,8 @@ export const AuthReducer = (state = initialState, action) => {
         token: null,
         isError: true,
       };
+    
+    
     case USER_LOGOUT_SUCCESS:
       localStorage.clear();
       return {
@@ -73,21 +85,25 @@ export const AuthReducer = (state = initialState, action) => {
         user: null,
         isError: true,
       };
+    
+    
     case types.GET_USER_REQUEST:
       return {
         ...state,
         isAuthLoading: true,
         isError: false,
       };
+    
+    
     case types.GET_USER_SUCCESS:
-      // console.log("get Alluser success", payload);
-
       return {
         ...state,
         allUser: [...payload],
         isAuthLoading: true,
         isError: false,
       };
+    
+    
     case types.GET_USER_FAILURE:
       return {
         ...state,
@@ -95,14 +111,16 @@ export const AuthReducer = (state = initialState, action) => {
         isError: false,
       };
 
+    
     case types.UPDATE_USER_REQUEST:
       return {
         ...state,
         isAuthLoading: true,
         isError: false,
       };
+    
+    
     case types.UPDATE_USER_SUCCESS:
-      // console.log("upadate user request", payload);
       saveItemToLocal("user", payload);
       return {
         ...state,
@@ -110,18 +128,24 @@ export const AuthReducer = (state = initialState, action) => {
         isAuthLoading: true,
         isError: false,
       };
+    
+    
     case types.UPDATE_USER_FAILURE:
       return {
         ...state,
         isAuthLoading: true,
         isError: false,
       };
+    
+    
     case types.DELETE_USER_REQUEST:
       return {
         ...state,
         isAuthLoading: true,
         isError: false,
       };
+    
+    
     case types.DELETE_USER_SUCCESS:
       localStorage.clear();
       return {
@@ -131,28 +155,31 @@ export const AuthReducer = (state = initialState, action) => {
         isAuthLoading: false,
         isError: false,
       };
+    
+    
     case types.DELETE_USER_FAILURE:
       return {
         ...state,
         isAuthLoading: false,
         isError: true,
       };
+    
+    
     case types.FOLLOW_USER_REQUEST:
       return {
         ...state,
         isAuthLoading: true,
         isError: false,
       };
-    case types.FOLLOW_USER_SUCCESS:
     
+    
+    case types.FOLLOW_USER_SUCCESS:
       let arr = state.allUser.map((el) => {
         if (el._id === payload) {
           el.followers.push(state.user._id);
         }
         return el;
       });
-
-      // console.log("inside the follow success", arr);
       return {
         ...state,
         user: { ...state.user, following: [...state.user.following, payload] },
@@ -160,31 +187,33 @@ export const AuthReducer = (state = initialState, action) => {
         isAuthLoading: false,
         isError: false,
       };
+    
+    
     case types.FOLLOW_USER_FAILURE:
       return {
         ...state,
         isAuthLoading: false,
         isError: true,
       };
+    
+    
     case types.UNFOLLOW_USER_REQUEST:
       return {
         ...state,
         isAuthLoading: true,
         isError: false,
       };
+    
+    
     case types.UNFOLLOW_USER_SUCCESS:
-      
+
       let res = state.allUser.map((el) => {
         if (el._id === payload) {
-        //  el.followers.filter((id) => id !== state.user._id);
           let index = el.followers.indexOf(state.user._id);
           el.followers.splice(index, 1);
         }
         return el;
       });
-
-      // console.log("inside the unfollow success", res);
-
       return {
         ...state,
         user: {
@@ -195,12 +224,16 @@ export const AuthReducer = (state = initialState, action) => {
         isAuthLoading: false,
         isError: false,
       };
+    
+    
     case types.UNFOLLOW_USER_FAILURE:
       return {
         ...state,
         isAuthLoading: false,
         isError: true,
       };
+    
+    
     default:
       return state;
   }

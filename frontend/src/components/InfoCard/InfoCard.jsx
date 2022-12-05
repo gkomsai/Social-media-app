@@ -11,15 +11,16 @@ import { notify } from "../../utils/extraFunctions";
 import CustomButton from "../Button/CustomButton";
 
 const InfoCard = () => {
-  const [currentUser, setCurrentUser] = useState({});
+
   const dispatch = useDispatch();
   const toast = useToast();
   const { id } = useParams();
-  // console.log(id);
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const [currentUser, setCurrentUser] = useState({});
+
   const { user } = useSelector((state) => state.AuthReducer, shallowEqual);
-  // console.log({user},"info card");
-  // console.log(id,user._id);
+ 
 
   const handleLogOut = () => {
     dispatch(logoutFun());
@@ -33,7 +34,6 @@ const InfoCard = () => {
         if (!isCancelled) {
           setCurrentUser(user);
         }
-      
       }
     }
     return () => {
@@ -41,6 +41,8 @@ const InfoCard = () => {
     }
   }, [user]);
 
+
+  
   return (
     <Box className="InfoCard">
       <Box className="infoHead">
