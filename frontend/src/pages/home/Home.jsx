@@ -7,6 +7,7 @@ import MiddleSide from "../../components/MiddleSide/MiddleSide";
 import RightSide from "../../components/RightSide/RightSide";
 
 const Home = () => {
+  
   const { error } = useSelector((state) => state.PostReducer, shallowEqual);
 
   return (

@@ -15,9 +15,11 @@
   padding: 0.5rem;
   min-height: 80vh;
   overflow-y: scroll;
-  /* border: 2px solid red; */
 }
 
+.Left-side-chat::-webkit-scrollbar {
+  display: none !important; 
+} 
 .chatMembers-list {
   display: flex;
   flex-direction: column;

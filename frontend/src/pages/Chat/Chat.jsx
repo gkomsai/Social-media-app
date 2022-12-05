@@ -25,6 +25,7 @@ const Chat = () => {
     (store) => store.AuthReducer,
     shallowEqual
   );
+
   const { chatUsers } = useSelector((store) => store.ChatReducer, shallowEqual);
  
   let location = "chatPage";
@@ -32,8 +33,8 @@ const Chat = () => {
   let arr = allUser.filter((elem) =>
     chatUsers.some((el) => el.members.includes(elem._id))
   );
+
   let finalChatUserData = arr.filter((el) => el._id !== user._id);
-  // console.log({ finalChatUserData });
 
 
 
@@ -63,6 +64,7 @@ const Chat = () => {
     }
   }, [user._id]);
 
+
   // Connecting to the Socket.io
   useEffect(() => {
     socket.current = io(
@@ -71,10 +73,10 @@ const Chat = () => {
 
     socket.current.emit("add-new-user", user._id);
     socket.current.on("all-currently-online-users", (users) => {
-      // here we are getting the informaiton about the online users from the socket.io
       setOnlineUsers(users);
     });
   }, [user]);
+
 
   // Sending Message to the socket server
   useEffect(() => {
@@ -83,6 +85,7 @@ const Chat = () => {
     }
   }, [sendMessage]);
 
+
   // Geting the message from the socket server
   useEffect(() => {
     socket.current.on("recieve-message", (data) => {
@@ -90,6 +93,7 @@ const Chat = () => {
     });
   }, []);
 
+  
   const checkOnlineStatus = (chatUser) => {
     const online = onlineUsers.some((el) => el.userId === chatUser._id); 
     return online ? true : false;

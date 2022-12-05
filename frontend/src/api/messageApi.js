@@ -10,6 +10,7 @@ export const getMessages = (id, token) =>
     },
   });
 
+  
 export const addMessage = (payload, token) =>
   axios.post("/message/", payload, {
     headers: {

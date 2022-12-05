@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Button, Input, Text, useToast, VStack } from "@chakra-ui/react";
+import { Box, Input, Text, useToast, VStack } from "@chakra-ui/react";
 import styles from "./Auth.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -7,6 +7,7 @@ import { loginFun } from "../../redux/auth/action";
 import CustomButton from "../../components/Button/CustomButton";
 
 const Login = () => {
+  
   const [user, setUser] = useState();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -17,10 +18,16 @@ const Login = () => {
     setUser({ ...user, [name]: value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = () => {
     dispatch(loginFun(user, toast, navigate));
   };
+
+  const handleEnter = (e) => {
+    if (e.keyCode === 13 && !e.shiftKey) {
+      e.preventDefault();
+      handleSubmit();
+    }
+  }
 
   return (
     <>
@@ -32,22 +39,22 @@ const Login = () => {
           <VStack spacing={"6"} w="75%" m="auto">
             <Input
               type="text"
+              onKeyDown={handleEnter}
               name="email"
               focusBorderColor="#F9802D"
               placeholder="Enter email"
               marginTop="15px"
-              fontWeight="lighter"
               fontSize="14px"
               onChange={handleChange}
             />
 
             <Input
               type="password"
+              onKeyDown={handleEnter}
               name="password"
               focusBorderColor="#F9802D"
               placeholder=" Enter password"
               marginTop="15px"
-              fontWeight="lighter"
               fontSize="14px"
               onChange={handleChange}
             />

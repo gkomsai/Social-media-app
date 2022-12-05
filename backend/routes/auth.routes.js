@@ -127,7 +127,7 @@ authRouter.post("/forgotten_password", async (req, res) => {
     } else {
       res
         .status(400)
-        .send({ status: "error", message: "Email doesn't exists" });
+        .send({ status: "error", message: "Please Enter a valid email" });
     }
   } else {
     res
@@ -136,7 +136,7 @@ authRouter.post("/forgotten_password", async (req, res) => {
     }
     
   } catch (error) {
-    console.error(error);
+    return res.status(500).send({ status: "error", message: error.message });
   }
 });
 
@@ -174,7 +174,6 @@ authRouter.post(
           .send({ status: "error", message: "All Fields are Required" });
       }
     } catch (error) {
-      // console.log(error);
       res.status(400).send({ status: "error", message: "Invalid Token" });
     }
   }

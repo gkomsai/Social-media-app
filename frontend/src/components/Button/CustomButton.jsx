@@ -9,7 +9,7 @@ const CustomButton = ({
   value,
   color = "white",
   w = "",
-  fontSize="15px",
+  fontSize = "15px",
   className,
   alignSelf = "",
   marginTop = "40px",

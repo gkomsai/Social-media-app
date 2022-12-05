@@ -14,7 +14,8 @@ import defaultProfile from "../../assets/defaultProfile.png";
 import { useEffect } from "react";
 import CustomButton from "../Button/CustomButton";
 
-const PostShare = ({onClose}) => {
+const PostShare = ({ onClose, location }) => {
+
   const imageRef = useRef();
   const description = useRef();
   const toast = useToast();
@@ -25,17 +26,23 @@ const PostShare = ({onClose}) => {
 
   const { user,token } = useSelector((store) => store.AuthReducer, shallowEqual);
  
-
   const [width, setWidth] = useState(window.innerWidth);
+  
+  
+  const headers = {
+    "Content-Type": "application/json",
+    "Authorization": `Bearer ${token}`,
+  };
+
+
+
   const breakpoint = 990;
 
   useEffect(() => {
     window.addEventListener("resize", () => setWidth(window.innerWidth));
   }, []);
-  const headers = {
-    "Content-Type": "application/json",
-    "Authorization": `Bearer ${token}`,
-  };
+
+
 
   const onImageChange = (e) => {
     if (e.target.files && e.target.files[0]) {
@@ -43,11 +50,8 @@ const PostShare = ({onClose}) => {
       setImage(img);
     }
   };
-  // handle post upload
+ 
   const handleUpload = async () => {
-    // e.preventDefault();
-
-    //post data
     let newPost = {
       userId: user._id,
       description: description.current.value,
@@ -70,21 +74,20 @@ const PostShare = ({onClose}) => {
       axios
         .post(`/posts/upload`, data, { headers })
         .then((res) => {
-          // console.log("upload wala", res.data);
           if (res.data) {
-            // notify(toast, "Image uploaded Successfully", "success");
             newPost = {
               ...newPost,
               image: res.data.secure_url,
               cloudinary_id: res.data.public_id,
             };
             dispatch(createPost(newPost, token, toast));
-            resetShare();
+            if (location === "middleside") {
+              resetShare();
+           }  
             setIsLoading(false);
           }
         })
         .catch((err) => {
-          // console.error(err);
           setIsLoading(false);
           notify(
             toast,
@@ -95,21 +98,43 @@ const PostShare = ({onClose}) => {
     } else {
       setIsLoading(true);
       dispatch(createPost(newPost, token, toast));
-      resetShare();
+      if (location === "middleside") {
+        resetShare();
+     }  
       setIsLoading(false);
     }
   };
 
-  const handleEnter = (e) => {
-    if (e.keyCode === 13 && !e.shiftKey) {
-      e.preventDefault();
-      handleUpload();
-    }
+
+  const handleClick =async () => {
+    if (location === "shareModal") {
+    await  handleUpload()
+      onClose();
+    } else {
+      handleUpload ()
+   } 
+  
   }
-  // Reset Post Share
+  
+
+
   function resetShare() {
     setImage(null);
     description.current.value = "";
+  }
+
+
+
+  const handleEnter = async(e) => {
+    if (e.keyCode === 13 && !e.shiftKey && location === "shareModal") {
+      e.preventDefault();
+     await handleUpload();
+      onClose();
+    } else if (e.keyCode === 13 && !e.shiftKey && location === "middleside") {
+      e.preventDefault();
+     await handleUpload();
+    }
+    return
   }
 
   if (!user) {
@@ -159,13 +184,10 @@ const PostShare = ({onClose}) => {
             marginTop="0px"
             w="85px"
             isLoading={isLoading}
-            onClick={() => {
-              handleUpload()
-              onClose()
-            }}
+            onClick={handleClick}  
             value="Share"
           />
-          <Box style={{ display: "none" }}>
+          <Box display={"none"}>
             <input type="file" ref={imageRef} onChange={onImageChange} />
           </Box>
         </Box>

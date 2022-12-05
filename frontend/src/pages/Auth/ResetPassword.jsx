@@ -15,11 +15,15 @@ import logo from "../../assets/logo.png";
 import CustomButton from "../../components/Button/CustomButton";
 
 const ResetPassword = () => {
+
   const navigate = useNavigate();
   const { id, token } = useParams();
   const toast = useToast();
+
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+
+
   const handlePasswordSubmit = (e) => {
     e.preventDefault();
     if (password && confirmPassword) {
@@ -28,19 +32,18 @@ const ResetPassword = () => {
       axios
         .post(`/auth/reset-password/${id}/${token}`, payload)
         .then((res) => {
-          // console.log(res.data.message);
           if (res.data.message) {
             notify(toast, res.data.message, "success");
             navigate("/auth/login");
           }
         })
         .catch((err) => {
-          // console.log(err);
           notify(toast, err.response.data.message, "error");
         });
     }
   };
 
+  
   return (
     <Box
       h="100vh"
@@ -60,7 +63,7 @@ const ResetPassword = () => {
         p="2rem"
       >
         <Text fontWeight="700" fontSize="18px" marginTop="30px">
-          Change Password
+          Reset Password
         </Text>
 
         <Divider width="96%" marginTop="20px" />
@@ -76,7 +79,7 @@ const ResetPassword = () => {
           <Input
             type="password"
             focusBorderColor="#F9802D"
-            w={{ base: "90%", md: "70%", lg: "70%" }}
+            w={{ base: "90%", md: "80%", lg: "60%" }}
             color="black"
             backgroundColor="#f8f8f8"
             fontSize="14px"

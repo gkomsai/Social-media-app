@@ -79,3 +79,14 @@
   margin-left: -2rem;
   margin-top: 20px;
 }
+
+@media screen and (max-width:400px){
+  .PostShare button{
+    font-size: small;
+    padding: 2px 0px;
+  }
+  .postOptions{
+    margin-left: -60px;
+  }
+}
+

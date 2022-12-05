@@ -53,12 +53,13 @@ export const logoutSuccess = () => {
 };
 
 
+/*  ----------------------for Creating an Account on the website  -------------------------------- */
+
 export const signupFun = (payload, toast, navigate) => (dispatch) => {
   dispatch(signupRequest());
   axios
     .post(`/auth/signup`, payload)
     .then((res) => {
-      // console.log(res.data);
       if (res.data) {
         dispatch(signupSuccess(res.data));
         notify(toast, "Account Created Successfully", "success");
@@ -71,14 +72,16 @@ export const signupFun = (payload, toast, navigate) => (dispatch) => {
     });
 };
 
+
+
+/*  ----------------------for Logging in a User  -------------------------------- */
+
 export const loginFun = (payload, toast, navigate) => (dispatch) => {
   dispatch(loginRequest());
   axios
     .post(`/auth/login`, payload)
     .then((res) => {
-      // console.log(res.data);
       if (res.data.token) {
-        // console.log(res.data);
         dispatch(loginSuccess(res.data));
         notify(toast, res.data.message, "success");
         navigate("/");
@@ -89,6 +92,9 @@ export const loginFun = (payload, toast, navigate) => (dispatch) => {
       dispatch(loginFailure());
     });
 };
+
+
+/*  ----------------------for Logout a user  -------------------------------- */
 
 export const logoutFun =() =>(dispatch)=>{
   return dispatch(logoutSuccess());

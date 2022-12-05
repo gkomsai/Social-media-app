@@ -31,38 +31,36 @@ import { MdComment } from "react-icons/md";
 import { FaShareAlt } from "react-icons/fa";
 import { truncate } from "../../utils/extraFunctions";
 
-
 const SinglePost = ({ postData }) => {
-  // console.log({postData})
+
+
   const toast = useToast();
   const dispatch = useDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  let { user, token, allUser } = useSelector((state) => state.AuthReducer, shallowEqual);
+
   const [description, setDescription] = useState("");
-  let { user, token, allUser } = useSelector(
-    (state) => state.AuthReducer,
-    shallowEqual
-  );
   const [showFullText, setShowFullText] = useState(false);
   const [liked, setLiked] = useState(postData.likes.includes(user._id));
   const [likes, setLikes] = useState(postData.likes.length);
   const [currentPostUser, setCurrentPostUser] = useState(null);
- 
 
-useEffect(() => {
-  let isCancelled = false;
-  if (!isCancelled && allUser.length) {
-    if (postData.userId === user._id) {
-      setCurrentPostUser({ ...user });
-    } else {
-      let postUser = allUser.filter((el) => el._id === postData.userId);
-      setCurrentPostUser({...postUser[0]})
+
+  useEffect(() => {
+    let isCancelled = false;
+    if (!isCancelled && allUser.length) {
+      if (postData.userId === user._id) {
+        setCurrentPostUser({ ...user });
+      } else {
+        let postUser = allUser.filter((el) => el._id === postData.userId);
+        setCurrentPostUser({ ...postUser[0] });
+      }
     }
-   
-  }
-  return () => {
-   isCancelled = true;
-  }
-}, [user])
+    return () => {
+      isCancelled = true;
+    };
+  }, [user]);
 
 
 
@@ -72,9 +70,11 @@ useEffect(() => {
     liked ? setLikes((prev) => prev - 1) : setLikes((prev) => prev + 1);
   };
 
+
   const handleDeltePost = () => {
     dispatch(deletePost(postData._id, token, toast));
   };
+
 
   const hadleUpdatePost = () => {
     const payload = {
@@ -83,14 +83,14 @@ useEffect(() => {
     dispatch(updatePost(postData._id, payload, token, toast));
   };
 
+
   const handleEnter = (e) => {
     if (e.keyCode === 13 && !e.shiftKey) {
       e.preventDefault();
       hadleUpdatePost();
+      onClose();
     }
-  }
-
-
+  };
 
 
   return (
@@ -107,17 +107,14 @@ useEffect(() => {
               fontWeight={"bold"}
               _hover={{ color: "green", textDecoration: "underline" }}
             >
-              {currentPostUser.firstName}  {currentPostUser.lastName}
+              {currentPostUser.firstName} {currentPostUser.lastName}
             </Text>
-            <Text fontSize={"13px"} >{truncate(currentPostUser.workStatus, 55)  }</Text>
+            <Text fontSize={"13px"}>
+              {truncate(currentPostUser.workStatus, 55)}
+            </Text>
             <Box fontSize={"10px"}>
-            <TimeAgo
-             size="12px"
-              datetime={postData.createdAt}
-           
-            />
+              <TimeAgo size="12px" datetime={postData.createdAt} />
             </Box>
-         
           </Box>
         </Flex>
       ) : null}
@@ -131,8 +128,8 @@ useEffect(() => {
             cursor={"pointer"}
             onClick={handleLike}
           />
-        <MdComment size="27px" cursor={"pointer"}/>
-        <FaShareAlt size="27px"  cursor={"pointer"}/>
+          <MdComment size="27px" cursor={"pointer"} />
+          <FaShareAlt size="27px" cursor={"pointer"} />
         </Box>
 
         <Menu>
@@ -147,25 +144,28 @@ useEffect(() => {
               <ModalContent>
                 <ModalHeader>Update your post description</ModalHeader>
                 <ModalCloseButton />
-                <form action="" onSubmit={hadleUpdatePost}>
-                  <ModalBody>
-                    <textarea
-                      className="updateTextarea"
-                      onKeyDown={handleEnter}
-                      defaultValue={postData?.description}
-                      onChange={(e) => setDescription(e.target.value)}
-                    />
-                  </ModalBody>
+            
+                <ModalBody>
+                  <textarea
+                    className="updateTextarea"
+                    onKeyDown={handleEnter}
+                    defaultValue={postData?.description}
+                    onChange={(e) => setDescription(e.target.value)}
+                  />
+                </ModalBody>
 
-                  <ModalFooter>
-                    <CustomButton
-                      type="submit"
-                      marginTop="0px"
-                      onClick={onClose}
-                      value="UPDATE"
-                    />
-                  </ModalFooter>
-                </form>
+                <ModalFooter>
+                  <CustomButton
+                    type="submit"
+                    marginTop="0px"
+                    onClick={() => {
+                      hadleUpdatePost();
+                      onClose();
+                    }}
+                    value="UPDATE"
+                  />
+                </ModalFooter>
+           
               </ModalContent>
             </Modal>
             <MenuItem onClick={handleDeltePost}>
@@ -185,15 +185,15 @@ useEffect(() => {
         {showFullText ? (
           <Text onClick={() => setShowFullText(false)} whiteSpace="pre-line">
             {postData?.description}{" "}
-            <Text as="span"  ml="30px" cursor={"pointer"}  color="blue.400">
+            <Text as="span" ml="30px" cursor={"pointer"} color="blue.400">
               see less...
             </Text>
           </Text>
-        ) : (  
+        ) : (
           <Text onClick={() => setShowFullText(true)} whiteSpace="pre-line">
             {truncate(postData?.description, 110)}{" "}
             {postData?.description.length > 110 ? (
-              <Text ml="20px" as="span" cursor={"pointer"}  color="blue.400">
+              <Text ml="20px" as="span" cursor={"pointer"} color="blue.400">
                 See more...
               </Text>
             ) : null}

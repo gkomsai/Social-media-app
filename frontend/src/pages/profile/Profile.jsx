@@ -5,7 +5,10 @@ import ProfileCard from "../../components/ProfileCard/ProfileCard";
 import ProfileLeft from "../../components/ProfilePageLeft/ProfileLeft";
 import RightSide from "../../components/RightSide/RightSide";
 
+
+
 const Profile = () => {
+  
   return (
     <>
       <Grid

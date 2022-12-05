@@ -17,10 +17,7 @@ const ChatBox = ({ currentChatUser, setSendMessage, receivedMessage }) => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
 
-  const { token, user } = useSelector(
-    (state) => state.AuthReducer,
-    shallowEqual
-  );
+  const { token, user } = useSelector((state) => state.AuthReducer,shallowEqual);
 
   const getchatSchema = async () => {
     try {
@@ -35,7 +32,7 @@ const ChatBox = ({ currentChatUser, setSendMessage, receivedMessage }) => {
       );
       setChatSchema({ ...res.data });
     } catch (err) {
-      // console.log(err);
+      notify(toast, err.response.data.message, "error");
     }
   };
 
@@ -45,6 +42,9 @@ const ChatBox = ({ currentChatUser, setSendMessage, receivedMessage }) => {
     }
   }, [currentChatUser?._id]);
 
+
+
+
   //for fetching messages
   useEffect(() => {
     const fetchMessages = async () => {
@@ -53,7 +53,6 @@ const ChatBox = ({ currentChatUser, setSendMessage, receivedMessage }) => {
         setMessages(data);
       } catch (err) {
         notify(toast, err.message, "err");
-        // console.error(error);
       }
     };
     if (chatSchema) {

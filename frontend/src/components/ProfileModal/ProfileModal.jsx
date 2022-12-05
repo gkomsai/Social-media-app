@@ -29,18 +29,19 @@ const ProfileModal = ({ onOpen, onClose, isOpen, userData }) => {
   let [profilePicUrl, setprofilePicUrl] = useState({});
   let [coverPicUrl, setcoverPicUrl] = useState({});
 
-  // console.log({profilePicture},{coverPicture})
-
-  const { token } = useSelector((store) => store.AuthReducer,shallowEqual);
+  const { token } = useSelector((store) => store.AuthReducer, shallowEqual);
+  
   const headers = {
     "Content-Type": "application/json",
-    Authorization: `Bearer ${token}`,
+    "Authorization": `Bearer ${token}`,
   };
 
   const handleChange = (e) => {
     let { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
+
+
 
   const postDetails = (e) => {
     if (e.target.files && e.target.files[0]) {
@@ -52,9 +53,7 @@ const ProfileModal = ({ onOpen, onClose, isOpen, userData }) => {
         axios
           .post(`/posts/upload`, data, { headers })
           .then((res) => {
-            // console.log("upload wala", res.data);
             if (res.data) {
-              // notify(toast, "Image uploaded Successfully", "success");
               setprofilePicUrl({
                 ...profilePicUrl,
                 profilePicture: res.data.secure_url,
@@ -64,6 +63,7 @@ const ProfileModal = ({ onOpen, onClose, isOpen, userData }) => {
             }
           })
           .catch((err) => {
+            console.error(err);
             setPicLoading(false);
             notify(
               toast,
@@ -79,9 +79,7 @@ const ProfileModal = ({ onOpen, onClose, isOpen, userData }) => {
         axios
           .post(`/posts/upload`, data, { headers })
           .then((res) => {
-            // console.log("upload wala", res.data);
             if (res.data) {
-              notify(toast, "Image uploaded Successfully", "success");
               setcoverPicUrl({
                 ...coverPicUrl,
                 coverPicture: res.data.secure_url,
@@ -91,6 +89,7 @@ const ProfileModal = ({ onOpen, onClose, isOpen, userData }) => {
             }
           })
           .catch((err) => {
+            console.error(err);
             setPicLoading(false);
             notify(
               toast,
@@ -101,6 +100,7 @@ const ProfileModal = ({ onOpen, onClose, isOpen, userData }) => {
       }
     }
   };
+
 
   const handleSubmit = (e) => {
     e.preventDefault();

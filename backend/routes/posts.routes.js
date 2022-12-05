@@ -18,7 +18,7 @@ postsRouter.post("/upload", upload.single("file"), async (req, res) => {
     const compressing = await webp.cwebp(
       req.file.path,
       output_path,
-      "-q 5",
+      "-q 25",
       (logging = "-quiet")
     );
     // console.log(compressing);
@@ -26,8 +26,9 @@ postsRouter.post("/upload", upload.single("file"), async (req, res) => {
     if (result) {
       return res.status(200).send(result);
     }
+    
   } catch (err) {
-    // console.log(err);
+    console.log(err);
     return res.status(500).send({ status: "error", message: err.message });
   }
 });
